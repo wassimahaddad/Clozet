@@ -1,12 +1,19 @@
 import React, { useState } from "react";
+
 import "./CreateClozetItem.component.css";
 
-const CreateClozetItem = () => {
+const CreateClozetItem = ({ display }) => {
   const [item, setItem] = useState("Shirt");
-  const [season, setSeason] = useState("");
-  const [size, setSize] = useState("");
-  const [img, setImg] = useState("");
+  const [season, setSeason] = useState("Winter");
+  const [size, setSize] = useState("Small");
+  //   const [img, setImg] = useState("");
+  //   -------------------------------------------------------------
+  const handleCancel = () => {
+    display("hide");
+  };
 
+  console.log(item, season, size);
+  //   -------------------------------------------------------------
   return (
     <div className="create-item-form-container">
       <div className="option-container">
@@ -14,7 +21,6 @@ const CreateClozetItem = () => {
         <select
           type="text"
           name="item"
-          value={item}
           onClick={(e) => setItem(e.target.value)}
         >
           <option>Shirt</option>
@@ -25,12 +31,7 @@ const CreateClozetItem = () => {
       </div>
       <div className="option-container">
         <div>Season: </div>
-        <select
-          type="text"
-          name="1"
-          value={season}
-          onClick={(e) => setSeason(e.target.value)}
-        >
+        <select type="text" name="1" onClick={(e) => setSeason(e.target.value)}>
           <option>Winter</option>
           <option>Spring</option>
           <option>Summer</option>
@@ -39,12 +40,7 @@ const CreateClozetItem = () => {
       </div>
       <div className="option-container">
         <div>Size: </div>
-        <select
-          type="text"
-          name="1"
-          value={size}
-          onClick={(e) => setSize(e.target.value)}
-        >
+        <select type="text" name="1" onClick={(e) => setSize(e.target.value)}>
           <option>Small</option>
           <option>Medium</option>
           <option>Large</option>
@@ -64,7 +60,9 @@ const CreateClozetItem = () => {
 
         <div className="create-item-buttons">
           <div className="create-item-button">Create</div>
-          <div className="create-item-button">Cancel</div>
+          <div onClick={handleCancel} className="create-item-button">
+            Cancel
+          </div>
         </div>
       </div>
     </div>

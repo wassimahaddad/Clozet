@@ -6,6 +6,7 @@ import "./Clozet.component.css";
 const Clozet = () => {
   const [data, setData] = useState();
   const [createItemDisplay, setCreateItemDisplay] = useState("hide");
+  const [showAll, setShowAll] = useState("hide");
   // -------------------------------------------------------------------------
   const handleClozet = async () => {
     try {
@@ -15,6 +16,9 @@ const Clozet = () => {
       });
 
       setData(response.data[0]);
+
+      setShowAll("show");
+      setCreateItemDisplay("hide");
     } catch (e) {
       console.log(e);
       return e.message;
@@ -25,6 +29,10 @@ const Clozet = () => {
 
   const handleItemCreate = () => {
     setCreateItemDisplay("show");
+    setShowAll("hide");
+  };
+  const handleDisplay = (val) => {
+    setCreateItemDisplay(val);
   };
   // -------------------------------------------------------------------------
   return (
@@ -42,8 +50,9 @@ const Clozet = () => {
       </div>
 
       <div className={createItemDisplay}>
-        <CreateClozetItem />
+        <CreateClozetItem display={handleDisplay} />
       </div>
+      <div className={showAll}>{data ? data.item : null}</div>
     </div>
   );
 };
