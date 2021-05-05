@@ -1,0 +1,71 @@
+.login-container {
+  width: 300px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 2%;
+}
+
+.login-email,
+.login-password {
+  width: 100%;
+  height: 30px;
+  padding-left: 5px;
+  margin-top: 5px;
+}
+
+.login-button {
+  margin-top: 10px;
+  width: 300px;
+  background: slateblue;
+  color: white;
+  height: 30px;
+  text-align: center;
+  padding: 7px;
+  cursor: pointer;
+}
+
+.avatar-test {
+  width: 300px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+}
+
+.login-bg {
+  margin-top: 30px;
+
+  height: 300px;
+  background: url("../../Assets/Images/clothes.jpg") no-repeat center center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.login-button:hover {
+  background: darkorchid;
+}
+.signup {
+  margin-top: 10px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.signup > span {
+  font-weight: bold;
+  color: slateblue;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.signup > span:hover {
+  color: darkorchid;
+}
+
+.login-error {
+  margin-top: 20px;
+  text-align: center;
+  color: red;
+}
+
+input {
+  outline: none;
+}
