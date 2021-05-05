@@ -31,13 +31,13 @@ const Clozet = () => {
     <div>
       <div className="clozet-menu">
         <div className="clozet-menu-item" onClick={handleItemCreate}>
-          Create Clozet item
+          Create
         </div>
         <div className="clozet-menu-item" onClick={handleClozet}>
-          Search Clozet
+          Search
         </div>
         <div className="clozet-menu-item" onClick={handleClozet}>
-          Show Clozet items
+          Show all
         </div>
       </div>
 

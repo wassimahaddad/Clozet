@@ -1,13 +1,19 @@
 .clozet-menu {
-  position: absolute;
+  display: flex;
   top: 60px;
+  justify-content: space-around;
+
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .clozet-menu-item {
   width: 180px;
   height: 50px;
   cursor: pointer;
-  background-color: palevioletred;
+  color: blueviolet;
+  font-weight: bold;
   padding: 15px 0;
   padding-left: 10px;
 }

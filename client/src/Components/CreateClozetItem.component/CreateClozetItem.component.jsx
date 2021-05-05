@@ -10,6 +10,7 @@ const CreateClozetItem = () => {
   return (
     <div className="create-item-form-container">
       <div className="option-container">
+        <div>Item: </div>
         <select
           type="text"
           name="item"
@@ -23,6 +24,7 @@ const CreateClozetItem = () => {
         </select>
       </div>
       <div className="option-container">
+        <div>Season: </div>
         <select
           type="text"
           name="1"
@@ -36,6 +38,7 @@ const CreateClozetItem = () => {
         </select>
       </div>
       <div className="option-container">
+        <div>Size: </div>
         <select
           type="text"
           name="1"
@@ -47,7 +50,8 @@ const CreateClozetItem = () => {
           <option>Large</option>
           <option>Extra Large</option>
         </select>
-
+      </div>
+      <div>
         <div className="image-upload-text">Image upload:</div>
         <div className="image-upload">
           <input
@@ -59,8 +63,8 @@ const CreateClozetItem = () => {
         </div>
 
         <div className="create-item-buttons">
-          <div>Cancel</div>
-          <div>Create</div>
+          <div className="create-item-button">Create</div>
+          <div className="create-item-button">Cancel</div>
         </div>
       </div>
     </div>
