@@ -36,9 +36,6 @@ const wardrobeSchema = new mongoose.Schema({
     required: true,
     ref: "User",
   },
-  buff: {
-    type: Buffer,
-  },
   img: {
     type: Buffer,
   },

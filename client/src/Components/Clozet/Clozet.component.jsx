@@ -1,10 +1,12 @@
 import React, { useState } from "react";
+import CreateClozetItem from "../CreateClozetItem.component/CreateClozetItem.component";
 import api from "../../API/api";
 import "./Clozet.component.css";
 
 const Clozet = () => {
   const [data, setData] = useState();
-
+  const [createItemDisplay, setCreateItemDisplay] = useState("hide");
+  // -------------------------------------------------------------------------
   const handleClozet = async () => {
     try {
       const token = await localStorage.getItem("token");
@@ -19,16 +21,28 @@ const Clozet = () => {
     }
   };
 
+  // -------------------------------------------------------------------------
+
+  const handleItemCreate = () => {
+    setCreateItemDisplay("show");
+  };
+  // -------------------------------------------------------------------------
   return (
     <div>
-      <button onClick={handleClozet}>get image</button>
-      <div className="text-image">
-        {data ? (
-          <>
-            <img src={`data: image/png;base64,${data.img}`} alt="Clozet" />
-            <div>{data.item}</div>
-          </>
-        ) : null}
+      <div className="clozet-menu">
+        <div className="clozet-menu-item" onClick={handleItemCreate}>
+          Create Clozet item
+        </div>
+        <div className="clozet-menu-item" onClick={handleClozet}>
+          Search Clozet
+        </div>
+        <div className="clozet-menu-item" onClick={handleClozet}>
+          Show Clozet items
+        </div>
+      </div>
+
+      <div className={createItemDisplay}>
+        <CreateClozetItem />
       </div>
     </div>
   );
