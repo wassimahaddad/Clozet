@@ -7,19 +7,31 @@ const wardrobeRouter = new express.Router();
 wardrobeRouter.use(express.json());
 
 // --------------- create wardrobe item ---------------------------------------
-wardrobeRouter.post("/api/wardrobes", auth, async (req, res) => {
-  const wardrobe = new Wardrobe({
-    ...req.body,
-    owner: req.user._id,
-  });
+wardrobeRouter.post(
+  "/api/wardrobes",
+  auth,
+  upload.single("image"),
+  async (req, res) => {
+    const wardrobe = new Wardrobe({
+      ...req.body,
+      owner: req.user._id,
+    });
 
-  try {
-    await wardrobe.save();
-    res.status(201).send(wardrobe);
-  } catch (e) {
-    res.status(400).send(e);
+    try {
+      if (req.file) {
+        const buffer = await sharp(req.file.buffer)
+          .png()
+          .resize({ width: 350, height: 350 })
+          .toBuffer();
+        wardrobe.img = buffer;
+      }
+      await wardrobe.save();
+      res.status(201).send(wardrobe);
+    } catch (e) {
+      res.status(400).send(e);
+    }
   }
-});
+);
 // // ------------------- Update wardrobe ------------------------
 
 wardrobeRouter.patch(
@@ -58,10 +70,12 @@ wardrobeRouter.patch(
           .toBuffer();
         wardrobe.img = buffer;
       }
+
       await wardrobe.save();
       res.send(wardrobe);
     } catch (e) {
       res.status(400).send(e);
+      console.log(e);
     }
   }
 );
