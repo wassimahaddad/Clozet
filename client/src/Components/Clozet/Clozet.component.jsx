@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import CreateClozetItem from "../CreateClozetItem.component/CreateClozetItem.component";
+import ClozetItem from "../ClozetItem/ClozetItem.component";
 import api from "../../API/api";
 import "./Clozet.component.css";
 
@@ -15,9 +16,9 @@ const Clozet = () => {
         headers: { Authorization: `Bearer ${token}` },
       });
 
-      setData(response.data[0]);
-
-      setShowAll("show");
+      setData(response.data);
+      console.log(response.data);
+      setShowAll("show-all-items");
       setCreateItemDisplay("hide");
     } catch (e) {
       console.log(e);
@@ -52,7 +53,13 @@ const Clozet = () => {
       <div className={createItemDisplay}>
         <CreateClozetItem display={handleDisplay} />
       </div>
-      <div className={showAll}>{data ? data.item : null}</div>
+      <div className={showAll}>
+        {data
+          ? data.map((item) => {
+              return <ClozetItem data={item} />;
+            })
+          : null}
+      </div>
     </div>
   );
 };

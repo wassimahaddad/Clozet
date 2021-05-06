@@ -1,0 +1,72 @@
+.clozet-item-container {
+  width: 350px;
+  height: 250px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: cornflowerblue;
+  border-radius: 20px;
+}
+.clozet-item-wrapper {
+  display: flex;
+  margin-top: 20px;
+
+  width: 100%;
+  height: 80%;
+}
+
+.clozet-item-details {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-left: 20px;
+
+  width: 130px;
+}
+.clozet-item-details-line {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 3px;
+}
+.clozet-item-details-line span {
+  font-weight: bold;
+}
+.clozet-item-wrapper img {
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+  width: 150px;
+  height: 150px;
+}
+
+.clozet-item-buttons {
+  width: 60%;
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: space-between;
+  font-weight: bold;
+  display: flex;
+}
+
+.clozet-item-button {
+  cursor: pointer;
+  background-color: blueviolet;
+  border-radius: 10px;
+  color: white;
+  width: 70px;
+  height: 30px;
+  text-align: center;
+  padding-top: 7px;
+}
+
+.clozet-item-button:hover {
+  color: goldenrod;
+}
+
+.create-item-error {
+  color: red;
+  width: 350px;
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}

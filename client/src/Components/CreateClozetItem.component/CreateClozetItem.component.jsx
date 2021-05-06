@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import api from "../../API/api";
+import ClozetItem from "../ClozetItem/ClozetItem.component";
+
 import "./CreateClozetItem.component.css";
 
 const CreateClozetItem = ({ display }) => {
@@ -8,31 +10,46 @@ const CreateClozetItem = ({ display }) => {
   const [size, setSize] = useState("Small");
   const [img, setImg] = useState("");
   const [data, setData] = useState("");
+  const [hide, setHide] = useState("hide");
+  const [error, setError] = useState(null);
   //   -------------------------------------------------------------
   const handleCancel = async () => {
     display("hide");
+    setHide("hide");
   };
 
-  const handleImage = async () => {
-    const formData = new FormData();
-    formData.append("image", img);
-    formData.append("item", item);
-    formData.append("season", season);
-    formData.append("size", size);
+  const handleShow = (val) => {
+    setHide(val);
+  };
 
-    const token = await localStorage.getItem("token");
-    const response = await api.post(
-      "http://localhost:5000/api/wardrobes",
-      formData,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "content-type": "multipart/form-data",
-        },
-      }
-    );
-    setData(response.data);
-    console.log(response.data);
+  const handleCreate = async () => {
+    try {
+      const formData = new FormData();
+      formData.append("image", img);
+      formData.append("item", item);
+      formData.append("season", season);
+      formData.append("size", size);
+
+      const token = await localStorage.getItem("token");
+      const response = await api.post(
+        "http://localhost:5000/api/wardrobes",
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "content-type": "multipart/form-data",
+          },
+        }
+      );
+      setData(response.data);
+      setHide("show");
+      console.log(response.data);
+      setError(null);
+    } catch (e) {
+      console.log(e.message);
+      setError(e.message);
+      setHide("hide");
+    }
   };
 
   //   -------------------------------------------------------------
@@ -53,6 +70,15 @@ const CreateClozetItem = ({ display }) => {
           </select>
         </div>
         <div className="option-container">
+          <div>Size: </div>
+          <select type="text" name="1" onClick={(e) => setSize(e.target.value)}>
+            <option>Small</option>
+            <option>Medium</option>
+            <option>Large</option>
+            <option>Extra Large</option>
+          </select>
+        </div>
+        <div className="option-container">
           <div>Season: </div>
           <select
             type="text"
@@ -65,15 +91,7 @@ const CreateClozetItem = ({ display }) => {
             <option>Fall</option>
           </select>
         </div>
-        <div className="option-container">
-          <div>Size: </div>
-          <select type="text" name="1" onClick={(e) => setSize(e.target.value)}>
-            <option>Small</option>
-            <option>Medium</option>
-            <option>Large</option>
-            <option>Extra Large</option>
-          </select>
-        </div>
+
         <div>
           <div className="image-upload-text">Image upload:</div>
           <div className="image-upload">
@@ -87,7 +105,7 @@ const CreateClozetItem = ({ display }) => {
           </div>
 
           <div className="create-item-buttons">
-            <div onClick={handleImage} className="create-item-button">
+            <div onClick={handleCreate} className="create-item-button">
               Create
             </div>
             <div onClick={handleCancel} className="create-item-button">
@@ -96,16 +114,12 @@ const CreateClozetItem = ({ display }) => {
           </div>
         </div>
       </div>
-      <>
-        <div>{data ? `Item: ${data.item}` : null}</div>
-        <div>{data ? `Season: ${data.season}` : null}</div>
-        <div>{data ? `Size: ${data.size}` : null}</div>
-        <div>{data ? `In Storage: ${data.in_storage}` : null}</div>
-        <div>{data ? `Keeper: ${data.keeper}` : null}</div>
-        {data ? (
-          <img src={`data: image/png;base64,${data.img}`} alt="test" />
-        ) : null}
-      </>
+      <div className={hide}>
+        <ClozetItem display={handleShow} data={data} />
+      </div>
+      <div className="create-item-error">
+        {error ? "Action failed, set all fields and try again" : null}
+      </div>
     </div>
   );
 };

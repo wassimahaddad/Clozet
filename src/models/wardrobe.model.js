@@ -38,6 +38,7 @@ const wardrobeSchema = new mongoose.Schema({
   },
   img: {
     type: Buffer,
+    required: true,
   },
 });
 

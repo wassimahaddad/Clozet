@@ -22,3 +22,13 @@
   padding-left: 15px;
   font-weight: bold;
 }
+
+.show-all-items {
+  width: 90vw;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin-left: auto;
+  margin-right: auto;
+}
