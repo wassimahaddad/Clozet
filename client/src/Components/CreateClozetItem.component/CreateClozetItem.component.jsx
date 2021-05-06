@@ -17,11 +17,11 @@ const CreateClozetItem = ({ display }) => {
     display("hide");
     setHide("hide");
   };
-
+  //   -------------------------------------------------------------
   const handleShow = (val) => {
     setHide(val);
   };
-
+  //   -------------------------------------------------------------
   const handleCreate = async () => {
     try {
       const formData = new FormData();
@@ -50,6 +50,11 @@ const CreateClozetItem = ({ display }) => {
       setError(e.message);
       setHide("hide");
     }
+  };
+  //   -------------------------------------------------------------
+  const handleRemove = (id) => {
+    setData(null);
+    setHide("hide");
   };
 
   //   -------------------------------------------------------------
@@ -115,7 +120,7 @@ const CreateClozetItem = ({ display }) => {
         </div>
       </div>
       <div className={hide}>
-        <ClozetItem display={handleShow} data={data} />
+        <ClozetItem remove={handleRemove} display={handleShow} data={data} />
       </div>
       <div className="create-item-error">
         {error ? "Action failed, set all fields and try again" : null}

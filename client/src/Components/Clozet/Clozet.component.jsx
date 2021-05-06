@@ -27,11 +27,15 @@ const Clozet = () => {
   };
 
   // -------------------------------------------------------------------------
-
+  const handleRemove = (id) => {
+    setData(data.filter((item) => item._id !== id));
+  };
+  // -------------------------------------------------------------------------
   const handleItemCreate = () => {
     setCreateItemDisplay("show");
     setShowAll("hide");
   };
+  // -------------------------------------------------------------------------
   const handleDisplay = (val) => {
     setCreateItemDisplay(val);
   };
@@ -56,7 +60,11 @@ const Clozet = () => {
       <div className={showAll}>
         {data
           ? data.map((item) => {
-              return <ClozetItem data={item} />;
+              return (
+                <div key={item._id}>
+                  <ClozetItem remove={handleRemove} data={item} />
+                </div>
+              );
             })
           : null}
       </div>

@@ -1,6 +1,16 @@
 import React from "react";
 import "./ClozetItem.component.css";
-const ClozetItem = ({ data }) => {
+import api from "../../API/api";
+const ClozetItem = ({ data, remove }) => {
+  const handleDeleteItem = async () => {
+    const token = await localStorage.getItem("token");
+    const response = await api.delete(`/wardrobes/${data._id}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    console.log(response);
+    remove(data._id);
+  };
+  // ------------------------------------------------------------------------------
   return (
     <div>
       <div className="clozet-item-container">
@@ -49,7 +59,9 @@ const ClozetItem = ({ data }) => {
         </div>
         <div className="clozet-item-buttons">
           <div className="clozet-item-button">Edit</div>
-          <div className="clozet-item-button">Delete</div>
+          <div onClick={handleDeleteItem} className="clozet-item-button">
+            Delete
+          </div>
         </div>
       </div>
     </div>
