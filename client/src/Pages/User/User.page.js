@@ -81,7 +81,7 @@ const User = () => {
 
   // ---------------------------------------------------------------------
   const handleMenu = (e) => {
-    if (e.type === "mouseover" || e.type === "mousedown") {
+    if (e.type === "mouseover") {
       setMenu("profile-menu");
       setTriangle(<span>&#9654;</span>);
     } else {
@@ -94,11 +94,11 @@ const User = () => {
     setClozet("show");
     setMenu("hide");
     setPersons("hide");
-    handleMenu();
+    // handleMenu();
   };
   // ---------------------------------------------------------------------
   const handlePersons = () => {
-    handleMenu();
+    // handleMenu();
     setClozet("hide");
     setPersons("show");
     console.log("people");
