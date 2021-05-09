@@ -4,7 +4,7 @@ import ClozetItem from "../ClozetItem/ClozetItem.component";
 import api from "../../API/api";
 import "./Clozet.component.css";
 
-const Clozet = () => {
+const Clozet = ({ fname }) => {
   const [data, setData] = useState();
   const [createItemDisplay, setCreateItemDisplay] = useState("hide");
   const [showAll, setShowAll] = useState("hide");
@@ -66,6 +66,7 @@ const Clozet = () => {
           display={handleDisplay}
           clozetVisible={clozetVisibility}
           showClozet={handleShowClozet}
+          fname={fname}
         />
       </div>
       <div className={showAll}>

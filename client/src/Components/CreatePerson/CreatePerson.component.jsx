@@ -5,13 +5,13 @@ import Person from "../Person/Person.component";
 import "./CreatePerson.component.css";
 
 const CreatePerson = ({ display, personVisible, showPerson }) => {
-  // --------------- States ---------------------------------------
+  // ---------------------- States -----------------------------------
   const [data, setData] = useState("");
   const [name, setName] = useState("");
   const [createdPersonVisibilty, setCreatedPersonVisibilty] = useState("hide");
   const [error, setError] = useState(null);
 
-  // ---------------------- Crate Person ----------------------------
+  // ---------------------- Create Person ----------------------------
 
   const handleCreate = async () => {
     try {
@@ -45,13 +45,10 @@ const CreatePerson = ({ display, personVisible, showPerson }) => {
 
   //   ------------- Remove created/deleted from vdom --------------
   const handleRemove = () => {
-    // setCreatedPersonVisibilty("hide");
     setData(null);
   };
-
   //   -------------------------------------------------------------
 
-  //   -------------------------------------------------------------
   return (
     <div>
       <div className="create-person-container">

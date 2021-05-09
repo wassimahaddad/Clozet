@@ -34,7 +34,7 @@ const SignIn = () => {
             onChange={(e) => setEmail(e.target.value)}
             type="email"
             value={email}
-            placeholder="your email address"
+            placeholder="Email address"
           />
         </div>
         <div>
@@ -43,17 +43,17 @@ const SignIn = () => {
             onChange={(e) => setPassword(e.target.value)}
             type="password"
             value={password}
-            placeholder="your password"
+            placeholder="Enter password"
           />
         </div>
         <div className="login-button" onClick={handleSignIn}>
           Sign in
         </div>
         <div className="signup">
-          No account?{" "}
-          <span>
+          <h4>No account?</h4>
+          <h4>
             <Link to="/signup">Create one here</Link>
-          </span>
+          </h4>
         </div>
         <div className="login-error">{error}</div>
       </div>

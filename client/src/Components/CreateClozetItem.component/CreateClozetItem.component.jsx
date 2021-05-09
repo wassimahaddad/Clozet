@@ -1,25 +1,48 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import api from "../../API/api";
 import ClozetItem from "../ClozetItem/ClozetItem.component";
+// import Person from "../Person/Person.component";
 
 import "./CreateClozetItem.component.css";
 
-const CreateClozetItem = ({ display, clozetVisible, showClozet }) => {
+const CreateClozetItem = ({ display, clozetVisible, showClozet, fname }) => {
+  //   ----------------- States ------------------------------------
   const [item, setItem] = useState("Shirt");
   const [season, setSeason] = useState("Winter");
   const [size, setSize] = useState("Small");
   const [img, setImg] = useState("");
   const [data, setData] = useState("");
-  const [hide, setHide] = useState("hide");
+  const [hideClozetItem, setHideClozetItem] = useState("hide");
   const [error, setError] = useState(null);
+  const [person, setPerson] = useState("");
+  const [persons, setPersons] = useState("");
+  //   -------------------------------------------------------------
+  useEffect(() => {
+    const getPersons = async () => {
+      const token = await localStorage.getItem("token");
+      const response = await api.get(
+        "http://localhost:5000/api/persons",
+
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      setPersons(response.data);
+      console.log(response.data);
+    };
+    getPersons();
+  }, []);
   //   -------------------------------------------------------------
   const handleCancel = async () => {
     display("hide");
-    setHide("hide");
+    setHideClozetItem("hide");
   };
   //   -------------------------------------------------------------
-  const handleShow = (val) => {
-    setHide(val);
+  const handleShowClozetItem = (val) => {
+    setHideClozetItem(val);
   };
   //   -------------------------------------------------------------
   const handleCreate = async () => {
@@ -29,6 +52,7 @@ const CreateClozetItem = ({ display, clozetVisible, showClozet }) => {
       formData.append("item", item);
       formData.append("season", season);
       formData.append("size", size);
+      formData.append("person", person);
 
       const token = await localStorage.getItem("token");
       const response = await api.post(
@@ -42,26 +66,41 @@ const CreateClozetItem = ({ display, clozetVisible, showClozet }) => {
         }
       );
       setData(response.data);
-      setHide("show");
+      setHideClozetItem("show");
       showClozet(true);
       console.log(response.data);
       setError(null);
     } catch (e) {
       console.log(e.message);
       setError(e.message);
-      setHide("hide");
+      setHideClozetItem("hide");
     }
   };
   //   -------------------------------------------------------------
-  const handleRemove = (id) => {
+  const handleRemoveClozetItem = (id) => {
     setData(null);
-    setHide("hide");
+    setHideClozetItem("hide");
   };
 
   //   -------------------------------------------------------------
   return (
     <div>
       <div className="create-item-form-container">
+        {persons ? (
+          <div className="option-container">
+            <div>Person: </div>
+            <select
+              type="text"
+              name="item"
+              onClick={(e) => setPerson(e.target.value)}
+            >
+              <option>{fname}</option>
+              {persons.map((person) => (
+                <option key={person._id}>{person.name}</option>
+              ))}
+            </select>
+          </div>
+        ) : null}
         <div className="option-container">
           <div>Item: </div>
           <select
@@ -120,9 +159,13 @@ const CreateClozetItem = ({ display, clozetVisible, showClozet }) => {
           </div>
         </div>
       </div>
-      <div className={hide}>
+      <div className={hideClozetItem}>
         {clozetVisible ? (
-          <ClozetItem remove={handleRemove} display={handleShow} data={data} />
+          <ClozetItem
+            remove={handleRemoveClozetItem}
+            display={handleShowClozetItem}
+            data={data}
+          />
         ) : null}
       </div>
       <div className="create-item-error">

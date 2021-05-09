@@ -8,9 +8,10 @@
 .login-email,
 .login-password {
   width: 100%;
-  height: 30px;
-  padding-left: 5px;
+  height: 40px;
+  padding-left: 15px;
   margin-top: 5px;
+  border-radius: 15px;
 }
 
 .login-button {
@@ -18,22 +19,23 @@
   width: 300px;
   background: slateblue;
   color: white;
-  height: 30px;
+  height: 40px;
   text-align: center;
-  padding: 7px;
+  padding: 10px;
   cursor: pointer;
+  border-radius: 15px;
+  font-size: large;
 }
 
-.avatar-test {
+/* .avatar-test {
   width: 300px;
   margin-left: auto;
   margin-right: auto;
   margin-top: 20px;
-}
+} */
 
 .login-bg {
   margin-top: 30px;
-
   height: 300px;
   background: url("../../Assets/Images/clothes.jpg") no-repeat center center;
   margin-left: auto;
@@ -44,16 +46,20 @@
   background: darkorchid;
 }
 .signup {
-  margin-top: 10px;
-  text-align: center;
-  font-size: 14px;
+  display: flex;
+  justify-content: space-around;
+  width: 250px;
+  padding-top: 10px;
+  color: white;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.signup > span {
+.signup a {
   font-weight: bold;
   color: slateblue;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .signup > span:hover {
@@ -68,4 +74,5 @@
 
 input {
   outline: none;
+  font-size: large;
 }

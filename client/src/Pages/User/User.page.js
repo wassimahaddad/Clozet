@@ -12,6 +12,7 @@ const User = () => {
   const [persons, setPersons] = useState("hide");
   const [traingle, setTriangle] = useState(<span>&#9660;</span>);
   const history = useHistory();
+
   // --------------------- Restrict access when not logged in --------
   useEffect(() => {
     const page = async () => {
@@ -56,10 +57,31 @@ const User = () => {
       return e.message;
     }
   };
+  // --------------------- logout ---------------------------------------
+  const handleLogoutAll = async () => {
+    try {
+      const token = await localStorage.getItem("token");
+
+      await api.post(
+        "/users/logoutAll",
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      localStorage.removeItem("token");
+      history.push("/");
+    } catch (e) {
+      console.log(e);
+      return e.message;
+    }
+  };
 
   // ---------------------------------------------------------------------
-  const handleMenu = () => {
-    if (menu === "hide") {
+  const handleMenu = (e) => {
+    if (e.type === "mouseover" || e.type === "mousedown") {
       setMenu("profile-menu");
       setTriangle(<span>&#9654;</span>);
     } else {
@@ -84,7 +106,7 @@ const User = () => {
   // ---------------------------------------------------------------------
   return (
     <div>
-      <div className={menu}>
+      <div onMouseOver={handleMenu} onMouseOut={handleMenu} className={menu}>
         <div className="menu-option">My profile</div>
         <div onClick={handlePersons} className="menu-option">
           People
@@ -95,9 +117,16 @@ const User = () => {
         <div onClick={handleLogout} className="menu-option">
           Logout
         </div>
+        <div onClick={handleLogoutAll} className="menu-option">
+          Logout all
+        </div>
       </div>
       <div className="user-navbar">
-        <div onClick={handleMenu} className="user-menu-triangle">
+        <div
+          onMouseOver={handleMenu}
+          onMouseOut={handleMenu}
+          className="user-menu-triangle"
+        >
           {traingle}
         </div>
 
@@ -113,7 +142,7 @@ const User = () => {
         </div>
       </div>
       <div className={clozet}>
-        <Clozet />
+        {data ? <Clozet fname={data.first_name} /> : null}
       </div>
       <div className={persons}>
         <Persons />

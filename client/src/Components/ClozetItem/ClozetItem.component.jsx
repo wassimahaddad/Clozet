@@ -52,6 +52,13 @@ const ClozetItem = ({ data, remove }) => {
                 </>
               ) : null}
             </div>
+            <div className="clozet-item-details-line">
+              {data ? (
+                <>
+                  <span>Person:</span> {data.person}
+                </>
+              ) : null}
+            </div>
           </div>
           {data ? (
             <img src={`data: image/png;base64,${data.img}`} alt="test" />
