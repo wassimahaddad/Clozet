@@ -1,0 +1,36 @@
+.create-person-container {
+  width: 350px;
+  padding: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 100px;
+  /* border: 1px solid blueviolet; */
+  border-radius: 20px;
+  background-color: blueviolet;
+}
+.person-name-input {
+  margin-top: 20px;
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+  color: white;
+  font-weight: bold;
+}
+
+.person-name-input input {
+  padding-left: 10px;
+  width: 100%;
+  font-size: large;
+}
+.create-person-buttons {
+  display: flex;
+  margin-top: 20px;
+  justify-content: space-around;
+  color: palevioletred;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.create-person-button:hover {
+  color: white;
+}

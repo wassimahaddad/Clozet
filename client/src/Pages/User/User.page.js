@@ -3,11 +3,13 @@ import { useHistory } from "react-router-dom";
 import api from "../../API/api";
 import "./User.page.css";
 import Clozet from "../../Components/Clozet/Clozet.component";
+import Persons from "../../Components/Persons/Persons.component";
 
 const User = () => {
   const [data, setData] = useState();
   const [menu, setMenu] = useState("hide");
   const [clozet, setClozet] = useState("hide");
+  const [persons, setPersons] = useState("hide");
   const [traingle, setTriangle] = useState(<span>&#9660;</span>);
   const history = useHistory();
   // --------------------- Restrict access when not logged in --------
@@ -69,12 +71,14 @@ const User = () => {
   const handleClozet = () => {
     setClozet("show");
     setMenu("hide");
+    setPersons("hide");
     handleMenu();
   };
   // ---------------------------------------------------------------------
-  const handlePeople = () => {
+  const handlePersons = () => {
     handleMenu();
     setClozet("hide");
+    setPersons("show");
     console.log("people");
   };
   // ---------------------------------------------------------------------
@@ -82,7 +86,7 @@ const User = () => {
     <div>
       <div className={menu}>
         <div className="menu-option">My profile</div>
-        <div onClick={handlePeople} className="menu-option">
+        <div onClick={handlePersons} className="menu-option">
           People
         </div>
         <div onClick={handleClozet} className="menu-option">
@@ -110,6 +114,9 @@ const User = () => {
       </div>
       <div className={clozet}>
         <Clozet />
+      </div>
+      <div className={persons}>
+        <Persons />
       </div>
     </div>
   );
