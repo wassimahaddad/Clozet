@@ -8,11 +8,12 @@ const Clozet = () => {
   const [data, setData] = useState();
   const [createItemDisplay, setCreateItemDisplay] = useState("hide");
   const [showAll, setShowAll] = useState("hide");
+  const [clozetVisibility, setClozetVisibility] = useState(true);
   // -------------------------------------------------------------------------
   const handleClozet = async () => {
     try {
       const token = await localStorage.getItem("token");
-      const response = await api.get("/wardrobes", {
+      const response = await api.get("/clozets", {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -29,6 +30,7 @@ const Clozet = () => {
   // -------------------------------------------------------------------------
   const handleRemove = (id) => {
     setData(data.filter((item) => item._id !== id));
+    setClozetVisibility(false);
   };
   // -------------------------------------------------------------------------
   const handleItemCreate = () => {
@@ -40,6 +42,11 @@ const Clozet = () => {
     setCreateItemDisplay(val);
   };
   // -------------------------------------------------------------------------
+
+  const handleShowClozet = (val) => {
+    setClozetVisibility(val);
+  };
+  // // -------------------------------------------------------------------------
   return (
     <div>
       <div className="clozet-menu">
@@ -55,7 +62,11 @@ const Clozet = () => {
       </div>
 
       <div className={createItemDisplay}>
-        <CreateClozetItem display={handleDisplay} />
+        <CreateClozetItem
+          display={handleDisplay}
+          clozetVisible={clozetVisibility}
+          showClozet={handleShowClozet}
+        />
       </div>
       <div className={showAll}>
         {data

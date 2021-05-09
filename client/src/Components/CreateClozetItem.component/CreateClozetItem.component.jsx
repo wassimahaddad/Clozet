@@ -4,7 +4,7 @@ import ClozetItem from "../ClozetItem/ClozetItem.component";
 
 import "./CreateClozetItem.component.css";
 
-const CreateClozetItem = ({ display }) => {
+const CreateClozetItem = ({ display, clozetVisible, showClozet }) => {
   const [item, setItem] = useState("Shirt");
   const [season, setSeason] = useState("Winter");
   const [size, setSize] = useState("Small");
@@ -32,7 +32,7 @@ const CreateClozetItem = ({ display }) => {
 
       const token = await localStorage.getItem("token");
       const response = await api.post(
-        "http://localhost:5000/api/wardrobes",
+        "http://localhost:5000/api/clozets",
         formData,
         {
           headers: {
@@ -43,6 +43,7 @@ const CreateClozetItem = ({ display }) => {
       );
       setData(response.data);
       setHide("show");
+      showClozet(true);
       console.log(response.data);
       setError(null);
     } catch (e) {
@@ -120,7 +121,9 @@ const CreateClozetItem = ({ display }) => {
         </div>
       </div>
       <div className={hide}>
-        <ClozetItem remove={handleRemove} display={handleShow} data={data} />
+        {clozetVisible ? (
+          <ClozetItem remove={handleRemove} display={handleShow} data={data} />
+        ) : null}
       </div>
       <div className="create-item-error">
         {error ? "Action failed, set all fields and try again" : null}

@@ -1,44 +1,55 @@
 import React, { useState } from "react";
 import api from "../../API/api";
-// import Persons from "../Persons/Persons.component";
+import Person from "../Person/Person.component";
 
 import "./CreatePerson.component.css";
 
-const CreatePerson = ({ display }) => {
+const CreatePerson = ({ display, personVisible, showPerson }) => {
+  // --------------- States ---------------------------------------
   const [data, setData] = useState("");
   const [name, setName] = useState("");
-  //   const [hide, setHide] = useState("hide");
-  //   const [error, setError] = useState(null);
+  const [createdPersonVisibilty, setCreatedPersonVisibilty] = useState("hide");
+  const [error, setError] = useState(null);
+
+  // ---------------------- Crate Person ----------------------------
 
   const handleCreate = async () => {
     try {
       const token = await localStorage.getItem("token");
       const response = await api.post(
         "http://localhost:5000/api/persons",
-        name,
+        { name },
         {
           headers: {
             Authorization: `Bearer ${token}`,
-            "Content-Type": "multipart/form-data",
           },
         }
       );
       setData(response.data);
-      console.log(data);
-
       console.log(response.data);
-      //   setError(null);
+      setError(null);
+      showPerson(true);
+      setCreatedPersonVisibilty("show");
     } catch (e) {
       console.log(e.message);
-      //   setError(e.message);
-
-      //   setHide("hide");
+      setError(e.message);
+      setCreatedPersonVisibilty("hide");
     }
   };
 
+  //   ----------------------- Cancel Button -----------------------
   const handleCancel = () => {
     display("hide");
+    setCreatedPersonVisibilty("hide");
   };
+
+  //   ------------- Remove created/deleted from vdom --------------
+  const handleRemove = () => {
+    // setCreatedPersonVisibilty("hide");
+    setData(null);
+  };
+
+  //   -------------------------------------------------------------
 
   //   -------------------------------------------------------------
   return (
@@ -60,6 +71,14 @@ const CreatePerson = ({ display }) => {
             Cancel
           </div>
         </div>
+      </div>
+      <div className={createdPersonVisibilty}>
+        {data && personVisible ? (
+          <Person remove={handleRemove} data={data} />
+        ) : null}
+      </div>
+      <div className="create-item-error">
+        {error ? "Action failed, set all fields and try again" : null}
       </div>
     </div>
   );

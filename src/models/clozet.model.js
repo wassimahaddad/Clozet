@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const wardrobeSchema = new mongoose.Schema({
+const clozetSchema = new mongoose.Schema({
   person: {
     type: String,
     // required: true,
@@ -42,11 +42,11 @@ const wardrobeSchema = new mongoose.Schema({
   },
 });
 
-wardrobeSchema.methods.toJSON = function () {
-  const wardrobe = this;
-  const wardrobeObject = wardrobe.toObject();
-  return wardrobeObject;
+clozetSchema.methods.toJSON = function () {
+  const clozet = this;
+  const clozetObject = clozet.toObject();
+  return clozetObject;
 };
 
-const Wardrobe = mongoose.model("Wardrobe", wardrobeSchema);
-module.exports = Wardrobe;
+const Clozet = mongoose.model("Clozet", clozetSchema);
+module.exports = Clozet;

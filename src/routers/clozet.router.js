@@ -1,18 +1,18 @@
 const express = require("express");
 const sharp = require("sharp");
-const Wardrobe = require("../models/wardrobe.model");
+const Clozet = require("../models/clozet.model");
 const auth = require("../middleware/auth.middleware");
 const { upload } = require("../middleware/multer.middleware");
-const wardrobeRouter = new express.Router();
-wardrobeRouter.use(express.json());
+const clozetRouter = new express.Router();
+clozetRouter.use(express.json());
 
-// --------------- create wardrobe item ---------------------------------------
-wardrobeRouter.post(
-  "/api/wardrobes",
+// --------------- create clozet item ---------------------------------------
+clozetRouter.post(
+  "/api/clozets",
   auth,
   upload.single("image"),
   async (req, res) => {
-    const wardrobe = new Wardrobe({
+    const clozet = new Clozet({
       ...req.body,
       owner: req.user._id,
     });
@@ -23,20 +23,20 @@ wardrobeRouter.post(
           .png()
           .resize({ width: 350, height: 350 })
           .toBuffer();
-        wardrobe.img = buffer;
+        clozet.img = buffer;
       }
-      await wardrobe.save();
-      res.status(201).send(wardrobe);
+      await clozet.save();
+      res.status(201).send(clozet);
     } catch (e) {
       res.status(400).send(e);
       console.log(e);
     }
   }
 );
-// // ------------------- Update wardrobe ------------------------
+// // ------------------- Update clozet ------------------------
 
-wardrobeRouter.patch(
-  "/api/wardrobes/:id",
+clozetRouter.patch(
+  "/api/clozets/:id",
   auth,
   upload.single("image"),
   async (req, res) => {
@@ -60,20 +60,20 @@ wardrobeRouter.patch(
     }
 
     try {
-      const wardrobe = await Wardrobe.findOne({ _id, owner: req.user._id });
+      const clozet = await Clozet.findOne({ _id, owner: req.user._id });
 
-      updates.forEach(async (update) => (wardrobe[update] = req.body[update]));
+      updates.forEach(async (update) => (clozet[update] = req.body[update]));
 
       if (req.file) {
         const buffer = await sharp(req.file.buffer)
           .png()
           .resize({ width: 350, height: 350 })
           .toBuffer();
-        wardrobe.img = buffer;
+        clozet.img = buffer;
       }
 
-      await wardrobe.save();
-      res.send(wardrobe);
+      await clozet.save();
+      res.send(clozet);
     } catch (e) {
       res.status(400).send(e);
       console.log(e);
@@ -82,44 +82,44 @@ wardrobeRouter.patch(
 );
 
 // --------------- list wardrobe item ---------------------------------------
-wardrobeRouter.get("/api/wardrobes/:id", auth, async (req, res) => {
+clozetRouter.get("/api/clozets/:id", auth, async (req, res) => {
   const _id = req.params.id;
 
   try {
-    const wardrobe = await Wardrobe.findOne({ _id, owner: req.user._id });
-    if (!wardrobe) {
+    const clozet = await Clozet.findOne({ _id, owner: req.user._id });
+    if (!clozet) {
       res.status(404).send();
     }
-    res.send(wardrobe);
+    res.send(clozet);
   } catch (e) {
     res.status(500).send(e);
   }
 });
-// --------------- list all wardrobe item ------------------------------------
-wardrobeRouter.get("/api/wardrobes", auth, async (req, res) => {
+// --------------- list all clozet item ------------------------------------
+clozetRouter.get("/api/clozets", auth, async (req, res) => {
   try {
-    const wardrobes = await Wardrobe.find({ owner: req.user._id });
-    res.send(wardrobes);
-    // await req.user.populate("wardrobes").execPopulate();
-    // res.send(req.user.wardrobes);
+    const clozets = await Clozet.find({ owner: req.user._id });
+    res.send(clozets);
+    // await req.user.populate("clozets").execPopulate();
+    // res.send(req.user.clozets);
   } catch (e) {
     res.status(500).send(e);
   }
 });
-// --------------- Delete a wardrobe item ------------------------------------
-wardrobeRouter.delete("/api/wardrobes/:id", auth, async (req, res) => {
+// --------------- Delete a clozet item ------------------------------------
+clozetRouter.delete("/api/clozets/:id", auth, async (req, res) => {
   try {
-    const wardrobe = await Wardrobe.findOneAndDelete({
+    const clozet = await Clozet.findOneAndDelete({
       _id: req.params.id,
       owner: req.user._id,
     });
-    if (!wardrobe) {
+    if (!clozet) {
       res.status(404).send();
     }
-    res.send(wardrobe);
+    res.send(clozet);
   } catch (e) {
     res.status(500).send(e);
   }
 });
 // ------------------- End of routes ------------------------
-module.exports = wardrobeRouter;
+module.exports = clozetRouter;

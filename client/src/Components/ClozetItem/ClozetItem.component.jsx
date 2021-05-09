@@ -4,7 +4,7 @@ import api from "../../API/api";
 const ClozetItem = ({ data, remove }) => {
   const handleDeleteItem = async () => {
     const token = await localStorage.getItem("token");
-    const response = await api.delete(`/wardrobes/${data._id}`, {
+    const response = await api.delete(`/clozets/${data._id}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     console.log(response);

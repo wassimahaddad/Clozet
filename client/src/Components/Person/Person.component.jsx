@@ -1,10 +1,18 @@
 import React from "react";
 import "./Person.component.css";
+import api from "../../API/api";
 
-const Person = ({ data }) => {
-  const handleDeleteItem = () => {
-    console.log("delete");
+const Person = ({ data, remove }) => {
+  // ----------- delete item ----------------------------
+  const handleDeleteItem = async () => {
+    const token = await localStorage.getItem("token");
+    const response = await api.delete(`/persons/${data._id}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    console.log(response);
+    remove(data._id);
   };
+  // ------------------------------------------------------
   return (
     <div className="person-item-container">
       <div className="person-item-details">

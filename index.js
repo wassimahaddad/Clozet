@@ -7,12 +7,12 @@ const app = express();
 app.use(cors());
 const userRouter = require("./src/routers/user.router");
 const personRouter = require("./src/routers/person.router");
-const wardrobeRouter = require("./src/routers/wardrobe.router");
+const clozetRouter = require("./src/routers/clozet.router");
 
 app.use(express.json());
 app.use(userRouter);
 app.use(personRouter);
-app.use(wardrobeRouter);
+app.use(clozetRouter);
 
 const publicDirectory = path.join(__dirname, "client/build");
 app.use(express.static(publicDirectory));

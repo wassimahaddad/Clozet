@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const Wardrobe = require("./wardrobe.model");
+const Clozet = require("./clozet.model");
 const { PASS_PHRASE } = require("../../config/keys");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
@@ -52,15 +52,15 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-//  virtual relationship between User and between Person and Wardrobe
+//  virtual relationship between User and between Person and Clozet
 
 userSchema.virtual("persons", {
   ref: "Person",
   localField: "_id",
   foreignField: "owner",
 });
-userSchema.virtual("wardrobe", {
-  ref: "Wardrobe",
+userSchema.virtual("clozet", {
+  ref: "Clozet",
   localField: "_id",
   foreignField: "owner",
 });
@@ -118,12 +118,12 @@ userSchema.pre("save", async function (next) {
 
   next();
 });
-// -------------------------- Remove wardrobes of removed user  --------------------------------------------
+// -------------------------- Remove clozets of removed user  --------------------------------------------
 
 userSchema.pre("remove", async function (next) {
   const user = this;
 
-  await Wardrobe.deleteMany({ owner: user._id });
+  await Clozet.deleteMany({ owner: user._id });
 
   next();
 });

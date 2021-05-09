@@ -8,6 +8,8 @@ const Persons = () => {
   const [data, setData] = useState();
   const [createItemDisplay, setCreateItemDisplay] = useState("hide");
   const [showAll, setShowAll] = useState("hide");
+  const [personVisibility, setPersonVisibility] = useState(true);
+
   // -------------------------------------------------------------------------
   const handlePersons = async () => {
     try {
@@ -28,15 +30,21 @@ const Persons = () => {
   // // -------------------------------------------------------------------------
   const handleRemove = (id) => {
     setData(data.filter((item) => item._id !== id));
+    setPersonVisibility(false);
   };
   // -------------------------------------------------------------------------
   const handleCreate = () => {
-    setCreateItemDisplay("show");
     setShowAll("hide");
+    setCreateItemDisplay("show");
   };
   // -------------------------------------------------------------------------
   const handleCreateItemDisplay = (val) => {
     setCreateItemDisplay(val);
+  };
+  // // -------------------------------------------------------------------------
+  // -------------------------------------------------------------------------
+  const handleShowPerson = (val) => {
+    setPersonVisibility(val);
   };
   // // -------------------------------------------------------------------------
   return (
@@ -51,7 +59,11 @@ const Persons = () => {
       </div>
 
       <div className={createItemDisplay}>
-        <CreatePerson display={handleCreateItemDisplay} />
+        <CreatePerson
+          display={handleCreateItemDisplay}
+          personVisible={personVisibility}
+          showPerson={handleShowPerson}
+        />
       </div>
       <div className={showAll}>
         {data
