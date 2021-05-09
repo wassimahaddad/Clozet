@@ -94,7 +94,7 @@ const CreateClozetItem = ({ display, clozetVisible, showClozet, fname }) => {
             onClick={(e) => setPerson(e.target.value)}
           >
             <option>{fname}</option>
-            {person
+            {persons
               ? persons.map((person) => (
                   <option key={person._id}>{person.name}</option>
                 ))
