@@ -1,0 +1,34 @@
+.people-menu {
+  display: flex;
+  top: 60px;
+  justify-content: space-around;
+  width: 60%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.people-menu-item {
+  width: 180px;
+  height: 50px;
+  cursor: pointer;
+  color: blueviolet;
+  font-weight: bold;
+  padding: 15px 0;
+  padding-left: 10px;
+}
+
+.people-menu-item:hover {
+  color: blueviolet;
+  padding-left: 15px;
+  font-weight: bold;
+}
+
+.show-all-people {
+  width: 90vw;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin-left: auto;
+  margin-right: auto;
+}

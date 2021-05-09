@@ -29,6 +29,7 @@ wardrobeRouter.post(
       res.status(201).send(wardrobe);
     } catch (e) {
       res.status(400).send(e);
+      console.log(e);
     }
   }
 );

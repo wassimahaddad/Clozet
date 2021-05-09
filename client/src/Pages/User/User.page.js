@@ -69,13 +69,22 @@ const User = () => {
   const handleClozet = () => {
     setClozet("show");
     setMenu("hide");
+    handleMenu();
+  };
+  // ---------------------------------------------------------------------
+  const handlePeople = () => {
+    handleMenu();
+    setClozet("hide");
+    console.log("people");
   };
   // ---------------------------------------------------------------------
   return (
     <div>
       <div className={menu}>
         <div className="menu-option">My profile</div>
-        <div className="menu-option">People</div>
+        <div onClick={handlePeople} className="menu-option">
+          People
+        </div>
         <div onClick={handleClozet} className="menu-option">
           clozet
         </div>

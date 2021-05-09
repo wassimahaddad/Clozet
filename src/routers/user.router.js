@@ -30,6 +30,7 @@ usersRouter.post("/api/users/login", async (req, res) => {
     res.send({ user, token });
   } catch (e) {
     res.status(400).send("Incorrect email and/or password");
+    console.log(e);
   }
 });
 // ------------------ logout -------------------------
