@@ -17,7 +17,9 @@ const SignIn = () => {
       setRes(response);
       localStorage.setItem("token", response.data.token);
       console.log(res);
-      history.push("/me");
+      if (res) {
+        history.push("/me");
+      }
     } catch (e) {
       console.log(e);
       setError("login failed");
