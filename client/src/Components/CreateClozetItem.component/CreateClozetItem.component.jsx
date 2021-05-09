@@ -86,21 +86,22 @@ const CreateClozetItem = ({ display, clozetVisible, showClozet, fname }) => {
   return (
     <div>
       <div className="create-item-form-container">
-        {persons ? (
-          <div className="option-container">
-            <div>Person: </div>
-            <select
-              type="text"
-              name="item"
-              onClick={(e) => setPerson(e.target.value)}
-            >
-              <option>{fname}</option>
-              {persons.map((person) => (
-                <option key={person._id}>{person.name}</option>
-              ))}
-            </select>
-          </div>
-        ) : null}
+        <div className="option-container">
+          <div>Person: </div>
+          <select
+            type="text"
+            name="item"
+            onClick={(e) => setPerson(e.target.value)}
+          >
+            <option>{fname}</option>
+            {person
+              ? persons.map((person) => (
+                  <option key={person._id}>{person.name}</option>
+                ))
+              : null}
+          </select>
+        </div>
+
         <div className="option-container">
           <div>Item: </div>
           <select
