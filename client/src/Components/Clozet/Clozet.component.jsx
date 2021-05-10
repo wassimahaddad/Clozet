@@ -71,7 +71,11 @@ const Clozet = ({ fname, clozetCreate, clozetCreateUpdate }) => {
   const handleShowClozet = (val) => {
     setClozetVisibility(val);
   };
-  // // -------------------------------------------------------------------------
+  // -------------------------------------------------------------------------
+  const handleRefreshData = () => {
+    handleClozet();
+  };
+  // -------------------------------------------------------------------------
   return (
     <div>
       <div className="clozet-menu">
@@ -104,6 +108,7 @@ const Clozet = ({ fname, clozetCreate, clozetCreateUpdate }) => {
                     remove={handleRemove}
                     data={item}
                     persons={persons}
+                    refreshData={handleRefreshData}
                   />
                 </div>
               );

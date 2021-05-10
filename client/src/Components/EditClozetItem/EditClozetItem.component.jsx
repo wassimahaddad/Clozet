@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import api from "../../API/api";
 import "./EditClozetItem.component.css";
 
-const UpdateClozetItem = ({ details, cancelEdit }) => {
+const UpdateClozetItem = ({ details, cancelEdit, refreshData }) => {
   //   ----------------- States ------------------------------------
   const [item, setItem] = useState("Shirt");
   const [season, setSeason] = useState("Winter");
@@ -56,6 +56,7 @@ const UpdateClozetItem = ({ details, cancelEdit }) => {
       console.log(data);
       setError(null);
       cancelEdit("hide");
+      refreshData();
     } catch (e) {
       console.log(e.message);
       setError(e.message);

@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import "./ClozetItem.component.css";
 import api from "../../API/api";
 import EditClozetItem from "../EditClozetItem/EditClozetItem.component";
-const ClozetItem = ({ data, remove }) => {
+
+const ClozetItem = ({ data, remove, refreshData }) => {
   const [showEdit, setShowEdit] = useState("hide");
   // --------------------- Delete Item ------------------------------------------
   const handleDeleteItem = async () => {
@@ -23,6 +24,9 @@ const ClozetItem = ({ data, remove }) => {
   const handleCancelEdit = (val) => {
     setShowEdit(val);
   };
+  // ------------------------------------------------------------------------------
+  // ------------------------------------------------------------------------------
+
   // ------------------------------------------------------------------------------
   return (
     <div>
@@ -87,7 +91,11 @@ const ClozetItem = ({ data, remove }) => {
         </div>
       </div>
       <div className={showEdit}>
-        <EditClozetItem details={data} cancelEdit={handleCancelEdit} />
+        <EditClozetItem
+          details={data}
+          cancelEdit={handleCancelEdit}
+          refreshData={refreshData}
+        />
       </div>
     </div>
   );
