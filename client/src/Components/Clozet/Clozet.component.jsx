@@ -1,14 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import CreateClozetItem from "../CreateClozetItem.component/CreateClozetItem.component";
 import ClozetItem from "../ClozetItem/ClozetItem.component";
 import api from "../../API/api";
 import "./Clozet.component.css";
 
-const Clozet = ({ fname }) => {
+const Clozet = ({ fname, clozetCreate, clozetCreateUpdate }) => {
   const [data, setData] = useState();
   const [createItemDisplay, setCreateItemDisplay] = useState("hide");
   const [showAll, setShowAll] = useState("hide");
   const [clozetVisibility, setClozetVisibility] = useState(true);
+  const [persons, setPersons] = useState();
+  // -------------------------------------------------------------------------
+  useEffect(() => {
+    setCreateItemDisplay(clozetCreate);
+  }, [clozetCreate]);
   // -------------------------------------------------------------------------
   const handleClozet = async () => {
     try {
@@ -28,14 +33,34 @@ const Clozet = ({ fname }) => {
   };
 
   // -------------------------------------------------------------------------
+  const getPersons = async () => {
+    const token = await localStorage.getItem("token");
+    const response = await api.get(
+      "/persons",
+
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    setPersons(response.data);
+    console.log(response.data);
+  };
+
+  // -------------------------------------------------------------------------
   const handleRemove = (id) => {
     setData(data.filter((item) => item._id !== id));
     setClozetVisibility(false);
   };
   // -------------------------------------------------------------------------
   const handleItemCreate = () => {
+    setPersons(null);
+    getPersons();
     setCreateItemDisplay("show");
     setShowAll("hide");
+    clozetCreateUpdate("show");
   };
   // -------------------------------------------------------------------------
   const handleDisplay = (val) => {
@@ -67,6 +92,7 @@ const Clozet = ({ fname }) => {
           clozetVisible={clozetVisibility}
           showClozet={handleShowClozet}
           fname={fname}
+          persons={persons}
         />
       </div>
       <div className={showAll}>

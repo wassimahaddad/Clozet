@@ -1,11 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import api from "../../API/api";
 import ClozetItem from "../ClozetItem/ClozetItem.component";
 // import Person from "../Person/Person.component";
 
 import "./CreateClozetItem.component.css";
 
-const CreateClozetItem = ({ display, clozetVisible, showClozet, fname }) => {
+const CreateClozetItem = ({
+  display,
+  clozetVisible,
+  showClozet,
+  fname,
+  persons,
+}) => {
   //   ----------------- States ------------------------------------
   const [item, setItem] = useState("Shirt");
   const [season, setSeason] = useState("Winter");
@@ -15,26 +21,7 @@ const CreateClozetItem = ({ display, clozetVisible, showClozet, fname }) => {
   const [hideClozetItem, setHideClozetItem] = useState("hide");
   const [error, setError] = useState(null);
   const [person, setPerson] = useState("");
-  const [persons, setPersons] = useState("");
-  //   -------------------------------------------------------------
-  useEffect(() => {
-    const getPersons = async () => {
-      const token = await localStorage.getItem("token");
-      const response = await api.get(
-        "/persons",
 
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      setPersons(response.data);
-      console.log(response.data);
-    };
-    getPersons();
-  }, []);
   //   -------------------------------------------------------------
   const handleCancel = async () => {
     display("hide");
@@ -79,6 +66,10 @@ const CreateClozetItem = ({ display, clozetVisible, showClozet, fname }) => {
   };
 
   //   -------------------------------------------------------------
+  const items = ["Shirt", "Pants", "Dress", "Shoes"];
+  const sizes = ["Small", "Large", "XL", "XXL"];
+  const seasons = ["Winter", "Spring", "Summer", "Fall"];
+  //   -------------------------------------------------------------
   return (
     <div>
       <div className="create-item-form-container">
@@ -105,19 +96,17 @@ const CreateClozetItem = ({ display, clozetVisible, showClozet, fname }) => {
             name="item"
             onClick={(e) => setItem(e.target.value)}
           >
-            <option>Shirt</option>
-            <option>Pants</option>
-            <option>Dress</option>
-            <option>Shoes</option>
+            {items.map((item) => (
+              <option>{item}</option>
+            ))}
           </select>
         </div>
         <div className="option-container">
           <div>Size: </div>
           <select type="text" name="1" onClick={(e) => setSize(e.target.value)}>
-            <option>Small</option>
-            <option>Medium</option>
-            <option>Large</option>
-            <option>Extra Large</option>
+            {sizes.map((size) => (
+              <option>{size}</option>
+            ))}
           </select>
         </div>
         <div className="option-container">
@@ -127,10 +116,9 @@ const CreateClozetItem = ({ display, clozetVisible, showClozet, fname }) => {
             name="1"
             onClick={(e) => setSeason(e.target.value)}
           >
-            <option>Winter</option>
-            <option>Spring</option>
-            <option>Summer</option>
-            <option>Fall</option>
+            {seasons.map((season) => (
+              <option>{season}</option>
+            ))}
           </select>
         </div>
 

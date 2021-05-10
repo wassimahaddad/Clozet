@@ -11,6 +11,7 @@ const User = () => {
   const [clozet, setClozet] = useState("hide");
   const [persons, setPersons] = useState("hide");
   const [traingle, setTriangle] = useState(<span>&#9660;</span>);
+  const [clozetCreate, setClozetCreate] = useState("");
   const history = useHistory();
 
   // --------------------- Restrict access when not logged in --------
@@ -94,14 +95,17 @@ const User = () => {
     setClozet("show");
     setMenu("hide");
     setPersons("hide");
-    // handleMenu();
+    setClozetCreate("hide");
   };
   // ---------------------------------------------------------------------
   const handlePersons = () => {
-    // handleMenu();
     setClozet("hide");
     setPersons("show");
     console.log("people");
+  };
+  // ---------------------------------------------------------------------
+  const clozetCreateUpdate = (val) => {
+    setClozetCreate(val);
   };
   // ---------------------------------------------------------------------
   return (
@@ -142,7 +146,13 @@ const User = () => {
         </div>
       </div>
       <div className={clozet}>
-        {data ? <Clozet fname={data.first_name} /> : null}
+        {data ? (
+          <Clozet
+            fname={data.first_name}
+            clozetCreate={clozetCreate}
+            clozetCreateUpdate={clozetCreateUpdate}
+          />
+        ) : null}
       </div>
       <div className={persons}>
         <Persons />
