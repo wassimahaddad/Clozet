@@ -10,21 +10,9 @@ const UpdateClozetItem = ({ details, cancelEdit }) => {
   const [img, setImg] = useState("");
   const [data, setData] = useState("");
   const [error, setError] = useState(null);
-  const [person, setPerson] = useState("");
+  const [person, setPerson] = useState(details.person);
   const [persons, setPersons] = useState("");
 
-  //   const [hideClozetItem, setHideClozetItem] = useState("hide");
-
-  //   -------------------------------------------------------------
-  const handleCancel = async () => {
-    cancelEdit("hide");
-    console.log("cancel");
-    console.log(details);
-  };
-  //   -------------------------------------------------------------
-  //   const handleShowClozetItem = (val) => {
-  //     setHideClozetItem(val);
-  //   };
   //   -------------------------------------------------------------
   useEffect(() => {
     const getPersons = async () => {
@@ -55,7 +43,7 @@ const UpdateClozetItem = ({ details, cancelEdit }) => {
       formData.append("person", person);
 
       const token = await localStorage.getItem("token");
-      const response = await api.patch("/clozets", formData, {
+      const response = await api.patch(`/clozets/${details._id}`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",
@@ -67,6 +55,7 @@ const UpdateClozetItem = ({ details, cancelEdit }) => {
       console.log(response.data);
       console.log(data);
       setError(null);
+      cancelEdit("hide");
     } catch (e) {
       console.log(e.message);
       setError(e.message);
@@ -74,10 +63,11 @@ const UpdateClozetItem = ({ details, cancelEdit }) => {
     }
   };
   //   -------------------------------------------------------------
-  // const handleRemoveClozetItem = (id) => {
-  //   // setData(null);
-  //   // setHideClozetItem("hide");
-  // };
+  const handleCancel = async () => {
+    cancelEdit("hide");
+    console.log("cancel");
+    console.log(details);
+  };
 
   //   -------------------------------------------------------------
   const items = ["Shirt", "Pants", "Dress", "Shoes"];
