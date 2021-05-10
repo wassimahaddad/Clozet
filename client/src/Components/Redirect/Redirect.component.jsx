@@ -5,8 +5,11 @@ import { useHistory } from "react-router-dom";
 
 const Redirect = () => {
   const history = useHistory();
+  const token = localStorage.getItem("token");
   useEffect(() => {
-    history.push("/me");
+    if (token) {
+      history.push("/me");
+    }
   }, [history]);
   return <div></div>;
 };
