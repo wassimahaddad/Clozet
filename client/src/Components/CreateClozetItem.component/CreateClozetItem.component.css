@@ -47,6 +47,7 @@
   margin-right: auto;
   color: white;
   font-weight: bold;
+  overflow: hidden;
 }
 .create-item-buttons {
   display: flex;

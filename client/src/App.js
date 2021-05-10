@@ -3,7 +3,7 @@ import "./App.css";
 import SignIn from "./Pages/SignIn/SignIn.page";
 import SignUp from "./Pages/SignUp/SignUp.page";
 import User from "./Pages/User/User.page";
-// import Redirect from "./Components/Redirect/Redirect.component";
+import Redirect from "./Components/Redirect/Redirect.component";
 
 function App() {
   return (
@@ -19,9 +19,9 @@ function App() {
           <User />
         </Route>
 
-        {/* <Route path="*">
+        <Route path="*">
           <Redirect />
-        </Route> */}
+        </Route>
       </BrowserRouter>
     </div>
   );
