@@ -17,6 +17,10 @@ app.use(clozetRouter);
 const publicDirectory = path.join(__dirname, "client/build");
 app.use(express.static(publicDirectory));
 
+app.get("*", (request, response) => {
+  response.sendFile(path.join(__dirname, "client/build", "index.html"));
+});
+
 // -------------------------------------------
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
