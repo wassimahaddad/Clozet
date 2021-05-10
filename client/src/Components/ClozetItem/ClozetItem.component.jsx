@@ -16,7 +16,7 @@ const ClozetItem = ({ data, remove }) => {
   // ----------------------- Edit Item -------------------------------------------
   const handleEditItem = () => {
     console.log(data._id);
-    setShowEdit("show");
+    setShowEdit("clozet-edit-window ");
   };
 
   // ------------------------------------------------------------------------------
@@ -86,7 +86,7 @@ const ClozetItem = ({ data, remove }) => {
           </div>
         </div>
       </div>
-      <div className={`clozet-edit-window ${showEdit}`}>
+      <div className={showEdit}>
         <EditClozetItem details={data} cancelEdit={handleCancelEdit} />
       </div>
     </div>
