@@ -70,3 +70,15 @@
   margin-right: auto;
   text-align: center;
 }
+
+.clozet-edit-window {
+  position: absolute;
+  top: 10%;
+  left: 5%;
+  width: 90%;
+  height: 80%;
+  opacity: 95%;
+  background-color: grey;
+  margin-left: auto;
+  margin-right: auto;
+}

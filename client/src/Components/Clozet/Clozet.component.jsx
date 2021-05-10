@@ -100,7 +100,11 @@ const Clozet = ({ fname, clozetCreate, clozetCreateUpdate }) => {
           ? data.map((item) => {
               return (
                 <div key={item._id}>
-                  <ClozetItem remove={handleRemove} data={item} />
+                  <ClozetItem
+                    remove={handleRemove}
+                    data={item}
+                    persons={persons}
+                  />
                 </div>
               );
             })

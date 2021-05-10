@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import "./ClozetItem.component.css";
 import api from "../../API/api";
+import EditClozetItem from "../EditClozetItem/EditClozetItem.component";
 const ClozetItem = ({ data, remove }) => {
+  const [showEdit, setShowEdit] = useState("hide");
+  // --------------------- Delete Item ------------------------------------------
   const handleDeleteItem = async () => {
     const token = await localStorage.getItem("token");
     const response = await api.delete(`/clozets/${data._id}`, {
@@ -9,6 +12,16 @@ const ClozetItem = ({ data, remove }) => {
     });
     console.log(response);
     remove(data._id);
+  };
+  // ----------------------- Edit Item -------------------------------------------
+  const handleEditItem = () => {
+    console.log(data._id);
+    setShowEdit("show");
+  };
+
+  // ------------------------------------------------------------------------------
+  const handleCancelEdit = (val) => {
+    setShowEdit(val);
   };
   // ------------------------------------------------------------------------------
   return (
@@ -65,11 +78,16 @@ const ClozetItem = ({ data, remove }) => {
           ) : null}
         </div>
         <div className="clozet-item-buttons">
-          <div className="clozet-item-button">Edit</div>
+          <div onClick={handleEditItem} className="clozet-item-button">
+            Edit
+          </div>
           <div onClick={handleDeleteItem} className="clozet-item-button">
             Delete
           </div>
         </div>
+      </div>
+      <div className={`clozet-edit-window ${showEdit}`}>
+        <EditClozetItem details={data} cancelEdit={handleCancelEdit} />
       </div>
     </div>
   );

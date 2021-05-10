@@ -5,6 +5,11 @@ require("./src/db/mongoose.db");
 
 const app = express();
 app.use(cors());
+
+// ---------------------------------------------------------
+// const indexRouter = require("./src/routers/index.router");
+// app.use(indexRouter);
+// ---------------------------------------------------------
 const userRouter = require("./src/routers/user.router");
 const personRouter = require("./src/routers/person.router");
 const clozetRouter = require("./src/routers/clozet.router");

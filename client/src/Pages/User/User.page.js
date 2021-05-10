@@ -58,7 +58,7 @@ const User = () => {
       return e.message;
     }
   };
-  // --------------------- logout ---------------------------------------
+  // --------------------- logout All---------------------------------------
   const handleLogoutAll = async () => {
     try {
       const token = await localStorage.getItem("token");

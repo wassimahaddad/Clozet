@@ -1,38 +1,51 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import api from "../../API/api";
-import ClozetItem from "../ClozetItem/ClozetItem.component";
-// import Person from "../Person/Person.component";
+import "./EditClozetItem.component.css";
 
-import "./CreateClozetItem.component.css";
-
-const CreateClozetItem = ({
-  display,
-  clozetVisible,
-  showClozet,
-  fname,
-  persons,
-}) => {
+const UpdateClozetItem = ({ details, cancelEdit }) => {
   //   ----------------- States ------------------------------------
   const [item, setItem] = useState("Shirt");
   const [season, setSeason] = useState("Winter");
   const [size, setSize] = useState("Small");
   const [img, setImg] = useState("");
   const [data, setData] = useState("");
-  const [hideClozetItem, setHideClozetItem] = useState("hide");
   const [error, setError] = useState(null);
-  const [person, setPerson] = useState(fname);
+  const [person, setPerson] = useState("");
+  const [persons, setPersons] = useState("");
+
+  //   const [hideClozetItem, setHideClozetItem] = useState("hide");
 
   //   -------------------------------------------------------------
   const handleCancel = async () => {
-    display("hide");
-    setHideClozetItem("hide");
+    cancelEdit("hide");
+    console.log("cancel");
+    console.log(details);
   };
   //   -------------------------------------------------------------
-  const handleShowClozetItem = (val) => {
-    setHideClozetItem(val);
-  };
+  //   const handleShowClozetItem = (val) => {
+  //     setHideClozetItem(val);
+  //   };
   //   -------------------------------------------------------------
-  const handleCreate = async () => {
+  useEffect(() => {
+    const getPersons = async () => {
+      const token = await localStorage.getItem("token");
+      const response = await api.get(
+        "/persons",
+
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      setPersons(response.data);
+    };
+    getPersons();
+  }, []);
+
+  //   -------------------------------------------------------------
+  const handleUpdate = async () => {
     try {
       const formData = new FormData();
       formData.append("image", img);
@@ -42,28 +55,29 @@ const CreateClozetItem = ({
       formData.append("person", person);
 
       const token = await localStorage.getItem("token");
-      const response = await api.post("/clozets", formData, {
+      const response = await api.patch("/clozets", formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",
         },
       });
       setData(response.data);
-      setHideClozetItem("show");
-      showClozet(true);
+      //   setHideClozetItem("show");
+      //   showClozet(true);
       console.log(response.data);
+      console.log(data);
       setError(null);
     } catch (e) {
       console.log(e.message);
       setError(e.message);
-      setHideClozetItem("hide");
+      //   setHideClozetItem("hide");
     }
   };
   //   -------------------------------------------------------------
-  const handleRemoveClozetItem = (id) => {
-    setData(null);
-    setHideClozetItem("hide");
-  };
+  // const handleRemoveClozetItem = (id) => {
+  //   // setData(null);
+  //   // setHideClozetItem("hide");
+  // };
 
   //   -------------------------------------------------------------
   const items = ["Shirt", "Pants", "Dress", "Shoes"];
@@ -80,7 +94,7 @@ const CreateClozetItem = ({
             name="item"
             onClick={(e) => setPerson(e.target.value)}
           >
-            <option>{fname}</option>
+            <option>{details.person}</option>
             {persons
               ? persons.map((person) => (
                   <option key={person._id}>{person.name}</option>
@@ -92,6 +106,7 @@ const CreateClozetItem = ({
         <div className="option-container">
           <div>Item: </div>
           <select
+            defaultValue={details.item}
             type="text"
             name="item"
             onClick={(e) => setItem(e.target.value)}
@@ -103,7 +118,12 @@ const CreateClozetItem = ({
         </div>
         <div className="option-container">
           <div>Size: </div>
-          <select type="text" name="1" onClick={(e) => setSize(e.target.value)}>
+          <select
+            defaultValue={details.size}
+            type="text"
+            name="1"
+            onClick={(e) => setSize(e.target.value)}
+          >
             {sizes.map((size) => (
               <option key={size}>{size}</option>
             ))}
@@ -112,6 +132,7 @@ const CreateClozetItem = ({
         <div className="option-container">
           <div>Season: </div>
           <select
+            defaultValue={details.season}
             type="text"
             name="1"
             onClick={(e) => setSeason(e.target.value)}
@@ -135,23 +156,14 @@ const CreateClozetItem = ({
           </div>
 
           <div className="create-item-buttons">
-            <div onClick={handleCreate} className="create-item-button">
-              Create
+            <div onClick={handleUpdate} className="create-item-button">
+              Update
             </div>
             <div onClick={handleCancel} className="create-item-button">
               Cancel
             </div>
           </div>
         </div>
-      </div>
-      <div className={hideClozetItem}>
-        {clozetVisible ? (
-          <ClozetItem
-            remove={handleRemoveClozetItem}
-            display={handleShowClozetItem}
-            data={data}
-          />
-        ) : null}
       </div>
       <div className="create-item-error">
         {error ? "Action failed, set all fields and try again" : null}
@@ -160,4 +172,4 @@ const CreateClozetItem = ({
   );
 };
 
-export default CreateClozetItem;
+export default UpdateClozetItem;
