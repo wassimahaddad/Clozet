@@ -21,7 +21,7 @@ const CreateClozetItem = ({ display, clozetVisible, showClozet, fname }) => {
     const getPersons = async () => {
       const token = await localStorage.getItem("token");
       const response = await api.get(
-        "http://localhost:5000/api/persons",
+        "/persons",
 
         {
           headers: {
@@ -55,16 +55,12 @@ const CreateClozetItem = ({ display, clozetVisible, showClozet, fname }) => {
       formData.append("person", person);
 
       const token = await localStorage.getItem("token");
-      const response = await api.post(
-        "http://localhost:5000/api/clozets",
-        formData,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+      const response = await api.post("/clozets", formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      });
       setData(response.data);
       setHideClozetItem("show");
       showClozet(true);

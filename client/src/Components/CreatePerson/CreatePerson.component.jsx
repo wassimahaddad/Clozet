@@ -17,7 +17,7 @@ const CreatePerson = ({ display, personVisible, showPerson }) => {
     try {
       const token = await localStorage.getItem("token");
       const response = await api.post(
-        "http://localhost:5000/api/persons",
+        "/persons",
         { name },
         {
           headers: {
