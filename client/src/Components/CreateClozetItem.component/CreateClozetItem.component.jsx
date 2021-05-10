@@ -64,6 +64,16 @@ const CreateClozetItem = ({
     setData(null);
     setHideClozetItem("hide");
   };
+  //   -------------------------------------------------------------
+  const handleRefreshData = async () => {
+    const token = await localStorage.getItem("token");
+    const response = await api.get(`/clozets/${data._id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    setData(response.data);
+  };
 
   //   -------------------------------------------------------------
   const items = ["Shirt", "Pants", "Dress", "Shoes"];
@@ -150,6 +160,7 @@ const CreateClozetItem = ({
             remove={handleRemoveClozetItem}
             display={handleShowClozetItem}
             data={data}
+            refreshData={handleRefreshData}
           />
         ) : null}
       </div>
