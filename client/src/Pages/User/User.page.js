@@ -155,7 +155,7 @@ const User = () => {
         ) : null}
       </div>
       <div className={persons}>
-        <Persons />
+        <Persons userName={data ? data.first_name : "owner"} />
       </div>
     </div>
   );

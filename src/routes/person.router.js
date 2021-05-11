@@ -23,13 +23,7 @@ personRouter.post("/api/persons", auth, async (req, res) => {
 
 personRouter.patch("/api/persons/:id", auth, async (req, res) => {
   const updates = Object.keys(req.body);
-  const allowedUpdates = [
-    "name",
-    "shirt_size",
-    "pants_size",
-    "dress_size",
-    "shoe_size",
-  ];
+  const allowedUpdates = ["name", "age_group"];
 
   const isValidOperation = updates.every((update) =>
     allowedUpdates.includes(update)

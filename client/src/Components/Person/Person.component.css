@@ -16,7 +16,7 @@
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 10px;
-  width: 150px;
+  width: 200px;
   font-size: large;
 }
 
@@ -37,6 +37,16 @@
 .person-item-button {
   cursor: pointer;
   background-color: blueviolet;
+  border-radius: 10px;
+  color: white;
+  width: 70px;
+  height: 30px;
+  text-align: center;
+  padding-top: 7px;
+}
+.person-item-button-disabled {
+  cursor: pointer;
+  background-color: grey;
   border-radius: 10px;
   color: white;
   width: 70px;

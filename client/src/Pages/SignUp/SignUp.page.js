@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 import api from "../../API/api";
 import "./SignUp.page.css";
@@ -11,7 +12,7 @@ const SignIn = () => {
   const [res, setRes] = useState("");
   const [message, setMessage] = useState("");
   const [status, setStatus] = useState("");
-
+  const history = useHistory();
   // ---------------------- Sign in -----------------------------------------
   const handleSignUp = async () => {
     setMessage("");
@@ -26,6 +27,23 @@ const SignIn = () => {
       console.log(res);
       setMessage("account created successfuly");
       setStatus("success");
+      const response2 = await api.post("/users/login", { email, password });
+      localStorage.setItem("token", response2.data.token);
+      const token = await localStorage.getItem("token");
+      const response3 = await api.post(
+        "/persons",
+        {
+          name: fname,
+          age_group: "Adult",
+        },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      console.log(response3);
+      if (token) {
+        history.push("/me");
+      }
     } catch (e) {
       console.log(e);
       setMessage("account creation failed, check details and try again");

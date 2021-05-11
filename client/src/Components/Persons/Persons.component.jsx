@@ -4,7 +4,7 @@ import CreatePerson from "../CreatePerson/CreatePerson.component";
 import api from "../../API/api";
 import "./Persons.component.css";
 
-const Persons = () => {
+const Persons = ({ userName }) => {
   const [data, setData] = useState();
   const [createItemDisplay, setCreateItemDisplay] = useState("hide");
   const [showAll, setShowAll] = useState("hide");
@@ -71,7 +71,11 @@ const Persons = () => {
           ? data.map((item) => {
               return (
                 <div key={item._id}>
-                  <Person remove={handleRemove} data={item} />
+                  <Person
+                    remove={handleRemove}
+                    data={item}
+                    userName={userName}
+                  />
                 </div>
               );
             })
