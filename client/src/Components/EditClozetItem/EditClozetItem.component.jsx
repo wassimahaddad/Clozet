@@ -82,14 +82,19 @@ const UpdateClozetItem = ({ data, cancelEdit, refreshData, userName }) => {
             name="item"
             onClick={(e) => setPerson(e.target.value)}
           >
-            <option>{data.person}</option>
+            {persons
+              ? persons.map((person) => (
+                  <option key={person._id}>{person.name}</option>
+                ))
+              : null}
+            {/* <option>{data.person}</option>
             {persons
               ? persons
                   .filter((person) => person.name !== data.person)
                   .map((person) => (
                     <option key={person._id}>{person.name}</option>
                   ))
-              : null}
+              : null} */}
           </select>
         </div>
 
