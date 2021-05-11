@@ -34,6 +34,7 @@
 
 .person-age-group select {
   font-size: large;
+  outline: none;
 }
 
 .person-name-input input {
