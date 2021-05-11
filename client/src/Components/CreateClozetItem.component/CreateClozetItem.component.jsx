@@ -112,6 +112,7 @@ const CreateClozetItem = ({
             type="text"
             name="item"
             onClick={(e) => setPerson(e.target.value)}
+            onChange={(e) => setPerson(e.target.value)}
           >
             {persons
               ? persons.map((person) => (
@@ -141,6 +142,7 @@ const CreateClozetItem = ({
             type="text"
             name="1"
             onClick={(e) => setSize(e.target.value)}
+            onChange={(e) => setSize(e.target.value)}
           >
             {sizeNames
               ? sizes[sizeNames].map((size) => (
