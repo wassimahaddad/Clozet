@@ -111,7 +111,7 @@ const CreateClozetItem = ({
             readOnly={person}
             type="text"
             name="item"
-            onClick={(e) => setPerson(e.target.value)}
+            // onClick={(e) => setPerson(e.target.value)}
             onChange={(e) => setPerson(e.target.value)}
           >
             {persons
@@ -128,7 +128,8 @@ const CreateClozetItem = ({
             readOnly={item}
             type="text"
             name="item"
-            onClick={(e) => setItem(e.target.value)}
+            onChange={(e) => setItem(e.target.value)}
+            // onClick={(e) => setItem(e.target.value)}
           >
             {items.map((item) => (
               <option key={item}>{item}</option>
@@ -141,7 +142,7 @@ const CreateClozetItem = ({
             readOnly={size}
             type="text"
             name="1"
-            onClick={(e) => setSize(e.target.value)}
+            // onClick={(e) => setSize(e.target.value)}
             onChange={(e) => setSize(e.target.value)}
           >
             {sizeNames
@@ -157,7 +158,8 @@ const CreateClozetItem = ({
             readOnly={season}
             type="text"
             name="1"
-            onClick={(e) => setSeason(e.target.value)}
+            onChange={(e) => setSeason(e.target.value)}
+            // onClick={(e) => setSeason(e.target.value)}
           >
             {seasons.map((season) => (
               <option key={season}>{season}</option>
