@@ -4,18 +4,21 @@ import ClozetItem from "../ClozetItem/ClozetItem.component";
 import api from "../../API/api";
 import "./Clozet.component.css";
 
-const Clozet = ({ fname, clozetCreate, clozetCreateUpdate }) => {
+const Clozet = ({ userName, clozetCreate, clozetCreateUpdate }) => {
   const [data, setData] = useState();
   const [createItemDisplay, setCreateItemDisplay] = useState("hide");
   const [showAll, setShowAll] = useState("hide");
   const [clozetVisibility, setClozetVisibility] = useState(true);
   const [persons, setPersons] = useState();
+  const [spinner, setSpinner] = useState("hidden");
   // -------------------------------------------------------------------------
   useEffect(() => {
     setCreateItemDisplay(clozetCreate);
   }, [clozetCreate]);
   // -------------------------------------------------------------------------
   const handleClozet = async () => {
+    setSpinner("page-loader");
+    setCreateItemDisplay("hide");
     try {
       const token = await localStorage.getItem("token");
       const response = await api.get("/clozets", {
@@ -25,7 +28,8 @@ const Clozet = ({ fname, clozetCreate, clozetCreateUpdate }) => {
       setData(response.data);
       console.log(response.data);
       setShowAll("show-all-items");
-      setCreateItemDisplay("hide");
+
+      setSpinner("hidden");
     } catch (e) {
       console.log(e);
       return e.message;
@@ -56,6 +60,7 @@ const Clozet = ({ fname, clozetCreate, clozetCreateUpdate }) => {
   };
   // -------------------------------------------------------------------------
   const handleItemCreate = () => {
+    setSpinner("hidden");
     setPersons(null);
     getPersons();
     setCreateItemDisplay("show");
@@ -95,8 +100,8 @@ const Clozet = ({ fname, clozetCreate, clozetCreateUpdate }) => {
           display={handleDisplay}
           clozetVisible={clozetVisibility}
           showClozet={handleShowClozet}
-          fname={fname}
           persons={persons}
+          userName={userName}
         />
       </div>
       <div className={showAll}>
@@ -114,6 +119,10 @@ const Clozet = ({ fname, clozetCreate, clozetCreateUpdate }) => {
               );
             })
           : null}
+      </div>
+      <div class={spinner}>
+        <div class="spinner"></div>
+        <p class="message">Please wait...</p>
       </div>
     </div>
   );

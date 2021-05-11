@@ -32,3 +32,49 @@
   margin-left: auto;
   margin-right: auto;
 }
+
+.page-loader {
+  background: transparent;
+  position: absolute;
+  top: 10vh;
+  left: 35%;
+  height: 20%;
+  width: 30%;
+}
+
+.spinner {
+  margin-top: 50vh;
+  margin-left: auto;
+  margin-right: auto;
+  border: blanchedalmond 5px solid;
+  border-top: blueviolet 5px solid;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  animation-name: goaround;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  animation-fill-mode: forwards;
+  animation-timing-function: ease-in;
+}
+
+.message {
+  font-size: 20px;
+  text-align: center;
+  margin-top: 20px;
+  color: blueviolet;
+}
+
+@keyframes goaround {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.hidden {
+  display: none;
+}

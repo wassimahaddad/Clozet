@@ -10,9 +10,9 @@ app.use(cors());
 // const indexRouter = require("./src/routers/index.router");
 // app.use(indexRouter);
 // ---------------------------------------------------------
-const userRouter = require("./src/routers/user.router");
-const personRouter = require("./src/routers/person.router");
-const clozetRouter = require("./src/routers/clozet.router");
+const userRouter = require("./src/routes/user.router");
+const personRouter = require("./src/routes/person.router");
+const clozetRouter = require("./src/routes/clozet.router");
 
 app.use(express.json());
 app.use(userRouter);

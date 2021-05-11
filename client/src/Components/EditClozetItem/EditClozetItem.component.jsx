@@ -2,18 +2,18 @@ import React, { useState, useEffect } from "react";
 import api from "../../API/api";
 import "./EditClozetItem.component.css";
 
-const UpdateClozetItem = ({ details, cancelEdit, refreshData }) => {
+const UpdateClozetItem = ({ data, cancelEdit, refreshData, userName }) => {
   //   ----------------- States ------------------------------------
   const [item, setItem] = useState("Shirt");
   const [season, setSeason] = useState("Winter");
   const [size, setSize] = useState("Small");
   const [img, setImg] = useState("");
-  const [data, setData] = useState("");
   const [error, setError] = useState(null);
-  const [person, setPerson] = useState(details.person);
+  const [person, setPerson] = useState(userName);
   const [persons, setPersons] = useState("");
+  // const [data, setData] = useState("");
 
-  //   -------------------------------------------------------------
+  //   ----------------- load persons for person field ---------------
   useEffect(() => {
     const getPersons = async () => {
       const token = await localStorage.getItem("token");
@@ -32,7 +32,7 @@ const UpdateClozetItem = ({ details, cancelEdit, refreshData }) => {
     getPersons();
   }, []);
 
-  //   -------------------------------------------------------------
+  //   ---------------------- Update selected item ----------------------
   const handleUpdate = async () => {
     try {
       const formData = new FormData();
@@ -43,34 +43,29 @@ const UpdateClozetItem = ({ details, cancelEdit, refreshData }) => {
       formData.append("person", person);
 
       const token = await localStorage.getItem("token");
-      const response = await api.patch(`/clozets/${details._id}`, formData, {
+      const response = await api.patch(`/clozets/${data._id}`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",
         },
       });
-      setData(response.data);
-      //   setHideClozetItem("show");
-      //   showClozet(true);
+      // setData(response.data);
       console.log(response.data);
-      console.log(data);
       setError(null);
       cancelEdit("hide");
       refreshData();
     } catch (e) {
       console.log(e.message);
       setError(e.message);
-      //   setHideClozetItem("hide");
     }
   };
-  //   -------------------------------------------------------------
+
   const handleCancel = async () => {
     cancelEdit("hide");
-    console.log("cancel");
-    console.log(details);
+    console.log(data.person);
   };
 
-  //   -------------------------------------------------------------
+  //   ----------------------- edit field options ------------------
   const items = ["Shirt", "Pants", "Dress", "Shoes"];
   const sizes = ["Small", "Large", "XL", "XXL"];
   const seasons = ["Winter", "Spring", "Summer", "Fall"];
@@ -81,15 +76,18 @@ const UpdateClozetItem = ({ details, cancelEdit, refreshData }) => {
         <div className="option-container">
           <div>Person: </div>
           <select
+            defaultValue={data.person}
             type="text"
             name="item"
             onClick={(e) => setPerson(e.target.value)}
           >
-            <option>{details.person}</option>
+            <option>{data.person}</option>
             {persons
-              ? persons.map((person) => (
-                  <option key={person._id}>{person.name}</option>
-                ))
+              ? persons
+                  .filter((person) => person.name !== data.person)
+                  .map((person) => (
+                    <option key={person._id}>{person.name}</option>
+                  ))
               : null}
           </select>
         </div>
@@ -97,7 +95,7 @@ const UpdateClozetItem = ({ details, cancelEdit, refreshData }) => {
         <div className="option-container">
           <div>Item: </div>
           <select
-            defaultValue={details.item}
+            defaultValue={data.item}
             type="text"
             name="item"
             onClick={(e) => setItem(e.target.value)}
@@ -110,7 +108,7 @@ const UpdateClozetItem = ({ details, cancelEdit, refreshData }) => {
         <div className="option-container">
           <div>Size: </div>
           <select
-            defaultValue={details.size}
+            defaultValue={data.size}
             type="text"
             name="1"
             onClick={(e) => setSize(e.target.value)}
@@ -123,7 +121,7 @@ const UpdateClozetItem = ({ details, cancelEdit, refreshData }) => {
         <div className="option-container">
           <div>Season: </div>
           <select
-            defaultValue={details.season}
+            defaultValue={data.season}
             type="text"
             name="1"
             onClick={(e) => setSeason(e.target.value)}

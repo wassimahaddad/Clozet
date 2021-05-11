@@ -3,7 +3,7 @@ import "./ClozetItem.component.css";
 import api from "../../API/api";
 import EditClozetItem from "../EditClozetItem/EditClozetItem.component";
 
-const ClozetItem = ({ data, remove, refreshData }) => {
+const ClozetItem = ({ userName, data, remove, refreshData, defaultPerson }) => {
   const [showEdit, setShowEdit] = useState("hide");
   // --------------------- Delete Item ------------------------------------------
   const handleDeleteItem = async () => {
@@ -16,7 +16,6 @@ const ClozetItem = ({ data, remove, refreshData }) => {
   };
   // ----------------------- Edit Item -------------------------------------------
   const handleEditItem = () => {
-    console.log(data._id);
     setShowEdit("clozet-edit-window ");
   };
 
@@ -90,9 +89,10 @@ const ClozetItem = ({ data, remove, refreshData }) => {
       </div>
       <div className={showEdit}>
         <EditClozetItem
-          details={data}
+          data={data}
           cancelEdit={handleCancelEdit}
           refreshData={refreshData}
+          userName={userName}
         />
       </div>
     </div>

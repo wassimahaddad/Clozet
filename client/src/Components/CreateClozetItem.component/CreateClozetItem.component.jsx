@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import api from "../../API/api";
 import ClozetItem from "../ClozetItem/ClozetItem.component";
 // import Person from "../Person/Person.component";
@@ -6,10 +6,10 @@ import ClozetItem from "../ClozetItem/ClozetItem.component";
 import "./CreateClozetItem.component.css";
 
 const CreateClozetItem = ({
+  userName,
   display,
   clozetVisible,
   showClozet,
-  fname,
   persons,
 }) => {
   //   ----------------- States ------------------------------------
@@ -17,15 +17,13 @@ const CreateClozetItem = ({
   const [season, setSeason] = useState("Winter");
   const [size, setSize] = useState("Small");
   const [img, setImg] = useState("");
-  const [data, setData] = useState("");
+  const [data, setData] = useState([]);
   const [hideClozetItem, setHideClozetItem] = useState("hide");
   const [error, setError] = useState(null);
-  const [person, setPerson] = useState(fname);
+  const [person, setPerson] = useState(userName);
 
   //   -------------------------------------------------------------
-  useEffect(() => {
-    setHideClozetItem("hide");
-  }, [display]);
+
   //   -------------------------------------------------------------
 
   const handleCreate = async () => {
@@ -44,7 +42,9 @@ const CreateClozetItem = ({
           "Content-Type": "multipart/form-data",
         },
       });
-      setData(response.data);
+      const arr = [];
+      arr.push(response.data);
+      setData(arr);
       setHideClozetItem("show");
       showClozet(true);
       console.log(response.data);
@@ -58,18 +58,22 @@ const CreateClozetItem = ({
   //   -------------------------------------------------------------
   const handleRefreshData = async () => {
     const token = await localStorage.getItem("token");
-    const response = await api.get(`/clozets/${data._id}`, {
+    const id = data[0]._id;
+    const response = await api.get(`/clozets/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-    setData(response.data);
+    const arr = [];
+    arr.push(response.data);
+    setData(arr);
   };
 
   //   -------------------------------------------------------------
   const handleCancel = async () => {
     display("hide");
     setHideClozetItem("hide");
+    console.log(data[0]._id);
   };
   //   -------------------------------------------------------------
   const handleShowClozetItem = (val) => {
@@ -77,7 +81,7 @@ const CreateClozetItem = ({
   };
   //   -------------------------------------------------------------
   const handleRemoveClozetItem = (id) => {
-    setData(null);
+    setData("");
     setHideClozetItem("hide");
   };
 
@@ -96,7 +100,6 @@ const CreateClozetItem = ({
             name="item"
             onClick={(e) => setPerson(e.target.value)}
           >
-            <option>{fname}</option>
             {persons
               ? persons.map((person) => (
                   <option key={person._id}>{person.name}</option>
@@ -161,14 +164,20 @@ const CreateClozetItem = ({
         </div>
       </div>
       <div className={hideClozetItem}>
-        {clozetVisible ? (
-          <ClozetItem
-            remove={handleRemoveClozetItem}
-            display={handleShowClozetItem}
-            data={data}
-            refreshData={handleRefreshData}
-          />
-        ) : null}
+        {/* {clozetVisible && data */}
+        {data
+          ? data.map((elm) => (
+              <div key={elm._id}>
+                <ClozetItem
+                  remove={handleRemoveClozetItem}
+                  display={handleShowClozetItem}
+                  data={elm}
+                  refreshData={handleRefreshData}
+                  userName={userName}
+                />
+              </div>
+            ))
+          : null}
       </div>
       <div className="create-item-error">
         {error ? "Action failed, set all fields and try again" : null}
