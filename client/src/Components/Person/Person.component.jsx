@@ -19,6 +19,10 @@ const Person = ({ data, remove }) => {
         <span>Name: </span>
         {data.name}
       </div>
+      <div className="person-item-details">
+        <span>Age Group: </span>
+        {data.age_group}
+      </div>
       <div className="person-item-buttons">
         <div className="person-item-button">Edit</div>
         <div onClick={handleDeleteItem} className="person-item-button">

@@ -16,6 +16,25 @@
   color: white;
   font-weight: bold;
 }
+.person-age-group {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+  color: white;
+  font-weight: bold;
+}
+
+.person-age-group label {
+  margin-right: 10px;
+  margin-top: 2px;
+}
+
+.person-age-group select {
+  font-size: large;
+}
 
 .person-name-input input {
   padding-left: 10px;

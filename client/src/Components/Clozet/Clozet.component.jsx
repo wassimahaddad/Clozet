@@ -120,9 +120,9 @@ const Clozet = ({ userName, clozetCreate, clozetCreateUpdate }) => {
             })
           : null}
       </div>
-      <div class={spinner}>
-        <div class="spinner"></div>
-        <p class="message">Please wait...</p>
+      <div className={spinner}>
+        <div className="spinner"></div>
+        <p className="message">Please wait...</p>
       </div>
     </div>
   );

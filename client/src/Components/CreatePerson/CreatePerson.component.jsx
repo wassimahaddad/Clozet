@@ -8,6 +8,7 @@ const CreatePerson = ({ display, personVisible, showPerson }) => {
   // ---------------------- States -----------------------------------
   const [data, setData] = useState("");
   const [name, setName] = useState("");
+  const [ageGroup, setAgeGroup] = useState("baby");
   const [createdPersonVisibilty, setCreatedPersonVisibilty] = useState("hide");
   const [error, setError] = useState(null);
 
@@ -18,7 +19,7 @@ const CreatePerson = ({ display, personVisible, showPerson }) => {
       const token = await localStorage.getItem("token");
       const response = await api.post(
         "/persons",
-        { name },
+        { name, age_group: ageGroup },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -47,6 +48,10 @@ const CreatePerson = ({ display, personVisible, showPerson }) => {
   const handleRemove = () => {
     setData(null);
   };
+
+  //   -------------------------------------------------------------
+  const sizes = ["Baby", "Toddler", "Child", "Adult"];
+
   //   -------------------------------------------------------------
 
   return (
@@ -58,6 +63,14 @@ const CreatePerson = ({ display, personVisible, showPerson }) => {
             value={name}
             placeholder="Enter unique name"
           />
+        </div>
+        <div className="person-age-group">
+          <label>Age Group</label>
+          <select onChange={(e) => setAgeGroup(e.target.value)}>
+            {sizes.map((size) => (
+              <option key={size}>{size}</option>
+            ))}
+          </select>
         </div>
 
         <div className="create-person-buttons">
