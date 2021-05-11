@@ -34,16 +34,17 @@
 }
 
 .page-loader {
-  background: transparent;
+  background: #222;
+
   position: absolute;
-  top: 10vh;
-  left: 35%;
+  top: 45vh;
+  left: 45%;
   height: 20%;
-  width: 30%;
+  width: 10%;
 }
 
 .spinner {
-  margin-top: 50vh;
+  margin-top: 5vh;
   margin-left: auto;
   margin-right: auto;
   border: blanchedalmond 5px solid;
