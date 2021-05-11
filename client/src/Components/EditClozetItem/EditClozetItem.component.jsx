@@ -4,12 +4,12 @@ import "./EditClozetItem.component.css";
 
 const UpdateClozetItem = ({ data, cancelEdit, refreshData, userName }) => {
   //   ----------------- States ------------------------------------
-  const [item, setItem] = useState(data.item);
-  const [season, setSeason] = useState(data.season);
-  const [size, setSize] = useState(data.size);
+  const [item, setItem] = useState("Shirt");
+  const [season, setSeason] = useState("Winter");
+  const [size, setSize] = useState("Small");
   const [img, setImg] = useState("");
   const [error, setError] = useState(null);
-  const [person, setPerson] = useState(data.person);
+  const [person, setPerson] = useState(userName);
   const [persons, setPersons] = useState("");
   // const [data, setData] = useState("");
 
@@ -76,33 +76,26 @@ const UpdateClozetItem = ({ data, cancelEdit, refreshData, userName }) => {
         <div className="option-container">
           <div>Person: </div>
           <select
-            // defaultValue={data.person}
-            readOnly={person}
+            defaultValue={data.person}
             type="text"
             name="item"
             onClick={(e) => setPerson(e.target.value)}
           >
-            {persons
-              ? persons.map((person) => (
-                  <option key={person._id}>{person.name}</option>
-                ))
-              : null}
-            {/* <option>{data.person}</option>
+            <option>{data.person}</option>
             {persons
               ? persons
                   .filter((person) => person.name !== data.person)
                   .map((person) => (
                     <option key={person._id}>{person.name}</option>
                   ))
-              : null} */}
+              : null}
           </select>
         </div>
 
         <div className="option-container">
           <div>Item: </div>
           <select
-            // defaultValue={data.item}
-            readOnly={item}
+            defaultValue={data.item}
             type="text"
             name="item"
             onClick={(e) => setItem(e.target.value)}
@@ -115,8 +108,7 @@ const UpdateClozetItem = ({ data, cancelEdit, refreshData, userName }) => {
         <div className="option-container">
           <div>Size: </div>
           <select
-            // defaultValue={data.size}
-            readOnly={size}
+            defaultValue={data.size}
             type="text"
             name="1"
             onClick={(e) => setSize(e.target.value)}
@@ -129,8 +121,7 @@ const UpdateClozetItem = ({ data, cancelEdit, refreshData, userName }) => {
         <div className="option-container">
           <div>Season: </div>
           <select
-            // defaultValue={data.season}
-            readOnly={season}
+            defaultValue={data.season}
             type="text"
             name="1"
             onClick={(e) => setSeason(e.target.value)}

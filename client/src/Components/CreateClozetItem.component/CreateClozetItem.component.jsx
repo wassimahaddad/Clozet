@@ -108,6 +108,7 @@ const CreateClozetItem = ({
         <div className="option-container">
           <div>Person: </div>
           <select
+            readOnly={person}
             type="text"
             name="item"
             onClick={(e) => setPerson(e.target.value)}
@@ -123,6 +124,7 @@ const CreateClozetItem = ({
         <div className="option-container">
           <div>Item: </div>
           <select
+            readOnly={item}
             type="text"
             name="item"
             onClick={(e) => setItem(e.target.value)}
@@ -134,7 +136,12 @@ const CreateClozetItem = ({
         </div>
         <div className="option-container">
           <div>Size: </div>
-          <select type="text" name="1" onClick={(e) => setSize(e.target.value)}>
+          <select
+            readOnly={size}
+            type="text"
+            name="1"
+            onClick={(e) => setSize(e.target.value)}
+          >
             {sizeNames
               ? sizes[sizeNames].map((size) => (
                   <option key={size}>{size}</option>
@@ -145,6 +152,7 @@ const CreateClozetItem = ({
         <div className="option-container">
           <div>Season: </div>
           <select
+            readOnly={season}
             type="text"
             name="1"
             onClick={(e) => setSeason(e.target.value)}
