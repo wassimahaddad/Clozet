@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import api from "../../API/api";
 import ClozetItem from "../ClozetItem/ClozetItem.component";
 // import Person from "../Person/Person.component";
@@ -23,15 +23,11 @@ const CreateClozetItem = ({
   const [person, setPerson] = useState(fname);
 
   //   -------------------------------------------------------------
-  const handleCancel = async () => {
-    display("hide");
+  useEffect(() => {
     setHideClozetItem("hide");
-  };
+  }, [display]);
   //   -------------------------------------------------------------
-  const handleShowClozetItem = (val) => {
-    setHideClozetItem(val);
-  };
-  //   -------------------------------------------------------------
+
   const handleCreate = async () => {
     try {
       const formData = new FormData();
@@ -60,11 +56,6 @@ const CreateClozetItem = ({
     }
   };
   //   -------------------------------------------------------------
-  const handleRemoveClozetItem = (id) => {
-    setData(null);
-    setHideClozetItem("hide");
-  };
-  //   -------------------------------------------------------------
   const handleRefreshData = async () => {
     const token = await localStorage.getItem("token");
     const response = await api.get(`/clozets/${data._id}`, {
@@ -73,6 +64,21 @@ const CreateClozetItem = ({
       },
     });
     setData(response.data);
+  };
+
+  //   -------------------------------------------------------------
+  const handleCancel = async () => {
+    display("hide");
+    setHideClozetItem("hide");
+  };
+  //   -------------------------------------------------------------
+  const handleShowClozetItem = (val) => {
+    setHideClozetItem(val);
+  };
+  //   -------------------------------------------------------------
+  const handleRemoveClozetItem = (id) => {
+    setData(null);
+    setHideClozetItem("hide");
   };
 
   //   -------------------------------------------------------------

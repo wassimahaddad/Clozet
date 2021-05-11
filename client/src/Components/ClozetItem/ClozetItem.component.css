@@ -72,7 +72,7 @@
 }
 
 .clozet-edit-window {
-  position: absolute;
+  position: fixed;
   top: 10%;
   left: 5%;
   width: 90%;
