@@ -77,7 +77,7 @@ const UpdateClozetItem = ({ data, cancelEdit, refreshData, userName }) => {
           <div>Person: </div>
           <select
             // defaultValue={data.person}
-            value={person}
+            readOnly={person}
             type="text"
             name="item"
             onClick={(e) => setPerson(e.target.value)}
@@ -97,7 +97,7 @@ const UpdateClozetItem = ({ data, cancelEdit, refreshData, userName }) => {
           <div>Item: </div>
           <select
             // defaultValue={data.item}
-            value={item}
+            readOnly={item}
             type="text"
             name="item"
             onClick={(e) => setItem(e.target.value)}
@@ -111,7 +111,7 @@ const UpdateClozetItem = ({ data, cancelEdit, refreshData, userName }) => {
           <div>Size: </div>
           <select
             // defaultValue={data.size}
-            value={size}
+            readOnly={size}
             type="text"
             name="1"
             onClick={(e) => setSize(e.target.value)}
@@ -125,7 +125,7 @@ const UpdateClozetItem = ({ data, cancelEdit, refreshData, userName }) => {
           <div>Season: </div>
           <select
             // defaultValue={data.season}
-            value={season}
+            readOnly={season}
             type="text"
             name="1"
             onClick={(e) => setSeason(e.target.value)}
