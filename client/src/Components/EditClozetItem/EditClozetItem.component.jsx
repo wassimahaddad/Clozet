@@ -11,7 +11,7 @@ const UpdateClozetItem = ({ data, cancelEdit, refreshData, userName }) => {
   const [img, setImg] = useState("");
   const [error, setError] = useState(null);
   const [person, setPerson] = useState(data.person);
-  const [persons, setPersons] = useState("");
+  const [persons, setPersons] = useState([{ name: "", age_group: "" }]);
 
   //   ----------------- load persons for person field ---------------
   useEffect(() => {
@@ -65,11 +65,14 @@ const UpdateClozetItem = ({ data, cancelEdit, refreshData, userName }) => {
   };
 
   //   ----------- customize size dropdown -----------------------
-  const sizeNames = persons
-    ? persons.filter((one) => one.name === person)[0].age_group.toLowerCase()
+  const sizeGroup = persons
+    ? persons.filter((one) => one.name === person)
+    : null;
+  const sizeNames = sizeGroup.length
+    ? sizeGroup[0].age_group.toLowerCase()
     : null;
 
-  //   -------------------------------------------------------------
+  // -------------------------------------------------------------------------
   return (
     <div>
       <div className="create-item-form-container">
@@ -81,12 +84,12 @@ const UpdateClozetItem = ({ data, cancelEdit, refreshData, userName }) => {
             name="person"
             onChange={(e) => setPerson(e.target.value)}
           >
-            <option>{data.person}</option>
+            <option key={data._id}>{data.person}</option>
             {persons
               ? persons
                   .filter((person) => person.name !== data.person)
                   .map((person) => (
-                    <option key={person._id}>{person.name}</option>
+                    <option key={person.name}>{person.name}</option>
                   ))
               : null}
           </select>
@@ -114,7 +117,7 @@ const UpdateClozetItem = ({ data, cancelEdit, refreshData, userName }) => {
             name="size"
             onChange={(e) => setSize(e.target.value)}
           >
-            <option>Choose size</option>
+            <option key="choose-size">Choose size</option>
             {sizeNames
               ? sizes[sizeNames].map((size) => (
                   <option key={size}>{size}</option>

@@ -81,6 +81,7 @@ const Clozet = ({ userName, clozetCreate, clozetCreateUpdate }) => {
     handleClozet();
   };
   // -------------------------------------------------------------------------
+
   return (
     <div>
       <div className="clozet-menu">

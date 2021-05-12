@@ -148,7 +148,7 @@ const User = () => {
       <div className={clozet}>
         {data ? (
           <Clozet
-            userName={data.first_name}
+            userName={data ? data.first_name : "owner"}
             clozetCreate={clozetCreate}
             clozetCreateUpdate={clozetCreateUpdate}
           />
