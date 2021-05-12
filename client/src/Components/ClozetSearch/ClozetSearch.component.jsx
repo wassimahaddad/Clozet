@@ -1,16 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { seasons, sizes, items } from "../../Assets/data";
 import api from "../../API/api";
+import ClozetItem from "../ClozetItem/ClozetItem.component";
 import "./ClozetSearch.component.css";
 
-const ClozetSearch = () => {
+const ClozetSearch = ({
+  showSearchBox,
+  hideSearchBox,
+  searchResultsVisibilty,
+  setSearchResultsVisibilty,
+}) => {
   const [persons, setPersons] = useState([{ name: "", age_group: "" }]);
   const [person, setPerson] = useState("");
   const [size, setSize] = useState("");
   const [item, setItem] = useState("");
   const [season, setSeason] = useState("");
-  const [inStorage, setInStorage] = useState("");
-  const [keeper, setKeeper] = useState("");
+  const [inStorage, setInStorage] = useState(false);
+  const [keeper, setKeeper] = useState(true);
+  const [data, setData] = useState("");
+  const [spinner, setSpinner] = useState("hidden");
+  let previousStates = {};
   const sizeGroup = persons
     ? persons.filter((one) => one.name === person)
     : null;
@@ -36,22 +45,59 @@ const ClozetSearch = () => {
     };
     getPersons();
   }, []);
+
   // -------------------------------------------------------------------
-  const handleSearch = () => {
-    console.log("person=", person);
-    console.log("size=", size);
-    console.log("item=", item);
-    console.log("season=", season);
-    console.log("storage=", inStorage);
-    console.log("keeper=", keeper);
+  const handleSearch = async () => {
+    setSpinner("page-loader");
+    hideSearchBox("hide");
+    const token = await localStorage.getItem("token");
+    const response = await api.post(
+      "/clozets/search",
+      { person, size, item, season, in_storage: inStorage, keeper },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    console.log(response.data);
+    setSpinner("hide");
+    setData(response.data);
+    setSearchResultsVisibilty();
+    previousStates = {
+      person,
+      size,
+      item,
+      season,
+      in_storage: inStorage,
+      keeper,
+    };
+    setPerson("");
+    setItem("");
+    setSize("");
+    setSeason("");
+    setInStorage(false);
+    setKeeper(true);
+
+    console.log(previousStates);
   };
   // -------------------------------------------------------------------
+  const handleRefreshData = (val) => {
+    let newData = data;
+    const index = newData.findIndex((id) => id._id === val._id);
+    newData[index] = val;
+    setData(null);
+    setData(newData);
+    console.log(data[index]);
+  };
+  // -------------------------------------------------------------------
+
   return (
     <div className="clozet-search-container">
-      <div className="clozet-search-wrapper">
+      <div className={showSearchBox}>
         <div className="clozet-search-option">
           <select
-            readOnly={person}
+            value={person}
             onChange={(e) =>
               e.target.value === e.target.name
                 ? setPerson("")
@@ -60,12 +106,17 @@ const ClozetSearch = () => {
             name="Select person"
             id="person"
           >
-            <option className="clozet-search-option-title">
+            <option
+              value="Select person"
+              className="clozet-search-option-title"
+            >
               Select person
             </option>
             {persons
               ? persons.map((person) => (
-                  <option key={person.name}>{person.name}</option>
+                  <option value={person.name} key={person.name}>
+                    {person.name}
+                  </option>
                 ))
               : null}
           </select>
@@ -75,7 +126,7 @@ const ClozetSearch = () => {
           <select
             name="Select item"
             id="item"
-            readOnly={item}
+            value={item}
             onChange={(e) =>
               e.target.value === e.target.name
                 ? setItem("")
@@ -83,16 +134,20 @@ const ClozetSearch = () => {
             }
             className="clozet-search-option-title"
           >
-            <option>Select item</option>
+            <option value="Select item">Select item</option>
             {items
-              ? items.map((item) => <option key={item}>{item}</option>)
+              ? items.map((item) => (
+                  <option value={item} key={item}>
+                    {item}
+                  </option>
+                ))
               : null}
           </select>
         </div>
 
         <div className="clozet-search-option">
           <select
-            readOnly={size}
+            value={size}
             onChange={(e) =>
               e.target.value === e.target.name
                 ? setSize("")
@@ -101,10 +156,14 @@ const ClozetSearch = () => {
             name="Select size"
             id="size"
           >
-            <option className="clozet-search-option-title">Select size</option>
+            <option value="Select size" className="clozet-search-option-title">
+              Select size
+            </option>
             {sizeNames
               ? sizes[sizeNames].map((size) => (
-                  <option key={size}>{size}</option>
+                  <option value={size} key={size}>
+                    {size}
+                  </option>
                 ))
               : null}
           </select>
@@ -114,7 +173,7 @@ const ClozetSearch = () => {
           <select
             name="Select season"
             id="season"
-            readOnly={season}
+            value={season}
             onChange={(e) =>
               e.target.value === e.target.name
                 ? setSeason("")
@@ -122,53 +181,85 @@ const ClozetSearch = () => {
             }
             className="clozet-search-option-title"
           >
-            <option>Select season</option>
+            <option value="Select season">Select season</option>
             {seasons.map((season) => (
-              <option key={season}>{season}</option>
+              <option value={season} key={season}>
+                {season}
+              </option>
             ))}
           </select>
         </div>
 
         <div className="clozet-search-option">
           <select
-            readOnly={inStorage}
+            value={inStorage}
             onChange={(e) =>
               e.target.value === e.target.name
-                ? setInStorage("")
-                : setInStorage(e.target.value)
+                ? setInStorage(false)
+                : e.target.value === "In storage"
+                ? setInStorage(true)
+                : setInStorage(false)
             }
             name="Select Storage status"
             id="In Storage"
           >
-            <option className="clozet-search-option-title">
+            <option
+              value="Select Storage status"
+              className="clozet-search-option-title"
+            >
               Select Storage status
             </option>
-            <option>In storage</option>
-            <option>Not in storage</option>
+            <option value="In storage">In storage</option>
+            <option value="Not in storage">Not in storage</option>
           </select>
         </div>
 
         <div className="clozet-search-option">
           <select
-            readOnly={keeper}
+            value={keeper}
             onChange={(e) =>
               e.target.value === e.target.name
-                ? setKeeper("")
-                : setKeeper(e.target.value)
+                ? setKeeper(true)
+                : e.target.value === "Yes"
+                ? setKeeper(true)
+                : setKeeper(false)
             }
             name="Select Keeper"
             id="Keeper"
           >
-            <option className="clozet-search-option-title">
+            <option
+              value="Select Keeper"
+              className="clozet-search-option-title"
+            >
               Select Keeper
             </option>
-            <option>Yes</option>
-            <option>No</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
           </select>
         </div>
         <div className="clozet-search-button">
           <button onClick={handleSearch}>Search</button>
         </div>
+      </div>
+      <div className={searchResultsVisibilty}>
+        {data
+          ? data.map((item) => {
+              return (
+                <React.Fragment key={item._id}>
+                  <ClozetItem
+                    // remove={handleRemove}
+                    data={item}
+                    persons={persons}
+                    refreshData={handleRefreshData}
+                  />
+                </React.Fragment>
+              );
+            })
+          : null}
+      </div>
+      <div className={spinner}>
+        <div className="spinner"></div>
+        <p className="message">Please wait...</p>
       </div>
     </div>
   );

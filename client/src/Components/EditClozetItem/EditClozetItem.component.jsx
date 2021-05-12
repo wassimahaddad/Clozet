@@ -53,7 +53,7 @@ const UpdateClozetItem = ({ data, cancelEdit, refreshData, userName }) => {
       console.log(response.data);
       setError(null);
       cancelEdit("hide");
-      refreshData();
+      refreshData(response.data);
     } catch (e) {
       console.log(e.message);
       setError(e.message);

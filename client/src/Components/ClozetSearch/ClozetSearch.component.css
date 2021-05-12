@@ -1,4 +1,15 @@
-.clozet-search-container {
+.search-results-show {
+  display: flex;
+  width: 90%;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.clozet-search-wrapper {
+  padding-top: 20px;
   width: 350px;
   height: 350px;
   background-color: blueviolet;
@@ -6,10 +17,6 @@
   margin-left: auto;
   margin-right: auto;
   margin-top: 100px;
-}
-
-.clozet-search-wrapper {
-  padding-top: 20px;
 }
 .clozet-search-option {
   width: 60%;

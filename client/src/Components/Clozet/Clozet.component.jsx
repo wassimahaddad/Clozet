@@ -1,45 +1,49 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+// import React, { useState, useEffect } from "react";
 import CreateClozetItem from "../CreateClozetItem.component/CreateClozetItem.component";
-import ClozetItem from "../ClozetItem/ClozetItem.component";
+// import ClozetItem from "../ClozetItem/ClozetItem.component";
 import ClozetSearch from "../ClozetSearch/ClozetSearch.component";
 import api from "../../API/api";
 import "./Clozet.component.css";
 
 const Clozet = ({ userName, clozetCreate, clozetCreateUpdate }) => {
-  const [data, setData] = useState();
+  // const [data, setData] = useState();
   const [createItemDisplay, setCreateItemDisplay] = useState("hide");
-  const [showAll, setShowAll] = useState("hide");
+  // const [showAll, setShowAll] = useState("hide");
   const [clozetVisibility, setClozetVisibility] = useState(true);
   const [persons, setPersons] = useState();
-  const [spinner, setSpinner] = useState("hidden");
+  // const [spinner, setSpinner] = useState("hidden");
   const [clozetSearchVisibilty, setClozetSearchVisibilty] = useState("hide");
+  // const [resetSearch, setResetSearch] = useState("search-results-show");
+  const [showSearchBox, setShowSearchBox] = useState("clozet-search-wrapper");
+  const [searchResultsVisibilty, setSearchResultsVisibility] = useState("hide");
   // -------------------------------------------------------------------------
-  useEffect(() => {
-    setCreateItemDisplay(clozetCreate);
-  }, [clozetCreate]);
-  // -------------------------------------------------------------------------
-  const handleClozet = async () => {
-    setSpinner("page-loader");
-    setCreateItemDisplay("hide");
-    setClozetSearchVisibilty("hide");
-    try {
-      const token = await localStorage.getItem("token");
-      const response = await api.get("/clozets", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+  // useEffect(() => {
+  //   setCreateItemDisplay(clozetCreate);
+  // }, [clozetCreate]);
+  // // -------------------------------------------------------------------------
+  // const handleClozet = async () => {
+  //   setSpinner("page-loader");
+  //   setCreateItemDisplay("hide");
+  //   setClozetSearchVisibilty("hide");
+  //   try {
+  //     const token = await localStorage.getItem("token");
+  //     const response = await api.get("/clozets", {
+  //       headers: { Authorization: `Bearer ${token}` },
+  //     });
 
-      setData(response.data);
-      console.log(response.data);
-      setShowAll("show-all-items");
+  //     setData(response.data);
+  //     console.log(response.data);
+  //     setShowAll("show-all-items");
 
-      setSpinner("hidden");
-    } catch (e) {
-      console.log(e);
-      return e.message;
-    }
-  };
+  //     setSpinner("hidden");
+  //   } catch (e) {
+  //     console.log(e);
+  //     return e.message;
+  //   }
+  // };
 
-  // -------------------------------------------------------------------------
+  // // -------------------------------------------------------------------------
   const getPersons = async () => {
     const token = await localStorage.getItem("token");
     const response = await api.get(
@@ -56,18 +60,18 @@ const Clozet = ({ userName, clozetCreate, clozetCreateUpdate }) => {
     console.log(response.data);
   };
 
-  // -------------------------------------------------------------------------
-  const handleRemove = (id) => {
-    setData(data.filter((item) => item._id !== id));
-    setClozetVisibility(false);
-  };
+  // // -------------------------------------------------------------------------
+  // const handleRemove = (id) => {
+  //   setData(data.filter((item) => item._id !== id));
+  //   setClozetVisibility(false);
+  // };
   // -------------------------------------------------------------------------
   const handleItemCreate = () => {
-    setSpinner("hidden");
+    // setSpinner("hidden");
     setPersons(null);
     getPersons();
     setCreateItemDisplay("show");
-    setShowAll("hide");
+    // setShowAll("hide");
     clozetCreateUpdate("show");
     setClozetSearchVisibilty("hide");
   };
@@ -81,14 +85,26 @@ const Clozet = ({ userName, clozetCreate, clozetCreateUpdate }) => {
     setClozetVisibility(val);
   };
   // -------------------------------------------------------------------------
-  const handleRefreshData = () => {
-    handleClozet();
-  };
+  // const handleRefreshData = () => {
+  //   handleClozet();
+  // };
   // -------------------------------------------------------------------------
   const handleSearch = () => {
-    setShowAll("hide");
+    // setShowAll("hide");
     setCreateItemDisplay("hide");
     setClozetSearchVisibilty("clozet-search-container");
+    // setResetSearch("clozet-search-wrapper");
+    setShowSearchBox("clozet-search-wrapper");
+    setSearchResultsVisibility("hide");
+  };
+  // -------------------------------------------------------------------------
+  const handleHideSearchBox = () => {
+    setShowSearchBox("hide");
+  };
+  // -------------------------------------------------------------------------
+  // -------------------------------------------------------------------------
+  const handleSearchResultsVisibilty = () => {
+    setSearchResultsVisibility("search-results-show");
   };
   // -------------------------------------------------------------------------
 
@@ -101,9 +117,9 @@ const Clozet = ({ userName, clozetCreate, clozetCreateUpdate }) => {
         <div className="clozet-menu-item" onClick={handleSearch}>
           Search
         </div>
-        <div className="clozet-menu-item" onClick={handleClozet}>
+        {/* <div className="clozet-menu-item" onClick={handleClozet}>
           Show all
-        </div>
+        </div> */}
       </div>
 
       <div className={createItemDisplay}>
@@ -115,7 +131,7 @@ const Clozet = ({ userName, clozetCreate, clozetCreateUpdate }) => {
           userName={userName}
         />
       </div>
-      <div className={showAll}>
+      {/* <div className={showAll}>
         {data
           ? data.map((item) => {
               return (
@@ -130,14 +146,21 @@ const Clozet = ({ userName, clozetCreate, clozetCreateUpdate }) => {
               );
             })
           : null}
-      </div>
+      </div> */}
       <div className={clozetSearchVisibilty}>
-        <ClozetSearch />
+        <ClozetSearch
+          // refreshData={handleRefreshData}
+          // resetSearch={resetSearch}
+          showSearchBox={showSearchBox}
+          hideSearchBox={handleHideSearchBox}
+          searchResultsVisibilty={searchResultsVisibilty}
+          setSearchResultsVisibilty={handleSearchResultsVisibilty}
+        />
       </div>
-      <div className={spinner}>
+      {/* <div className={spinner}>
         <div className="spinner"></div>
         <p className="message">Please wait...</p>
-      </div>
+      </div> */}
     </div>
   );
 };
