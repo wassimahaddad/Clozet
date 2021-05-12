@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import CreateClozetItem from "../CreateClozetItem.component/CreateClozetItem.component";
 import ClozetItem from "../ClozetItem/ClozetItem.component";
+import ClozetSearch from "../ClozetSearch/ClozetSearch.component";
 import api from "../../API/api";
 import "./Clozet.component.css";
 
@@ -11,6 +12,7 @@ const Clozet = ({ userName, clozetCreate, clozetCreateUpdate }) => {
   const [clozetVisibility, setClozetVisibility] = useState(true);
   const [persons, setPersons] = useState();
   const [spinner, setSpinner] = useState("hidden");
+  const [clozetSearchVisibilty, setClozetSearchVisibilty] = useState("hide");
   // -------------------------------------------------------------------------
   useEffect(() => {
     setCreateItemDisplay(clozetCreate);
@@ -19,6 +21,7 @@ const Clozet = ({ userName, clozetCreate, clozetCreateUpdate }) => {
   const handleClozet = async () => {
     setSpinner("page-loader");
     setCreateItemDisplay("hide");
+    setClozetSearchVisibilty("hide");
     try {
       const token = await localStorage.getItem("token");
       const response = await api.get("/clozets", {
@@ -66,6 +69,7 @@ const Clozet = ({ userName, clozetCreate, clozetCreateUpdate }) => {
     setCreateItemDisplay("show");
     setShowAll("hide");
     clozetCreateUpdate("show");
+    setClozetSearchVisibilty("hide");
   };
   // -------------------------------------------------------------------------
   const handleDisplay = (val) => {
@@ -81,6 +85,12 @@ const Clozet = ({ userName, clozetCreate, clozetCreateUpdate }) => {
     handleClozet();
   };
   // -------------------------------------------------------------------------
+  const handleSearch = () => {
+    setShowAll("hide");
+    setCreateItemDisplay("hide");
+    setClozetSearchVisibilty("clozet-search-container");
+  };
+  // -------------------------------------------------------------------------
 
   return (
     <div>
@@ -88,7 +98,7 @@ const Clozet = ({ userName, clozetCreate, clozetCreateUpdate }) => {
         <div className="clozet-menu-item" onClick={handleItemCreate}>
           Create
         </div>
-        <div className="clozet-menu-item" onClick={handleClozet}>
+        <div className="clozet-menu-item" onClick={handleSearch}>
           Search
         </div>
         <div className="clozet-menu-item" onClick={handleClozet}>
@@ -120,6 +130,9 @@ const Clozet = ({ userName, clozetCreate, clozetCreateUpdate }) => {
               );
             })
           : null}
+      </div>
+      <div className={clozetSearchVisibilty}>
+        <ClozetSearch />
       </div>
       <div className={spinner}>
         <div className="spinner"></div>
