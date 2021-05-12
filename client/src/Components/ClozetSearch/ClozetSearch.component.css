@@ -1,6 +1,6 @@
 .clozet-search-container {
   width: 350px;
-  height: 300px;
+  height: 350px;
   background-color: blueviolet;
   border-radius: 15px;
   margin-left: auto;
@@ -25,6 +25,14 @@
   outline: none;
 }
 
+.clozet-search-option select:nth-child(1) {
+  font-weight: bold;
+}
+
+.clozet-search-option-title {
+  font-weight: bold;
+}
+
 .clozet-search-button {
   width: 60%;
   margin-left: auto;
@@ -38,8 +46,4 @@
   height: 30px;
   width: 50%;
   margin-left: 25%;
-}
-
-.clozet-search-option-title {
-  font-weight: bold;
 }

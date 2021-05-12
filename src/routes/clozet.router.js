@@ -81,12 +81,31 @@ clozetRouter.patch(
   }
 );
 
-// --------------- list wardrobe item ---------------------------------------
+// --------------- list clozet item ---------------------------------------
 clozetRouter.get("/api/clozets/:id", auth, async (req, res) => {
   const _id = req.params.id;
 
   try {
     const clozet = await Clozet.findOne({ _id, owner: req.user._id });
+    if (!clozet) {
+      res.status(404).send();
+    }
+    res.send(clozet);
+  } catch (e) {
+    res.status(500).send(e);
+  }
+});
+// --------------- Clozet search ---------------------------------------
+clozetRouter.post("/api/clozets/search", auth, async (req, res) => {
+  const obj = { ...req.body };
+  for (const key in obj) {
+    if (obj[key] === "") {
+      delete obj[key];
+    }
+  }
+
+  try {
+    const clozet = await Clozet.find({ ...obj, owner: req.user._id });
     if (!clozet) {
       res.status(404).send();
     }
