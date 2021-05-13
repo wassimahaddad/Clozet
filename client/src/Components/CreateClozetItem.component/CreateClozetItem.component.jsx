@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import api from "../../API/api";
 import ClozetItem from "../ClozetItem/ClozetItem.component";
-import { sizes, seasons } from "../../Assets/data";
+import { sizes, seasons, items } from "../../Assets/data";
 
 import "./CreateClozetItem.component.css";
 
 const CreateClozetItem = ({
   userName,
   display,
-  // clozetVisible,
+  clozetVisible,
   showClozet,
   persons,
 }) => {
@@ -22,7 +22,6 @@ const CreateClozetItem = ({
   const [error, setError] = useState(null);
   const [person, setPerson] = useState(userName);
   const [spinner, setSpinner] = useState("hidden");
-  // const [ageGroup, setAgeGroup] = useState("");
 
   //   -------------------------------------------------------------
 
@@ -83,23 +82,12 @@ const CreateClozetItem = ({
   };
   //   -------------------------------------------------------------
   const handleRemoveClozetItem = (id) => {
-    setData("");
-    setHideClozetItem("hide");
+    setData(data.filter((item) => item._id !== id));
+    // setHideClozetItem("hide");
+    clozetVisible(false);
   };
 
   // -------------------------------------------------------------
-  const items = ["Shirt", "Pants", "Dress", "Shoes"];
-  // const sizes = ["Small", "Large", "XL", "XXL"];
-  //   -------------------------------------------------------------
-  // const sizes = {
-  //   baby: ["NB", "0-3M", "3M-6M", "6M-9M", "9M-12M"],
-  //   toddler: ["12M-18M", "18-24M", "24M-30M", "30-36M"],
-  //   child: ["3", "4", "5", "6", "8", "10", "12", "14", "16"],
-  //   adult: ["XS", "S", "L", "XL", "XXL"],
-  // };
-
-  // const seasons = ["Winter", "Spring", "Summer", "Fall"];
-
   const sizeNames = persons
     ? persons.filter((one) => one.name === person)[0].age_group.toLowerCase()
     : null;
@@ -114,7 +102,6 @@ const CreateClozetItem = ({
             readOnly={person}
             type="text"
             name="item"
-            // onClick={(e) => setPerson(e.target.value)}
             onChange={(e) => setPerson(e.target.value)}
           >
             {persons
@@ -132,7 +119,6 @@ const CreateClozetItem = ({
             type="text"
             name="item"
             onChange={(e) => setItem(e.target.value)}
-            // onClick={(e) => setItem(e.target.value)}
           >
             {items.map((item) => (
               <option key={item}>{item}</option>
@@ -145,7 +131,6 @@ const CreateClozetItem = ({
             readOnly={size}
             type="text"
             name="1"
-            // onClick={(e) => setSize(e.target.value)}
             onChange={(e) => setSize(e.target.value)}
           >
             {sizeNames
@@ -162,7 +147,6 @@ const CreateClozetItem = ({
             type="text"
             name="1"
             onChange={(e) => setSeason(e.target.value)}
-            // onClick={(e) => setSeason(e.target.value)}
           >
             {seasons.map((season) => (
               <option key={season}>{season}</option>
@@ -193,8 +177,7 @@ const CreateClozetItem = ({
         </div>
       </div>
       <div className={hideClozetItem}>
-        {/* {clozetVisible && data */}
-        {data
+        {clozetVisible && data
           ? data.map((elm) => (
               <div key={elm._id}>
                 <ClozetItem
