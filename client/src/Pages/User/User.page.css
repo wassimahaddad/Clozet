@@ -18,13 +18,14 @@
 
 .user-menu-triangle {
   margin-left: 10px;
-  font-size: 20px;
-  margin-top: 30px;
+  margin-right: 10px;
+  font-size: 30px;
+  margin-top: 10px;
   width: 15px;
 }
 
 .user-menu-triangle:hover {
-  color: teal;
+  /* color: teal; */
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
 }

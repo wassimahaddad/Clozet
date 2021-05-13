@@ -88,11 +88,13 @@ const User = () => {
   const handleMenu = (e) => {
     if (e.type === "mouseover" || e.type === "touchstart") {
       setMenu("profile-menu");
-      setTriangle(<span>&#9654;</span>);
+      setTriangle(<span>&#9776;</span>);
+      // setTriangle(<span>&#9654;</span>);
     }
     if (e.type === "mouseout" || e.type === "touchend") {
       setMenu("hide");
-      setTriangle(<span>&#9660;</span>);
+      setTriangle(<span>&#9776;</span>);
+      // setTriangle(<span>&#9660;</span>);
     }
   };
   // ---------------------------------------------------------------------
