@@ -136,9 +136,10 @@ const ClozetSearch = ({
                 ? setItem("")
                 : setItem(e.target.value)
             }
-            className="clozet-search-option-title"
           >
-            <option value="Select item">Select item</option>
+            <option className="clozet-search-option-title" value="Select item">
+              Select item
+            </option>
             {items
               ? items.map((item) => (
                   <option value={item} key={item}>
@@ -183,9 +184,13 @@ const ClozetSearch = ({
                 ? setSeason("")
                 : setSeason(e.target.value)
             }
-            className="clozet-search-option-title"
           >
-            <option value="Select season">Select season</option>
+            <option
+              className="clozet-search-option-title"
+              value="Select season"
+            >
+              Select season
+            </option>
             {seasons.map((season) => (
               <option value={season} key={season}>
                 {season}

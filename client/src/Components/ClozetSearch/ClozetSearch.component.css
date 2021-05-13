@@ -33,7 +33,7 @@
 }
 
 .clozet-search-option select:nth-child(1) {
-  font-weight: bold;
+  /* font-weight: bold; */
 }
 
 .clozet-search-option-title {
