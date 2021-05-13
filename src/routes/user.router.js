@@ -16,6 +16,7 @@ usersRouter.post("/api/users", async (req, res) => {
     res.status(201).send({ user, token });
   } catch (e) {
     res.status(400).send(e);
+    console.log(e);
   }
 });
 
@@ -59,6 +60,7 @@ usersRouter.post("/api/users/logoutAll", auth, async (req, res) => {
 // ------------------ Get own profile -------------------------
 usersRouter.get("/api/users/me", auth, async (req, res) => {
   res.send(req.user);
+  console.log(req.user.avatar);
 });
 
 // ------------------- Update user ------------------------

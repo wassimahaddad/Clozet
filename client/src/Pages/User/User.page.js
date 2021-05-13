@@ -5,6 +5,7 @@ import "./User.page.css";
 import Clozet from "../../Components/Clozet/Clozet.component";
 import Persons from "../../Components/Persons/Persons.component";
 import EditUserProfile from "../../Components/EditUserProfile/EditUserProfile.component";
+import { defaultAvatar } from "../../Assets/data";
 
 const User = () => {
   const [data, setData] = useState();
@@ -184,7 +185,14 @@ const User = () => {
         <div className="user-avatar">
           {data ? (
             <>
-              <img src={`data: image/png;base64,${data.avatar}`} alt="test" />
+              <img
+                src={
+                  data.avatar
+                    ? `data: image/png;base64,${data.avatar}`
+                    : `data: image/png;base64,${defaultAvatar}`
+                }
+                alt="test"
+              />
             </>
           ) : null}
         </div>

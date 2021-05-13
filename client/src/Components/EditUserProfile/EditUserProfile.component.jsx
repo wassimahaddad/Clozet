@@ -1,6 +1,12 @@
 import React from "react-router-dom";
 // import api from '../../API/api'
 import "./EditUserProfile.component.css";
+import { defaultAvatar } from "../../Assets/data";
+// ----------------------------------------------------------------
+const handleEditProfile = () => {
+  console.log("edit");
+};
+//   --------------------------------------------------------------------------
 
 const EditUserProfile = ({ data }) => {
   return (
@@ -9,7 +15,13 @@ const EditUserProfile = ({ data }) => {
         <div className="user-profile-wrapper">
           <div className="user-profile-avatar">
             <img
-              src={`data: image/png;base64,${data ? data.avatar : null}`}
+              src={
+                data
+                  ? `data: image/png;base64,${
+                      data.avatar ? data.avatar : defaultAvatar
+                    }`
+                  : null
+              }
               alt="user avatar"
             />
           </div>
@@ -23,7 +35,9 @@ const EditUserProfile = ({ data }) => {
           </div>
         </div>
         <div className="user-profile-buttons">
-          <div className="user-profile-button">Edit Profile</div>
+          <div onClick={handleEditProfile} className="user-profile-button">
+            Edit Profile
+          </div>
           <div className="user-profile-button">Delete Account</div>
         </div>
       </div>
