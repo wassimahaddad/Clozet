@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useHistory } from "react-router-dom";
 import api from "../../API/api";
 import "./User.page.css";
@@ -13,6 +13,7 @@ const User = () => {
   const [traingle, setTriangle] = useState(<span>&#9660;</span>);
   const [clozetCreate, setClozetCreate] = useState("");
   const history = useHistory();
+  const menuRef = useRef();
 
   // --------------------- Restrict access when not logged in --------
   useEffect(() => {
@@ -97,12 +98,14 @@ const User = () => {
     setMenu("hide");
     setPersons("hide");
     setClozetCreate("hide");
+    menuRef.current.blur();
   };
   // ---------------------------------------------------------------------
   const handlePersons = () => {
     setClozet("hide");
     setPersons("show");
     setMenu("hide");
+    menuRef.current.blur();
   };
   // ---------------------------------------------------------------------
   const clozetCreateUpdate = (val) => {
@@ -111,7 +114,12 @@ const User = () => {
   // ---------------------------------------------------------------------
   return (
     <div>
-      <div onMouseOver={handleMenu} onMouseOut={handleMenu} className={menu}>
+      <div
+        ref={menuRef}
+        onMouseOver={handleMenu}
+        onMouseOut={handleMenu}
+        className={menu}
+      >
         <div className="menu-option">My profile</div>
         <div onClick={handlePersons} className="menu-option">
           Persons
