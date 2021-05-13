@@ -85,7 +85,8 @@ const User = () => {
     if (e.type === "mouseover") {
       setMenu("profile-menu");
       setTriangle(<span>&#9654;</span>);
-    } else {
+    }
+    if (e.type === "mouseout") {
       setMenu("hide");
       setTriangle(<span>&#9660;</span>);
     }
