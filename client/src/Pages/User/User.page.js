@@ -101,7 +101,7 @@ const User = () => {
   const handlePersons = () => {
     setClozet("hide");
     setPersons("show");
-    console.log("people");
+    setMenu("hide");
   };
   // ---------------------------------------------------------------------
   const clozetCreateUpdate = (val) => {
@@ -113,7 +113,7 @@ const User = () => {
       <div onMouseOver={handleMenu} onMouseOut={handleMenu} className={menu}>
         <div className="menu-option">My profile</div>
         <div onClick={handlePersons} className="menu-option">
-          People
+          Persons
         </div>
         <div onClick={handleClozet} className="menu-option">
           clozet

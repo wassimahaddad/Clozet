@@ -61,3 +61,11 @@
 .create-item-button:hover {
   color: white;
 }
+
+.spinner-loader {
+  background: #222;
+  height: 20%;
+  width: 30%;
+  margin-left: auto;
+  margin-right: auto;
+}

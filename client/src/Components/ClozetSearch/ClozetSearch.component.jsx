@@ -92,6 +92,10 @@ const ClozetSearch = ({
   };
   // -------------------------------------------------------------------
 
+  const handleRemoveClozetItem = (id) => {
+    setData(data.filter((item) => item._id !== id));
+  };
+
   return (
     <div className="clozet-search-container">
       <div className={showSearchBox}>
@@ -247,7 +251,7 @@ const ClozetSearch = ({
               return (
                 <React.Fragment key={item._id}>
                   <ClozetItem
-                    // remove={handleRemove}
+                    remove={handleRemoveClozetItem}
                     data={item}
                     persons={persons}
                     refreshData={handleRefreshData}

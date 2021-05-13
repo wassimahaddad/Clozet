@@ -21,11 +21,13 @@ const CreateClozetItem = ({
   const [hideClozetItem, setHideClozetItem] = useState("hide");
   const [error, setError] = useState(null);
   const [person, setPerson] = useState(userName);
+  const [spinner, setSpinner] = useState("hidden");
   // const [ageGroup, setAgeGroup] = useState("");
 
   //   -------------------------------------------------------------
 
   const handleCreate = async () => {
+    setSpinner("spinner-loader");
     try {
       const formData = new FormData();
       formData.append("image", img);
@@ -48,6 +50,7 @@ const CreateClozetItem = ({
       showClozet(true);
       console.log(response.data);
       setError(null);
+      setSpinner("hide");
     } catch (e) {
       console.log(e.message);
       setError(e.message);
@@ -168,7 +171,7 @@ const CreateClozetItem = ({
         </div>
 
         <div>
-          <div className="image-upload-text">Image upload:</div>
+          <div className="image-upload-text">Upload landscape image:</div>
           <div className="image-upload">
             <input
               onChange={(e) => setImg(e.target.files[0])}
@@ -207,6 +210,10 @@ const CreateClozetItem = ({
       </div>
       <div className="create-item-error">
         {error ? "Action failed, set all fields and try again" : null}
+      </div>
+      <div className={spinner}>
+        <div className="spinner"></div>
+        <p className="message">Please wait...</p>
       </div>
     </div>
   );
