@@ -26,12 +26,27 @@
 .user-menu-triangle:hover {
   color: teal;
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.user-menu-triangle span {
+  background: blueviolet;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .user-display-name {
   margin-left: 20px;
   margin-top: 30px;
   font-weight: bold;
+}
+
+.page-title {
+  color: #222;
+  font-weight: bold;
+  align-content: center;
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: xx-large;
 }
 
 .profile-menu {

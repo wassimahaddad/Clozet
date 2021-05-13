@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import api from "../../API/api";
 import "./User.page.css";
@@ -12,8 +12,8 @@ const User = () => {
   const [persons, setPersons] = useState("hide");
   const [traingle, setTriangle] = useState(<span>&#9660;</span>);
   const [clozetCreate, setClozetCreate] = useState("");
+  const [pageTitle, setPageTitle] = useState("Home");
   const history = useHistory();
-  const menuRef = useRef();
 
   // --------------------- Restrict access when not logged in --------
   useEffect(() => {
@@ -83,11 +83,11 @@ const User = () => {
 
   // ---------------------------------------------------------------------
   const handleMenu = (e) => {
-    if (e.type === "mouseover") {
+    if (e.type === "mouseover" || e.type === "touchstart") {
       setMenu("profile-menu");
       setTriangle(<span>&#9654;</span>);
     }
-    if (e.type === "mouseout") {
+    if (e.type === "mouseout" || e.type === "touchend") {
       setMenu("hide");
       setTriangle(<span>&#9660;</span>);
     }
@@ -98,14 +98,14 @@ const User = () => {
     setMenu("hide");
     setPersons("hide");
     setClozetCreate("hide");
-    menuRef.current.blur();
+    setPageTitle("Clozet");
   };
   // ---------------------------------------------------------------------
   const handlePersons = () => {
     setClozet("hide");
     setPersons("show");
     setMenu("hide");
-    menuRef.current.blur();
+    setPageTitle("Persons");
   };
   // ---------------------------------------------------------------------
   const clozetCreateUpdate = (val) => {
@@ -115,29 +115,48 @@ const User = () => {
   return (
     <div>
       <div
-        ref={menuRef}
         onMouseOver={handleMenu}
+        onTouchStart={handleMenu}
         onMouseOut={handleMenu}
+        onTouchEnd={handleMenu}
         className={menu}
       >
         <div className="menu-option">My profile</div>
-        <div onClick={handlePersons} className="menu-option">
+        <div
+          onClick={handlePersons}
+          onTouchStart={handlePersons}
+          className="menu-option"
+        >
           Persons
         </div>
-        <div onClick={handleClozet} className="menu-option">
+        <div
+          onClick={handleClozet}
+          onTouchStart={handleClozet}
+          className="menu-option"
+        >
           clozet
         </div>
-        <div onClick={handleLogout} className="menu-option">
+        <div
+          onClick={handleLogout}
+          onTouchStart={handleLogout}
+          className="menu-option"
+        >
           Logout
         </div>
-        <div onClick={handleLogoutAll} className="menu-option">
+        <div
+          onClick={handleLogoutAll}
+          onTouchStart={handleLogoutAll}
+          className="menu-option"
+        >
           Logout all
         </div>
       </div>
       <div className="user-navbar">
         <div
           onMouseOver={handleMenu}
+          onTouchStart={handleMenu}
           onMouseOut={handleMenu}
+          onTouchEnd={handleMenu}
           className="user-menu-triangle"
         >
           {traingle}
@@ -153,7 +172,9 @@ const User = () => {
         <div className="user-display-name">
           {data ? `${data.first_name} ${data.last_name}` : null}
         </div>
+        <div className="page-title">{pageTitle}</div>
       </div>
+
       <div className={clozet}>
         {data ? (
           <Clozet
