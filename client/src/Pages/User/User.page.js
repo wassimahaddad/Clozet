@@ -4,6 +4,7 @@ import api from "../../API/api";
 import "./User.page.css";
 import Clozet from "../../Components/Clozet/Clozet.component";
 import Persons from "../../Components/Persons/Persons.component";
+import EditUserProfile from "../../Components/EditUserProfile/EditUserProfile.component";
 
 const User = () => {
   const [data, setData] = useState();
@@ -13,6 +14,7 @@ const User = () => {
   const [traingle, setTriangle] = useState(<span>&#9660;</span>);
   const [clozetCreate, setClozetCreate] = useState("");
   const [pageTitle, setPageTitle] = useState("Home");
+  const [userProfileVisibility, setUserProfileVisibility] = useState("hide");
   const history = useHistory();
 
   // --------------------- Restrict access when not logged in --------
@@ -99,6 +101,7 @@ const User = () => {
     setPersons("hide");
     setClozetCreate("hide");
     setPageTitle("Clozet");
+    setUserProfileVisibility("hide");
   };
   // ---------------------------------------------------------------------
   const handlePersons = () => {
@@ -106,10 +109,20 @@ const User = () => {
     setPersons("show");
     setMenu("hide");
     setPageTitle("Persons");
+    setUserProfileVisibility("hide");
   };
   // ---------------------------------------------------------------------
   const clozetCreateUpdate = (val) => {
     setClozetCreate(val);
+  };
+  // ---------------------------------------------------------------------
+  const handleEditProfile = () => {
+    console.log(data.first_name);
+    setUserProfileVisibility("show");
+    setClozet("hide");
+    setPersons("hide");
+    setMenu("hide");
+    setPageTitle("User Profile");
   };
   // ---------------------------------------------------------------------
   return (
@@ -121,7 +134,13 @@ const User = () => {
         onTouchEnd={handleMenu}
         className={menu}
       >
-        <div className="menu-option">My profile</div>
+        <div
+          onClick={handleEditProfile}
+          onTouchStart={handleEditProfile}
+          className="menu-option"
+        >
+          My profile
+        </div>
         <div
           onClick={handlePersons}
           onTouchStart={handlePersons}
@@ -173,6 +192,9 @@ const User = () => {
           {data ? `${data.first_name} ${data.last_name}` : null}
         </div>
         <div className="page-title">{pageTitle}</div>
+      </div>
+      <div className={userProfileVisibility}>
+        <EditUserProfile data={data} />
       </div>
 
       <div className={clozet}>
