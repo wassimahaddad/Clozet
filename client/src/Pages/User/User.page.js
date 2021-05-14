@@ -174,9 +174,11 @@ const User = () => {
           onTouchStart={handleMenu}
           onMouseOut={handleMenu}
           onTouchEnd={handleMenu}
-          className="user-menu-hamburger"
+          className="user-menu-hamburger-container"
         >
-          <div className="user-menu-hamburger-middle-line"></div>
+          <div className="user-menu-hamburger">
+            <div className="user-menu-hamburger-middle-line"></div>
+          </div>
         </div>
 
         <div className="user-avatar">

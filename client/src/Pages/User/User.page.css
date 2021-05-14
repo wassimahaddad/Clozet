@@ -16,20 +16,24 @@
   max-height: 100%;
 }
 
+.user-menu-hamburger-container {
+  /* border: 1px solid red; */
+  width: 60px;
+  height: 100%;
+}
 .user-menu-hamburger {
+  /* border: 1px solid white; */
+  height: 50%;
   margin-left: 10px;
   margin-right: 10px;
-  font-size: 30px;
-  margin-top: 17px;
-  margin-bottom: 15px;
-  width: 30px;
-  border-top: 2px solid black;
-  border-bottom: 2px solid black;
+  margin-top: 15px;
+  border-top: 3px solid#222;
+  border-bottom: 3px solid#222;
 }
 
 .user-menu-hamburger-middle-line {
-  border-top: black 2px solid;
-  margin-top: 11px;
+  border-top: #222 3px solid;
+  margin-top: 10px;
 }
 
 .user-menu-hamburger:hover {
