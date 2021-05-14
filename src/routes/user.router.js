@@ -60,7 +60,6 @@ usersRouter.post("/api/users/logoutAll", auth, async (req, res) => {
 // ------------------ Get own profile -------------------------
 usersRouter.get("/api/users/me", auth, async (req, res) => {
   res.send(req.user);
-  console.log(req.user.avatar);
 });
 
 // ------------------- Update user ------------------------

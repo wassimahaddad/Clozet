@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { seasons, sizes, items } from "../../Assets/data";
+import { seasons, sizes, allSizes, items } from "../../Assets/data";
 import api from "../../API/api";
 import ClozetItem from "../ClozetItem/ClozetItem.component";
 import "./ClozetSearch.component.css";
@@ -96,6 +96,7 @@ const ClozetSearch = ({
     setData(data.filter((item) => item._id !== id));
   };
 
+  // -------------------------------------------------------------------
   return (
     <div className="clozet-search-container">
       <div className={showSearchBox}>
@@ -170,7 +171,11 @@ const ClozetSearch = ({
                     {size}
                   </option>
                 ))
-              : null}
+              : allSizes.map((size) => (
+                  <option value={size} key={size}>
+                    {size}
+                  </option>
+                ))}
           </select>
         </div>
 
