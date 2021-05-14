@@ -65,7 +65,13 @@ usersRouter.get("/api/users/me", auth, async (req, res) => {
 // ------------------- Update user ------------------------
 
 usersRouter.patch("/api/users/me", auth, async (req, res) => {
-  const updates = Object.keys(req.body);
+  const obj = { ...req.body };
+  for (const key in obj) {
+    if (obj[key] === "") {
+      delete obj[key];
+    }
+  }
+  const updates = Object.keys(obj);
   const allowedUpdates = ["first_name", "last_name", "email", "password"];
 
   const isValidOperation = updates.every((update) =>

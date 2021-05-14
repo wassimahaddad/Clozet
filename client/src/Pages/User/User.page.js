@@ -8,7 +8,7 @@ import EditUserProfile from "../../Components/EditUserProfile/EditUserProfile.co
 import { defaultAvatar } from "../../Assets/data";
 
 const User = () => {
-  const [data, setData] = useState();
+  const [data, setData] = useState("");
   const [menu, setMenu] = useState("hide");
   const [clozet, setClozet] = useState("hide");
   const [persons, setPersons] = useState("hide");
@@ -120,7 +120,7 @@ const User = () => {
     setClozet("hide");
     setPersons("hide");
     setMenu("hide");
-    setPageTitle("User Profile");
+    setPageTitle("My Profile");
   };
   // ---------------------------------------------------------------------
   return (
@@ -201,7 +201,7 @@ const User = () => {
         <div className="page-title">{pageTitle}</div>
       </div>
       <div className={userProfileVisibility}>
-        <EditUserProfile data={data} />
+        <EditUserProfile data={data} refreshData={handleUserProfile} />
       </div>
 
       <div className={clozet}>
