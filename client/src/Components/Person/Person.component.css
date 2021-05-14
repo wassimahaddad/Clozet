@@ -67,3 +67,15 @@
   margin-right: auto;
   text-align: center;
 }
+
+.person-item-edit {
+  position: fixed;
+  top: 10%;
+  left: 5%;
+  width: 90%;
+  height: 80%;
+  opacity: 0.95;
+  background-color: grey;
+  margin-left: auto;
+  margin-right: auto;
+}

@@ -32,8 +32,9 @@
 }
 
 .user-menu-hamburger-middle-line {
-  border-top: #222 3px solid;
-  margin-top: 10px;
+  border-bottom: #222 3px solid;
+  margin-top: 2px;
+  height: 50%;
 }
 
 .user-menu-hamburger:hover {

@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import "./Person.component.css";
 import api from "../../API/api";
+import EditPerson from "../EditPerson/EditPerson.comonent";
 
-const Person = ({ data, remove, userName }) => {
+const Person = ({ data, remove, userName, handlePersons }) => {
   const [enableDisable, setEnableDisable] = useState("person-item-button");
+  const [editPersonVisibility, setEditPersonVisibility] = useState("hide");
   // ----------- delete item ----------------------------
   const handleDeleteItem = async () => {
     if (data.name !== userName) {
@@ -19,21 +21,42 @@ const Person = ({ data, remove, userName }) => {
     }
   };
   // ------------------------------------------------------
+  const handleEditItem = () => {
+    console.log("edit");
+
+    setEditPersonVisibility("person-item-edit");
+  };
+  // ------------------------------------------------------
+  const HandleditPersonVisibility = () => {
+    setEditPersonVisibility("hide");
+  };
+  // ------------------------------------------------------
   return (
-    <div className="person-item-container">
-      <div className="person-item-details">
-        <span>Name: </span>
-        {data.name}
-      </div>
-      <div className="person-item-details">
-        <span>Age Group: </span>
-        {data.age_group}
-      </div>
-      <div className="person-item-buttons">
-        <div className="person-item-button">Edit</div>
-        <div onClick={handleDeleteItem} className={enableDisable}>
-          Delete
+    <div>
+      <div className="person-item-container">
+        <div className="person-item-details">
+          <span>Name: </span>
+          {data.name}
         </div>
+        <div className="person-item-details">
+          <span>Age Group: </span>
+          {data.age_group}
+        </div>
+        <div className="person-item-buttons">
+          <div onClick={handleEditItem} className="person-item-button">
+            Edit
+          </div>
+          <div onClick={handleDeleteItem} className={enableDisable}>
+            Delete
+          </div>
+        </div>
+      </div>
+      <div className={editPersonVisibility}>
+        <EditPerson
+          data={data}
+          editPersonVisibility={HandleditPersonVisibility}
+          handlePersons={handlePersons}
+        />
       </div>
     </div>
   );
