@@ -4,7 +4,12 @@ import Person from "../Person/Person.component";
 import { sizes } from "../../Assets/data";
 import "./CreatePerson.component.css";
 
-const CreatePerson = ({ display, personVisible, showPerson }) => {
+const CreatePerson = ({
+  display,
+  personVisible,
+  showPerson,
+  handlePersons,
+}) => {
   // ---------------------- States -----------------------------------
   const [data, setData] = useState("");
   const [name, setName] = useState("");
@@ -50,6 +55,14 @@ const CreatePerson = ({ display, personVisible, showPerson }) => {
   };
 
   //   -------------------------------------------------------------
+  // ------------------------------------------------------
+  const handleRefreshData = (name, ageGroup) => {
+    const temp = data ? { ...data } : {};
+    temp.name = name;
+    temp.age_group = ageGroup;
+    setData(temp);
+  };
+  // ------------------------------------------------------
 
   const cap = (s) => {
     return s.charAt(0).toUpperCase() + s.slice(1);
@@ -87,7 +100,11 @@ const CreatePerson = ({ display, personVisible, showPerson }) => {
       </div>
       <div className={createdPersonVisibilty}>
         {data && personVisible ? (
-          <Person remove={handleRemove} data={data} />
+          <Person
+            remove={handleRemove}
+            data={data}
+            handlePerson={handleRefreshData}
+          />
         ) : null}
       </div>
       <div className="create-item-error">

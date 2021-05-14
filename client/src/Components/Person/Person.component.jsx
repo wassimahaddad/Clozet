@@ -3,7 +3,7 @@ import "./Person.component.css";
 import api from "../../API/api";
 import EditPerson from "../EditPerson/EditPerson.comonent";
 
-const Person = ({ data, remove, userName, handlePersons }) => {
+const Person = ({ data, remove, userName, handlePerson }) => {
   const [enableDisable, setEnableDisable] = useState("person-item-button");
   const [editPersonVisibility, setEditPersonVisibility] = useState("hide");
   // ----------- delete item ----------------------------
@@ -31,6 +31,10 @@ const Person = ({ data, remove, userName, handlePersons }) => {
     setEditPersonVisibility("hide");
   };
   // ------------------------------------------------------
+  const handleRefreshData = (name, ageGroup, id) => {
+    handlePerson(name, ageGroup, id);
+  };
+  // ------------------------------------------------------
   return (
     <div>
       <div className="person-item-container">
@@ -55,7 +59,7 @@ const Person = ({ data, remove, userName, handlePersons }) => {
         <EditPerson
           data={data}
           editPersonVisibility={HandleditPersonVisibility}
-          handlePersons={handlePersons}
+          refreshData={handleRefreshData}
         />
       </div>
     </div>

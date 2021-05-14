@@ -48,6 +48,16 @@ const Persons = ({ userName }) => {
   };
 
   // -------------------------------------------------------------------------
+  const handlePerson = (n, ag, id) => {
+    const findById = data.filter((item) => item._id === id);
+    const index = data.indexOf(findById[0]);
+    let temp = [...data];
+    temp[index].name = n;
+    temp[index].age_group = ag;
+    setData(null);
+    setData(temp);
+  };
+  // -------------------------------------------------------------------------
   return (
     <div>
       <div className="persons-menu">
@@ -64,6 +74,7 @@ const Persons = ({ userName }) => {
           display={handleCreateItemDisplay}
           personVisible={personVisibility}
           showPerson={handleShowPerson}
+          handlePersons={handlePersons}
         />
       </div>
       <div className={showAll}>
@@ -75,6 +86,7 @@ const Persons = ({ userName }) => {
                     remove={handleRemove}
                     data={item}
                     userName={userName}
+                    handlePerson={handlePerson}
                   />
                 </div>
               );
