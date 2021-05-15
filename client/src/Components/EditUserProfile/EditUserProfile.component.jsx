@@ -46,7 +46,7 @@ const EditUserProfile = ({ data, refreshData }) => {
   //--------------------------------------------------------------------------
   const handleUpateProfile = async () => {
     checkPasswords();
-    if (!message) {
+    if (!message || message === "Done!") {
       try {
         const token = await localStorage.getItem("token");
         const response = await api.patch(

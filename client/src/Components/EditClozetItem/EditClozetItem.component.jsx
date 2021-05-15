@@ -11,6 +11,7 @@ const UpdateClozetItem = ({ data, cancelEdit, refreshData, userName }) => {
   const [img, setImg] = useState("");
   const [inStorage, setInStorage] = useState("");
   const [keeper, setKeeper] = useState("");
+  const [spinner, setSpinner] = useState("hide");
   const [error, setError] = useState(null);
   const [person, setPerson] = useState(data.person);
   const [persons, setPersons] = useState([{ name: "", age_group: "" }]);
@@ -36,6 +37,7 @@ const UpdateClozetItem = ({ data, cancelEdit, refreshData, userName }) => {
 
   //   ---------------------- Update selected item ----------------------
   const handleUpdate = async () => {
+    setSpinner("show");
     try {
       const formData = new FormData();
       formData.append("image", img);
@@ -58,6 +60,7 @@ const UpdateClozetItem = ({ data, cancelEdit, refreshData, userName }) => {
       setError(null);
       cancelEdit("hide");
       refreshData(response.data);
+      setSpinner("hide");
     } catch (e) {
       console.log(e.message);
       setError(e.message);
@@ -195,6 +198,10 @@ const UpdateClozetItem = ({ data, cancelEdit, refreshData, userName }) => {
       </div>
       <div className="create-item-error">
         {error ? "Action failed, set all fields and try again" : null}
+      </div>
+      <div className={spinner}>
+        <div className="spinner"></div>
+        <p className="message">Please wait...</p>
       </div>
     </div>
   );
