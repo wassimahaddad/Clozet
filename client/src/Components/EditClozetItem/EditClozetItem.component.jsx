@@ -9,6 +9,8 @@ const UpdateClozetItem = ({ data, cancelEdit, refreshData, userName }) => {
   const [season, setSeason] = useState("Winter");
   const [size, setSize] = useState(data.size);
   const [img, setImg] = useState("");
+  const [inStorage, setInStorage] = useState("");
+  const [keeper, setKeeper] = useState("");
   const [error, setError] = useState(null);
   const [person, setPerson] = useState(data.person);
   const [persons, setPersons] = useState([{ name: "", age_group: "" }]);
@@ -41,6 +43,8 @@ const UpdateClozetItem = ({ data, cancelEdit, refreshData, userName }) => {
       formData.append("season", season);
       formData.append("size", size);
       formData.append("person", person);
+      formData.append("in_storage", inStorage === "Yes");
+      formData.append("keeper", keeper === "Yes");
 
       const token = await localStorage.getItem("token");
       const response = await api.patch(`/clozets/${data._id}`, formData, {
@@ -62,8 +66,11 @@ const UpdateClozetItem = ({ data, cancelEdit, refreshData, userName }) => {
 
   const handleCancel = async () => {
     cancelEdit("hide");
+    console.log("storage=", inStorage);
+    console.log("keeper=", keeper);
+    setInStorage(data.in_storage ? "Yes" : "No");
+    setKeeper(data.keeper ? "Yes" : "No");
   };
-
   //   ----------- customize size dropdown -----------------------
   const sizeGroup = persons
     ? persons.filter((one) => one.name === person)
@@ -111,7 +118,8 @@ const UpdateClozetItem = ({ data, cancelEdit, refreshData, userName }) => {
         <div className="option-container">
           <div>Size: </div>
           <select
-            defaultValue={(e) => setSize(e.target.value)}
+            defaultValue={data.size}
+            // defaultValue={(e) => setSize(e.target.value)}
             readOnly={size}
             type="text"
             name="size"
@@ -136,6 +144,30 @@ const UpdateClozetItem = ({ data, cancelEdit, refreshData, userName }) => {
             {seasons.map((season) => (
               <option key={season}>{season}</option>
             ))}
+          </select>
+        </div>
+        <div className="option-container">
+          <div>In Storage: </div>
+          <select
+            defaultValue={data.in_storage ? "Yes" : "No"} //------
+            type="text"
+            name="In Storage"
+            onChange={(e) => setInStorage(e.target.value)}
+          >
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+          </select>
+        </div>
+        <div className="option-container">
+          <div>Keeper: </div>
+          <select
+            defaultValue={data.keeper ? "Yes" : "No"} //------
+            type="text"
+            name="keeper"
+            onChange={(e) => setKeeper(e.target.value)}
+          >
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
           </select>
         </div>
 

@@ -15,8 +15,8 @@ const ClozetSearch = ({
   const [size, setSize] = useState("");
   const [item, setItem] = useState("");
   const [season, setSeason] = useState("");
-  const [inStorage, setInStorage] = useState(false);
-  const [keeper, setKeeper] = useState(true);
+  const [inStorage, setInStorage] = useState("");
+  const [keeper, setKeeper] = useState("");
   const [data, setData] = useState("");
   const [spinner, setSpinner] = useState("hidden");
   const [message, setMessage] = useState(null);
@@ -79,8 +79,8 @@ const ClozetSearch = ({
     setItem("");
     setSize("");
     setSeason("");
-    setInStorage(false);
-    setKeeper(true);
+    setInStorage("");
+    setKeeper("");
     console.log(previousStates);
     if (response.data.length === 0) {
       setMessage("no match found");
