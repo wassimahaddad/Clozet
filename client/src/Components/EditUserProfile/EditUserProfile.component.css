@@ -83,7 +83,7 @@
 }
 
 .user-profile-edit-subselection {
-  margin-top: 40px;
+  margin-top: 20px;
   /* height: 20px; */
 }
 
@@ -116,4 +116,13 @@
   color: blueviolet;
   font-weight: bold;
   margin-bottom: 10px;
+}
+
+.update-error-messages {
+  /* border: 1px solid blue; */
+  height: 20px;
+  font-size: 14px;
+  font-weight: bold;
+  /* color: orangered; */
+  text-align: center;
 }

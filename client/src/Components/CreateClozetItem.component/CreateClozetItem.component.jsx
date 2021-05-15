@@ -24,36 +24,48 @@ const CreateClozetItem = ({
   const [spinner, setSpinner] = useState("hidden");
 
   //   -------------------------------------------------------------
+  const checkImage = () => {
+    if (!img) {
+      setError("error");
+    } else {
+      setError(null);
+    }
+    console.log(error);
+  };
+  //   -------------------------------------------------------------
 
   const handleCreate = async () => {
-    setSpinner("spinner-loader");
-    try {
-      const formData = new FormData();
-      formData.append("image", img);
-      formData.append("item", item);
-      formData.append("season", season);
-      formData.append("size", size);
-      formData.append("person", person);
+    checkImage();
+    if (error !== null) {
+      setSpinner("spinner-loader");
+      try {
+        const formData = new FormData();
+        formData.append("image", img);
+        formData.append("item", item);
+        formData.append("season", season);
+        formData.append("size", size);
+        formData.append("person", person);
 
-      const token = await localStorage.getItem("token");
-      const response = await api.post("/clozets", formData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "multipart/form-data",
-        },
-      });
-      const arr = [];
-      arr.push(response.data);
-      setData(arr);
-      setHideClozetItem("show");
-      showClozet(true);
-      console.log(response.data);
-      setError(null);
-      setSpinner("hide");
-    } catch (e) {
-      console.log(e.message);
-      setError(e.message);
-      setHideClozetItem("hide");
+        const token = await localStorage.getItem("token");
+        const response = await api.post("/clozets", formData, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
+        });
+        const arr = [];
+        arr.push(response.data);
+        setData(arr);
+        setHideClozetItem("show");
+        showClozet(true);
+        console.log(response.data);
+        setError(null);
+        setSpinner("hide");
+      } catch (e) {
+        console.log(e.message);
+        setError(e.message);
+        setHideClozetItem("hide");
+      }
     }
   };
   //   ------------------ refresh data afetr delete ------------------
@@ -84,7 +96,7 @@ const CreateClozetItem = ({
   const handleRemoveClozetItem = (id) => {
     setData(data.filter((item) => item._id !== id));
     // setHideClozetItem("hide");
-    clozetVisible(false);
+    // clozetVisible(false);
   };
 
   // -------------------------------------------------------------

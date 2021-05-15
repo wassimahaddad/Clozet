@@ -13,6 +13,8 @@ const EditUserProfile = ({ data, refreshData }) => {
   const [email, setEmail] = useState("");
   const [img, setImg] = useState("");
   const [password, setPassword] = useState("");
+  const [message, setMessage] = useState(null);
+  const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [delPhotoBtn, setDelPhotoBtn] = useState("hide");
 
@@ -26,53 +28,69 @@ const EditUserProfile = ({ data, refreshData }) => {
     setLName(data.last_name);
     setEmail(data.email);
     setDelPhotoBtn("user-photo-delete-button");
-    console.log(data);
+  };
+
+  //--------------------------------------------------------------------------
+  const checkPasswords = () => {
+    setMessage(null);
+    if (
+      (newPassword.length > 6 || newPassword.length === 0) &&
+      newPassword === confirmPassword
+    ) {
+      setPassword(newPassword);
+      setMessage(null);
+    } else setMessage("Passwords don't match or less than 7 characters");
   };
 
   //--------------------------------------------------------------------------
   const handleUpateProfile = async () => {
-    try {
-      const token = await localStorage.getItem("token");
-      const response = await api.patch(
-        `/users/me`,
-        {
-          first_name: fname,
-          last_name: lname,
-          email: email,
-          password: password,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
+    checkPasswords();
+    if (!message) {
+      try {
+        const token = await localStorage.getItem("token");
+        const response = await api.patch(
+          `/users/me`,
+          {
+            first_name: fname,
+            last_name: lname,
+            email: email,
+            password: password,
           },
-        }
-      );
-      console.log(response.data);
-
-      if (img !== "") {
-        try {
-          const formData = new FormData();
-          formData.append("avatar", img);
-          const response = await api.post(`/users/me/avatar`, formData, {
+          {
             headers: {
               Authorization: `Bearer ${token}`,
-              "Content-Type": "multipart/form-data",
             },
-          });
-          console.log(response.data);
-          setDelPhotoBtn("user-photo-delete-button");
-        } catch (e) {
-          console.log(e);
+          }
+        );
+        console.log(response);
+
+        if (img !== "") {
+          try {
+            const formData = new FormData();
+            formData.append("avatar", img);
+            const response = await api.post(`/users/me/avatar`, formData, {
+              headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "multipart/form-data",
+              },
+            });
+            console.log(response.data);
+            setDelPhotoBtn("user-photo-delete-button");
+          } catch (e) {
+            console.log(e);
+          }
         }
+        setMessage("Done!");
+      } catch (e) {
+        console.log(e);
+
+        setMessage(e.message);
       }
-    } catch (e) {
-      console.log(e.message);
+      refreshData();
     }
-    refreshData();
   };
   //   --------------------------------------------------------------------------
   const handleCancel = () => {
-    console.log("cancel");
     setEditButtons("user-profile-buttons");
     setUpdateButtons("hide");
     setSubSelectionContainer("hide");
@@ -152,8 +170,8 @@ const EditUserProfile = ({ data, refreshData }) => {
             <input
               type="password"
               placeholder="new password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
             />
             <input
               type="password"
@@ -172,6 +190,7 @@ const EditUserProfile = ({ data, refreshData }) => {
               accept="image/png, image/jpeg"
             />
           </div>
+          <div className="update-error-messages">{message}</div>
         </div>
 
         <div className={editButtons}>

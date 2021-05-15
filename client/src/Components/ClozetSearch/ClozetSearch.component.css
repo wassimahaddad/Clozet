@@ -54,3 +54,13 @@
   width: 50%;
   margin-left: 25%;
 }
+
+.create-item-message-visibility {
+  width: 350px;
+  font-size: xx-large;
+  font-weight: bold;
+  color: red;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}

@@ -19,6 +19,8 @@ const ClozetSearch = ({
   const [keeper, setKeeper] = useState(true);
   const [data, setData] = useState("");
   const [spinner, setSpinner] = useState("hidden");
+  const [message, setMessage] = useState(null);
+  const [messageVisibility, setMessageVisibility] = useState("hide");
   let previousStates = {};
   const sizeGroup = persons
     ? persons.filter((one) => one.name === person)
@@ -50,6 +52,7 @@ const ClozetSearch = ({
   const handleSearch = async () => {
     setSpinner("page-loader");
     hideSearchBox("hide");
+    setMessage(null);
     const token = await localStorage.getItem("token");
     const response = await api.post(
       "/clozets/search",
@@ -78,8 +81,16 @@ const ClozetSearch = ({
     setSeason("");
     setInStorage(false);
     setKeeper(true);
-
     console.log(previousStates);
+    if (response.data.length === 0) {
+      setMessage("no match found");
+      setMessageVisibility("create-item-message-visibility");
+      console.log(message);
+    } else {
+      setMessage(null);
+      setMessageVisibility("hide");
+      console.log(message);
+    }
   };
   // -------------------------------------------------------------------
   const handleRefreshData = (val) => {
@@ -99,6 +110,9 @@ const ClozetSearch = ({
   // -------------------------------------------------------------------
   return (
     <div className="clozet-search-container">
+      {showSearchBox === "hide" ? (
+        <div className={messageVisibility}>{message}</div>
+      ) : null}
       <div className={showSearchBox}>
         <div className="clozet-search-option">
           <select
