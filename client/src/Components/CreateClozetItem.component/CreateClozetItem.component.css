@@ -49,6 +49,11 @@
   font-weight: bold;
   overflow: hidden;
 }
+.image-upload input {
+  font-weight: normal;
+  font-size: 15px;
+}
+
 .create-item-buttons {
   display: flex;
   margin-top: 20px;

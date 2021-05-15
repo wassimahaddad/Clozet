@@ -117,7 +117,7 @@ const UpdateClozetItem = ({ data, cancelEdit, refreshData, userName }) => {
             name="size"
             onChange={(e) => setSize(e.target.value)}
           >
-            <option key="choose-size">Choose size</option>
+            <option key="choose-size">Size</option>
             {sizeNames
               ? sizes[sizeNames].map((size) => (
                   <option key={size}>{size}</option>
@@ -140,7 +140,7 @@ const UpdateClozetItem = ({ data, cancelEdit, refreshData, userName }) => {
         </div>
 
         <div>
-          <div className="image-upload-text">Image upload:</div>
+          <div className="image-upload-text">Upload landscape image :</div>
           <div className="image-upload">
             <input
               onChange={(e) => setImg(e.target.files[0])}

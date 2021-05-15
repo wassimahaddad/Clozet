@@ -58,7 +58,7 @@ const CreateClozetItem = ({
         setData(arr);
         setHideClozetItem("show");
         showClozet(true);
-        console.log(response.data);
+        console.log(response);
         setError(null);
         setSpinner("hide");
       } catch (e) {
@@ -204,7 +204,7 @@ const CreateClozetItem = ({
           : null}
       </div>
       <div className="create-item-error">
-        {error ? "Action failed, set all fields and try again" : null}
+        {error ? "Please select image" : null}
       </div>
       <div className={spinner}>
         <div className="spinner"></div>
