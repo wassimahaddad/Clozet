@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import { useHistory } from "react-router-dom";
 import "./EditUserProfile.component.css";
 import { defaultAvatar } from "../../Assets/data";
 import api from "../../API/api";
@@ -17,7 +17,8 @@ const EditUserProfile = ({ data, refreshData }) => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [delPhotoBtn, setDelPhotoBtn] = useState("hide");
-
+  const [areYouSure, setAreYouSure] = useState("hide");
+  const history = useHistory();
   // ----------------------------------------------------------------
   const handleEditProfile = () => {
     refreshData();
@@ -112,6 +113,29 @@ const EditUserProfile = ({ data, refreshData }) => {
     refreshData();
   };
   //   --------------------------------------------------------------------------
+
+  const handleAreYouSure = () => {
+    setAreYouSure("are-you-sure");
+  };
+  //   --------------------------------------------------------------------------
+  const handleDeleteAccount = async () => {
+    console.log("del");
+    setAreYouSure("hide");
+    try {
+      const token = await localStorage.getItem("token");
+      const response = await api.delete(`/users/me`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log(response.data);
+    } catch (e) {
+      console.log(e);
+    }
+    localStorage.clear();
+    history.push("/");
+  };
+  //   --------------------------------------------------------------------------
   return (
     <div>
       <div className="user-profile-container">
@@ -197,13 +221,32 @@ const EditUserProfile = ({ data, refreshData }) => {
           <div onClick={handleEditProfile} className="user-profile-button">
             Edit Profile
           </div>
-          <div className="user-profile-button">Delete Account</div>
+          <div onClick={handleAreYouSure} className="user-profile-button">
+            Delete Account
+          </div>
         </div>
         <div className={updateButtons}>
           <div onClick={handleUpateProfile} className="user-profile-button">
             Update
           </div>
           <div onClick={handleCancel} className="user-profile-button">
+            Cancel
+          </div>
+        </div>
+      </div>
+      <div className={areYouSure}>
+        <div className="delete-account-warning">
+          Deleting your account will delete all stored data, please confirm or
+          cancel
+        </div>
+        <div className="are-you-sure-wrapper">
+          <div className="are-you-sure-button" onClick={handleDeleteAccount}>
+            Confirm
+          </div>
+          <div
+            className="are-you-sure-button"
+            onClick={() => setAreYouSure("hide")}
+          >
             Cancel
           </div>
         </div>
