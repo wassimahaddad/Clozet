@@ -31,12 +31,13 @@ const CreateClozetItem = ({
       setError(null);
     }
     console.log(error);
+    console.log(img);
   };
   //   -------------------------------------------------------------
 
   const handleCreate = async () => {
     checkImage();
-    if (error !== null) {
+    if (img !== "") {
       setSpinner("spinner-loader");
       try {
         const formData = new FormData();
