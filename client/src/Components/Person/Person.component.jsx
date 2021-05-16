@@ -8,16 +8,20 @@ const Person = ({ data, remove, userName, handlePerson }) => {
   const [editPersonVisibility, setEditPersonVisibility] = useState("hide");
   // ----------- delete item ----------------------------
   const handleDeleteItem = async () => {
-    if (data.name !== userName) {
-      setEnableDisable("person-item-button");
-      const token = await localStorage.getItem("token");
-      const response = await api.delete(`/persons/${data._id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      console.log(response);
-      remove(data._id);
-    } else {
-      setEnableDisable("person-item-button-disabled");
+    try {
+      if (data.name !== userName) {
+        setEnableDisable("person-item-button");
+        const token = await localStorage.getItem("token");
+        const response = await api.delete(`/persons/${data._id}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        console.log(response);
+        remove(data._id);
+      } else {
+        setEnableDisable("person-item-button-disabled");
+      }
+    } catch (e) {
+      console.log(e);
     }
   };
   // ------------------------------------------------------

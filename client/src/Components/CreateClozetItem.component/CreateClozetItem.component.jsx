@@ -71,16 +71,20 @@ const CreateClozetItem = ({
   };
   //   ------------------ refresh data afetr delete ------------------
   const handleRefreshData = async () => {
-    const token = await localStorage.getItem("token");
-    const id = data[0]._id;
-    const response = await api.get(`/clozets/${id}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    const arr = [];
-    arr.push(response.data);
-    setData(arr);
+    try {
+      const token = await localStorage.getItem("token");
+      const id = data[0]._id;
+      const response = await api.get(`/clozets/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const arr = [];
+      arr.push(response.data);
+      setData(arr);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   //   ---------------------cancel create --------------------------

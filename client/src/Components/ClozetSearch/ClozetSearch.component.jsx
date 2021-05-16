@@ -21,7 +21,7 @@ const ClozetSearch = ({
   const [spinner, setSpinner] = useState("hidden");
   const [message, setMessage] = useState(null);
   const [messageVisibility, setMessageVisibility] = useState("hide");
-  let previousStates = {};
+  // let previousStates = {};
   const sizeGroup = persons
     ? persons.filter((one) => one.name === person)
     : null;
@@ -32,64 +32,72 @@ const ClozetSearch = ({
   //   ----------------- load persons for person field ---------------
   useEffect(() => {
     const getPersons = async () => {
-      const token = await localStorage.getItem("token");
-      const response = await api.get(
-        "/persons",
+      try {
+        const token = await localStorage.getItem("token");
+        const response = await api.get(
+          "/persons",
 
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
-      setPersons(response.data);
+        setPersons(response.data);
+      } catch (e) {
+        console.log(e);
+      }
     };
     getPersons();
   }, []);
 
   // -------------------------------------------------------------------
   const handleSearch = async () => {
-    setSpinner("page-loader");
-    hideSearchBox("hide");
-    setMessage(null);
-    const token = await localStorage.getItem("token");
-    const response = await api.post(
-      "/clozets/search",
-      { person, size, item, season, in_storage: inStorage, keeper },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-    console.log(response.data);
-    setSpinner("hide");
-    setData(response.data);
-    setSearchResultsVisibilty();
-    previousStates = {
-      person,
-      size,
-      item,
-      season,
-      in_storage: inStorage,
-      keeper,
-    };
-    setPerson("");
-    setItem("");
-    setSize("");
-    setSeason("");
-    setInStorage("");
-    setKeeper("");
-    console.log(previousStates);
-    if (response.data.length === 0) {
-      setMessage("no match found");
-      setMessageVisibility("create-item-message-visibility");
-      console.log(message);
-    } else {
+    try {
+      setSpinner("page-loader");
+      hideSearchBox("hide");
       setMessage(null);
-      setMessageVisibility("hide");
-      console.log(message);
+      const token = await localStorage.getItem("token");
+      const response = await api.post(
+        "/clozets/search",
+        { person, size, item, season, in_storage: inStorage, keeper },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log(response.data);
+      setSpinner("hide");
+      setData(response.data);
+      setSearchResultsVisibilty();
+      // previousStates = {
+      //   person,
+      //   size,
+      //   item,
+      //   season,
+      //   in_storage: inStorage,
+      //   keeper,
+      // };
+      setPerson("");
+      setItem("");
+      setSize("");
+      setSeason("");
+      setInStorage("");
+      setKeeper("");
+      // console.log(previousStates);
+      if (response.data.length === 0) {
+        setMessage("no match found");
+        setMessageVisibility("create-item-message-visibility");
+        console.log(message);
+      } else {
+        setMessage(null);
+        setMessageVisibility("hide");
+        console.log(message);
+      }
+    } catch (e) {
+      console.log(e);
     }
   };
   // -------------------------------------------------------------------
@@ -108,6 +116,7 @@ const ClozetSearch = ({
   };
 
   // -------------------------------------------------------------------
+
   return (
     <div className="clozet-search-container">
       {showSearchBox === "hide" ? (

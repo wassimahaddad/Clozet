@@ -7,12 +7,16 @@ const ClozetItem = ({ userName, data, remove, refreshData, defaultPerson }) => {
   const [showEdit, setShowEdit] = useState("hide");
   // --------------------- Delete Item ------------------------------------------
   const handleDeleteItem = async () => {
-    const token = await localStorage.getItem("token");
-    const response = await api.delete(`/clozets/${data._id}`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    console.log(response);
-    remove(data._id);
+    try {
+      const token = await localStorage.getItem("token");
+      const response = await api.delete(`/clozets/${data._id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      console.log(response);
+      remove(data._id);
+    } catch (e) {
+      console.log(e);
+    }
   };
   // ----------------------- Edit Item -------------------------------------------
   const handleEditItem = () => {

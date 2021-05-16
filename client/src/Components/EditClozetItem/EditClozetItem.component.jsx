@@ -33,6 +33,9 @@ const UpdateClozetItem = ({ data, cancelEdit, refreshData, userName }) => {
       setPersons(response.data);
     };
     getPersons();
+    return function cleanup() {
+      setPersons([{ name: "", age_group: "" }]);
+    };
   }, []);
 
   //   ---------------------- Update selected item ----------------------

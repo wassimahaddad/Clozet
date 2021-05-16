@@ -14,19 +14,23 @@ const Clozet = ({ userName, clozetCreateUpdate }) => {
   // -------------------------------------------------------------------------
 
   const getPersons = async () => {
-    const token = await localStorage.getItem("token");
-    const response = await api.get(
-      "/persons",
+    try {
+      const token = await localStorage.getItem("token");
+      const response = await api.get(
+        "/persons",
 
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
-    setPersons(response.data);
-    console.log(response.data);
+      setPersons(response.data);
+      console.log(response.data);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   // // -------------------------------------------------------------------------

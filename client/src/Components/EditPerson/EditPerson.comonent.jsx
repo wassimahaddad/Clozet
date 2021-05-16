@@ -10,22 +10,26 @@ const EditPerson = ({ data, editPersonVisibility, refreshData }) => {
 
   // --------------------------------------------------------------------------
   const handleUpdate = async () => {
-    const token = await localStorage.getItem("token");
-    const response = await api.patch(
-      `/persons/${data._id}`,
-      { name, age_group: ageGroup },
+    try {
+      const token = await localStorage.getItem("token");
+      const response = await api.patch(
+        `/persons/${data._id}`,
+        { name, age_group: ageGroup },
 
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-    console.log(response.data);
-    editPersonVisibility();
-    setName(response.data.name);
-    setAgeGroup(response.data.ageGroup);
-    refreshData(name, ageGroup, data._id);
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log(response.data);
+      editPersonVisibility();
+      setName(response.data.name);
+      setAgeGroup(response.data.ageGroup);
+      refreshData(name, ageGroup, data._id);
+    } catch (e) {
+      console.log(e);
+    }
   };
   // --------------------------------------------------------------------------
   const handleCancel = () => {
