@@ -12,8 +12,7 @@ const EditUserProfile = ({ data, refreshData }) => {
   const [lname, setLName] = useState("");
   const [email, setEmail] = useState("");
   const [img, setImg] = useState("");
-  const [password, setPassword] = useState("");
-  const [message, setMessage] = useState(null);
+  const [message, setMessage] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [delPhotoBtn, setDelPhotoBtn] = useState("hide");
@@ -32,21 +31,11 @@ const EditUserProfile = ({ data, refreshData }) => {
   };
 
   //--------------------------------------------------------------------------
-  const checkPasswords = () => {
-    setMessage(null);
+  const handleUpateProfile = async () => {
     if (
       (newPassword.length > 6 || newPassword.length === 0) &&
       newPassword === confirmPassword
     ) {
-      setPassword(newPassword);
-      setMessage(null);
-    } else setMessage("Passwords don't match or less than 7 characters");
-  };
-
-  //--------------------------------------------------------------------------
-  const handleUpateProfile = async () => {
-    checkPasswords();
-    if (!message || message === "Done!") {
       try {
         const token = await localStorage.getItem("token");
         const response = await api.patch(
@@ -55,7 +44,7 @@ const EditUserProfile = ({ data, refreshData }) => {
             first_name: fname,
             last_name: lname,
             email: email,
-            password: password,
+            password: newPassword,
           },
           {
             headers: {
@@ -88,7 +77,7 @@ const EditUserProfile = ({ data, refreshData }) => {
         setMessage(e.message);
       }
       refreshData();
-    }
+    } else setMessage("Passwords don't match or less than 7 characters");
   };
   //   --------------------------------------------------------------------------
   const handleCancel = () => {
