@@ -2,7 +2,7 @@ import axios from "axios";
 
 let url;
 
-const localhost = "10.0.0.9" || "localhost";
+const localhost = "localhost";
 
 if (process.env.NODE_ENV === "development") {
   url = `http://${localhost}:5000/api`;

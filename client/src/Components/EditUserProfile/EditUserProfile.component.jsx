@@ -37,6 +37,7 @@ const EditUserProfile = ({ data, refreshData }) => {
       newPassword === confirmPassword
     ) {
       try {
+        console.log(newPassword);
         const token = await localStorage.getItem("token");
         const response = await api.patch(
           `/users/me`,
@@ -73,7 +74,6 @@ const EditUserProfile = ({ data, refreshData }) => {
         setMessage("Done!");
       } catch (e) {
         console.log(e);
-
         setMessage(e.message);
       }
       refreshData();
@@ -124,6 +124,7 @@ const EditUserProfile = ({ data, refreshData }) => {
     localStorage.clear();
     history.push("/");
   };
+
   //   --------------------------------------------------------------------------
   return (
     <div>
