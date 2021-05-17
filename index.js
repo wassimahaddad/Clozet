@@ -2,22 +2,20 @@ const express = require("express");
 const cors = require("cors");
 const path = require("path");
 require("./src/db/mongoose.db");
+const route = require("./src/routes/index.route");
 
 const app = express();
 app.use(cors());
 
-// ---------------------------------------------------------
-// const indexRouter = require("./src/routers/index.router");
-// app.use(indexRouter);
-// ---------------------------------------------------------
-const userRouter = require("./src/routes/user.router");
-const personRouter = require("./src/routes/person.router");
-const clozetRouter = require("./src/routes/clozet.router");
+// const userRoute = require("./src/routes/user.route");
+// const personRoute = require("./src/routes/person.route");
+// const clozetRoute = require("./src/routes/clozet.route");
 
 app.use(express.json());
-app.use(userRouter);
-app.use(personRouter);
-app.use(clozetRouter);
+app.use("/api/", route);
+// app.use(userRoute);
+// app.use(personRoute);
+// app.use(clozetRoute);
 
 const publicDirectory = path.join(__dirname, "client/build");
 app.use(express.static(publicDirectory));

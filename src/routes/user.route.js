@@ -1,48 +1,48 @@
 const express = require("express");
 const sharp = require("sharp");
-const userController = require("../controllers/user.controller.");
+const userController = require("../controllers/user.controller");
 const auth = require("../middleware/auth.middleware");
 const { upload } = require("../middleware/multer.middleware");
-const usersRouter = new express.Router();
-usersRouter.use(express.json());
+const userRoute = new express.Router();
+userRoute.use(express.json());
 
 // ---------------- Create User ---------------------------
-usersRouter.post("/api/users", async (req, res) => {
+userRoute.post("/", async (req, res) => {
   userController.createUser(req, res);
 });
 
 // --------------- User Login ----------------------------
-usersRouter.post("/api/users/login", async (req, res) => {
+userRoute.post("/login", async (req, res) => {
   userController.userLogin(req, res);
 });
 // ------------------ logout -------------------------
-usersRouter.post("/api/users/logout", auth, async (req, res) => {
+userRoute.post("/logout", auth, async (req, res) => {
   userController.userLogout(req, res);
 });
 // ------------------ logout All-------------------------
-usersRouter.post("/api/users/logoutAll", auth, async (req, res) => {
+userRoute.post("/logoutAll", auth, async (req, res) => {
   userController.userLogoutAll(req, res);
 });
 // ------------------ Get own profile -------------------------
-usersRouter.get("/api/users/me", auth, async (req, res) => {
+userRoute.get("/me", auth, async (req, res) => {
   userController.getUserProfile(req, res);
 });
 
 // ------------------- Update user ------------------------
 
-usersRouter.patch("/api/users/me", auth, async (req, res) => {
+userRoute.patch("/me", auth, async (req, res) => {
   userController.updateUserProfile(req, res);
 });
 // ------------------- Delete user ------------------------
 
-usersRouter.delete("/api/users/me", auth, async (req, res) => {
+userRoute.delete("/me", auth, async (req, res) => {
   userController.deleteUser(req, res);
 });
 
 // ------------------- Add avatar ------------------------
 
-usersRouter.post(
-  "/api/users/me/avatar",
+userRoute.post(
+  "/me/avatar",
   auth,
   upload.single("avatar"),
   async (req, res) => {
@@ -54,8 +54,8 @@ usersRouter.post(
 );
 // ------------------- Delete avatar ------------------------
 
-usersRouter.delete(
-  "/api/users/me/avatar",
+userRoute.delete(
+  "/me/avatar",
   auth,
   upload.single("avatar"),
   async (req, res) => {
@@ -64,9 +64,9 @@ usersRouter.delete(
 );
 // ------------------- Get avatar ------------------------
 
-usersRouter.get("/api/users/me/avatar", auth, async (req, res) => {
+userRoute.get("/me/avatar", auth, async (req, res) => {
   userController.getAvatar(req, res);
 });
 
 // ------------------- End of routes ------------------------
-module.exports = usersRouter;
+module.exports = userRoute;
