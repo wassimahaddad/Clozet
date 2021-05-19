@@ -37,10 +37,26 @@ const UpdateClozetItem = ({ data, cancelEdit, refreshData, userName }) => {
       setPersons([{ name: "", age_group: "" }]);
     };
   }, []);
+  //   ---------------------- translate true/false to Yes/No ----------------------
+  const boolTrans = (state, val) => {
+    if (state === "Yes") {
+      val = true;
+    } else if (state === "No") {
+      val = false;
+    } else {
+      val = "";
+    }
+    return val;
+  };
 
   //   ---------------------- Update selected item ----------------------
   const handleUpdate = async () => {
     setSpinner("show");
+    let keep = "";
+    let storage = "";
+    storage = boolTrans(inStorage, storage);
+    keep = boolTrans(keeper, keep);
+
     try {
       const formData = new FormData();
       formData.append("image", img);
@@ -48,8 +64,8 @@ const UpdateClozetItem = ({ data, cancelEdit, refreshData, userName }) => {
       formData.append("season", season);
       formData.append("size", size);
       formData.append("person", person);
-      formData.append("in_storage", inStorage === "Yes");
-      formData.append("keeper", keeper === "Yes");
+      formData.append("in_storage", storage);
+      formData.append("keeper", keep);
 
       const token = await localStorage.getItem("token");
       const response = await api.patch(`/clozets/${data._id}`, formData, {
@@ -64,6 +80,8 @@ const UpdateClozetItem = ({ data, cancelEdit, refreshData, userName }) => {
       cancelEdit("hide");
       refreshData(response.data);
       setSpinner("hide");
+      // setInStorage("");
+      // setKeeper("");
     } catch (e) {
       console.log(e.message);
       setError(e.message);
@@ -72,8 +90,8 @@ const UpdateClozetItem = ({ data, cancelEdit, refreshData, userName }) => {
 
   const handleCancel = async () => {
     cancelEdit("hide");
-    console.log("storage=", inStorage);
-    console.log("keeper=", keeper);
+    console.log("storage=", inStorage, inStorage === "Yes");
+    console.log("keeper=", keeper, keeper === "Yes");
     setInStorage(data.in_storage ? "Yes" : "No");
     setKeeper(data.keeper ? "Yes" : "No");
   };
@@ -160,6 +178,7 @@ const UpdateClozetItem = ({ data, cancelEdit, refreshData, userName }) => {
             name="In Storage"
             onChange={(e) => setInStorage(e.target.value)}
           >
+            {/* <option>select</option> */}
             <option value="Yes">Yes</option>
             <option value="No">No</option>
           </select>
@@ -172,6 +191,7 @@ const UpdateClozetItem = ({ data, cancelEdit, refreshData, userName }) => {
             name="keeper"
             onChange={(e) => setKeeper(e.target.value)}
           >
+            {/* <option>select</option> */}
             <option value="Yes">Yes</option>
             <option value="No">No</option>
           </select>

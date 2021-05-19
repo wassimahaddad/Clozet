@@ -24,7 +24,13 @@ const createClozet = async (req, res) => {
 };
 // ---------------------------------------------
 const updateClozet = async (req, res) => {
-  const updates = Object.keys(req.body);
+  const obj = { ...req.body };
+  for (const key in obj) {
+    if (obj[key] === "") {
+      delete obj[key];
+    }
+  }
+  const updates = Object.keys(obj);
   const allowedUpdates = [
     "person",
     "size",
