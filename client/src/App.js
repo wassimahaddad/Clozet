@@ -18,7 +18,7 @@ function App() {
         <Route path="/me" exact>
           <User />
         </Route>
-        <Route path="*">
+        <Route path="/*">
           <Redirect />
         </Route>
       </BrowserRouter>
