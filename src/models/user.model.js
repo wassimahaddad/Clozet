@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Clozet = require("./clozet.model");
+const Person = require("./person.model");
 const { PASS_PHRASE } = require("../../config/keys");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
@@ -124,6 +125,7 @@ userSchema.pre("remove", async function (next) {
   const user = this;
 
   await Clozet.deleteMany({ owner: user._id });
+  await Person.deleteMany({ owner: user._id });
 
   next();
 });
