@@ -12,10 +12,10 @@ const createUser = async (req, res) => {
 
   try {
     await user.save();
-    // const token = user.generateAuthToken();
-    // res
-    //   .status(201)
-    //   .cookie("access_token", token, { httpOnly: true, secure: protocol });
+    const token = user.generateAuthToken();
+    res
+      .status(201)
+      .cookie("access_token", token, { httpOnly: true, secure: protocol });
     res.status(201).send({ user });
   } catch (e) {
     res.status(400).send(e);
