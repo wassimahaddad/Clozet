@@ -13,10 +13,8 @@ const Persons = ({ userName }) => {
   // -------------------------------------------------------------------------
   const handlePersons = async () => {
     try {
-      const token = await localStorage.getItem("token");
-      const response = await api.get("/persons", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const response = await api.get("/persons");
+
       setData(response.data);
       console.log(response.data);
       setShowAll("show-all-persons");

@@ -27,21 +27,15 @@ const SignIn = () => {
       console.log(res);
       setMessage("account created successfuly");
       setStatus("success");
-      const response2 = await api.post("/users/login", { email, password });
-      localStorage.setItem("token", response2.data.token);
-      const token = await localStorage.getItem("token");
-      const response3 = await api.post(
-        "/persons",
-        {
-          name: fname,
-          age_group: "Adult",
-        },
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-      console.log(response3);
-      if (token) {
+      await api.post("/users/login", { email, password });
+      localStorage.setItem("login", "login");
+      const login = await localStorage.getItem("login");
+      const response2 = await api.post("/persons", {
+        name: fname,
+        age_group: "Adult",
+      });
+      console.log(response2);
+      if (login) {
         history.push("/me");
       }
     } catch (e) {

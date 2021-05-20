@@ -47,10 +47,8 @@ const CreateClozetItem = ({
         formData.append("size", size);
         formData.append("person", person);
 
-        const token = await localStorage.getItem("token");
         const response = await api.post("/clozets", formData, {
           headers: {
-            Authorization: `Bearer ${token}`,
             "Content-Type": "multipart/form-data",
           },
         });
@@ -72,13 +70,9 @@ const CreateClozetItem = ({
   //   ------------------ refresh data afetr delete ------------------
   const handleRefreshData = async () => {
     try {
-      const token = await localStorage.getItem("token");
       const id = data[0]._id;
-      const response = await api.get(`/clozets/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await api.get(`/clozets/${id}`);
+
       const arr = [];
       arr.push(response.data);
       setData(arr);
@@ -100,8 +94,6 @@ const CreateClozetItem = ({
   //   -------------------------------------------------------------
   const handleRemoveClozetItem = (id) => {
     setData(data.filter((item) => item._id !== id));
-    // setHideClozetItem("hide");
-    // clozetVisible(false);
   };
 
   // -------------------------------------------------------------

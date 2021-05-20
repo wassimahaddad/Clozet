@@ -38,21 +38,13 @@ const EditUserProfile = ({ data, refreshData }) => {
     ) {
       try {
         console.log(newPassword);
-        const token = await localStorage.getItem("token");
-        const response = await api.patch(
-          `/users/me`,
-          {
-            first_name: fname,
-            last_name: lname,
-            email: email,
-            password: newPassword,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+
+        const response = await api.patch(`/users/me`, {
+          first_name: fname,
+          last_name: lname,
+          email: email,
+          password: newPassword,
+        });
         console.log(response);
 
         if (img !== "") {
@@ -61,7 +53,6 @@ const EditUserProfile = ({ data, refreshData }) => {
             formData.append("avatar", img);
             const response = await api.post(`/users/me/avatar`, formData, {
               headers: {
-                Authorization: `Bearer ${token}`,
                 "Content-Type": "multipart/form-data",
               },
             });
@@ -88,12 +79,8 @@ const EditUserProfile = ({ data, refreshData }) => {
   //   --------------------------------------------------------------------------
   const handleDeletePhoto = async () => {
     try {
-      const token = await localStorage.getItem("token");
-      const response = await api.delete(`/users/me/avatar`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await api.delete(`/users/me/avatar`);
+
       console.log(response.data);
     } catch (e) {
       console.log(e);
@@ -111,12 +98,8 @@ const EditUserProfile = ({ data, refreshData }) => {
     console.log("del");
     setAreYouSure("hide");
     try {
-      const token = await localStorage.getItem("token");
-      const response = await api.delete(`/users/me`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await api.delete(`/users/me`);
+
       console.log(response.data);
     } catch (e) {
       console.log(e);

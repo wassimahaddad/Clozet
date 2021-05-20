@@ -1,13 +1,22 @@
 const User = require("../models/user.model");
 const sharp = require("sharp");
 // ----------------------------------------------------
+
+const protocol = false;
+if (process.env.NODE_ENV === "production") {
+  protocol = true;
+}
+// ----------------------------------------------------
 const createUser = async (req, res) => {
   const user = await new User(req.body);
 
   try {
     await user.save();
-    const token = user.generateAuthToken();
-    res.status(201).send({ user, token });
+    // const token = user.generateAuthToken();
+    // res
+    //   .status(201)
+    //   .cookie("access_token", token, { httpOnly: true, secure: protocol });
+    res.status(201).send({ user });
   } catch (e) {
     res.status(400).send(e);
     console.log(e);
@@ -21,7 +30,10 @@ const userLogin = async (req, res) => {
       req.body.password
     );
     const token = await user.generateAuthToken();
-    res.send({ user, token });
+    res
+      .status(201)
+      .cookie("access_token", token, { httpOnly: true, secure: protocol });
+    res.status(200).send({ user });
   } catch (e) {
     res.status(400).send("Incorrect email and/or password");
     console.log(e);
@@ -35,6 +47,7 @@ const userLogout = async (req, res) => {
     });
 
     await req.user.save();
+    res.status(202).clearCookie("access_token");
     res.send("user successfully logged out");
   } catch (e) {
     res.status(500).send();
@@ -45,6 +58,7 @@ const userLogoutAll = async (req, res) => {
   try {
     req.user.tokens = [];
     await req.user.save();
+    res.status(202).clearCookie("access_token");
     res.send("All user successfully logged out");
   } catch (e) {
     res.status(500).send();

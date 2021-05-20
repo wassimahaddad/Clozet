@@ -15,7 +15,7 @@ const SignIn = () => {
     try {
       const response = await api.post("/users/login", { email, password });
       setRes(response);
-      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("login", "login");
       console.log(res);
       history.push("/me");
     } catch (e) {

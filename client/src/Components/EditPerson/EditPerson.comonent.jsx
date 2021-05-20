@@ -4,31 +4,26 @@ import api from "../../API/api";
 
 import "./EditPerson.comonent.css";
 
-const EditPerson = ({ data, editPersonVisibility, refreshData }) => {
+const EditPerson = ({ data, editPersonVisibility, refreshData, userName }) => {
   const [name, setName] = useState(data ? data.name : "");
   const [ageGroup, setAgeGroup] = useState(data ? data.age_group : "");
 
   // --------------------------------------------------------------------------
   const handleUpdate = async () => {
-    try {
-      const token = await localStorage.getItem("token");
-      const response = await api.patch(
-        `/persons/${data._id}`,
-        { name, age_group: ageGroup },
-
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      console.log(response.data);
-      editPersonVisibility();
-      setName(response.data.name);
-      setAgeGroup(response.data.ageGroup);
-      refreshData(name, ageGroup, data._id);
-    } catch (e) {
-      console.log(e);
+    if (name !== userName) {
+      try {
+        const response = await api.patch(`/persons/${data._id}`, {
+          name,
+          age_group: ageGroup,
+        });
+        console.log(response.data);
+        editPersonVisibility();
+        setName(response.data.name);
+        setAgeGroup(response.data.ageGroup);
+        refreshData(name, ageGroup, data._id);
+      } catch (e) {
+        console.log(e);
+      }
     }
   };
   // --------------------------------------------------------------------------

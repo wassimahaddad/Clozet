@@ -8,10 +8,7 @@ const ClozetItem = ({ userName, data, remove, refreshData, defaultPerson }) => {
   // --------------------- Delete Item ------------------------------------------
   const handleDeleteItem = async () => {
     try {
-      const token = await localStorage.getItem("token");
-      const response = await api.delete(`/clozets/${data._id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const response = await api.delete(`/clozets/${data._id}`);
       console.log(response);
       remove(data._id);
     } catch (e) {

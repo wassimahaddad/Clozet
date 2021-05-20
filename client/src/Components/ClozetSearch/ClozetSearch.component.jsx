@@ -21,7 +21,6 @@ const ClozetSearch = ({
   const [spinner, setSpinner] = useState("hidden");
   const [message, setMessage] = useState(null);
   const [messageVisibility, setMessageVisibility] = useState("hide");
-  // let previousStates = {};
   const sizeGroup = persons
     ? persons.filter((one) => one.name === person)
     : null;
@@ -33,17 +32,7 @@ const ClozetSearch = ({
   useEffect(() => {
     const getPersons = async () => {
       try {
-        const token = await localStorage.getItem("token");
-        const response = await api.get(
-          "/persons",
-
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-
+        const response = await api.get("/persons");
         setPersons(response.data);
       } catch (e) {
         console.log(e);
@@ -58,35 +47,27 @@ const ClozetSearch = ({
       setSpinner("page-loader");
       hideSearchBox("hide");
       setMessage(null);
-      const token = await localStorage.getItem("token");
-      const response = await api.post(
-        "/clozets/search",
-        { person, size, item, season, in_storage: inStorage, keeper },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+
+      const response = await api.post("/clozets/search", {
+        person,
+        size,
+        item,
+        season,
+        in_storage: inStorage,
+        keeper,
+      });
       console.log(response.data);
       setSpinner("hide");
       setData(response.data);
       setSearchResultsVisibilty();
-      // previousStates = {
-      //   person,
-      //   size,
-      //   item,
-      //   season,
-      //   in_storage: inStorage,
-      //   keeper,
-      // };
+
       setPerson("");
       setItem("");
       setSize("");
       setSeason("");
       setInStorage("");
       setKeeper("");
-      // console.log(previousStates);
+
       if (response.data.length === 0) {
         setMessage("no match found");
         setMessageVisibility("create-item-message-visibility");

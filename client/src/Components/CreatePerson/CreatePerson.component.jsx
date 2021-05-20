@@ -21,16 +21,10 @@ const CreatePerson = ({
 
   const handleCreate = async () => {
     try {
-      const token = await localStorage.getItem("token");
-      const response = await api.post(
-        "/persons",
-        { name, age_group: ageGroup },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await api.post("/persons", {
+        name,
+        age_group: ageGroup,
+      });
       setData(response.data);
       console.log(response.data);
       setError(null);

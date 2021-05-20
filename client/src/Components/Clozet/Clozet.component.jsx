@@ -11,20 +11,12 @@ const Clozet = ({ userName, clozetCreateUpdate }) => {
   const [clozetSearchVisibilty, setClozetSearchVisibilty] = useState("hide");
   const [showSearchBox, setShowSearchBox] = useState("clozet-search-wrapper");
   const [searchResultsVisibilty, setSearchResultsVisibility] = useState("hide");
+
   // -------------------------------------------------------------------------
 
   const getPersons = async () => {
     try {
-      const token = await localStorage.getItem("token");
-      const response = await api.get(
-        "/persons",
-
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await api.get("/persons");
 
       setPersons(response.data);
       console.log(response.data);
@@ -55,6 +47,8 @@ const Clozet = ({ userName, clozetCreateUpdate }) => {
 
   // -------------------------------------------------------------------------
   const handleSearch = () => {
+    setPersons(null);
+    getPersons();
     setCreateItemDisplay("hide");
     setClozetSearchVisibilty("clozet-search-container");
     setShowSearchBox("clozet-search-wrapper");

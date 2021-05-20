@@ -11,10 +11,7 @@ const Person = ({ data, remove, userName, handlePerson }) => {
     try {
       if (data.name !== userName) {
         setEnableDisable("person-item-button");
-        const token = await localStorage.getItem("token");
-        const response = await api.delete(`/persons/${data._id}`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const response = await api.delete(`/persons/${data._id}`);
         console.log(response);
         remove(data._id);
       } else {
@@ -64,6 +61,7 @@ const Person = ({ data, remove, userName, handlePerson }) => {
           data={data}
           editPersonVisibility={HandleditPersonVisibility}
           refreshData={handleRefreshData}
+          userName={userName}
         />
       </div>
     </div>

@@ -18,44 +18,32 @@ const User = () => {
   const history = useHistory();
 
   // --------------------- Restrict access when not logged in --------
+
   useEffect(() => {
     const page = async () => {
-      const token = await localStorage.getItem("token");
-      if (!token) history.push("/");
+      const login = await localStorage.getItem("login");
+      if (!login) history.push("/");
     };
     page();
     handleUserProfile();
+    // eslint-disable-next-line
   }, [history]);
   // --------------------- user profile ---------------------------------------
   const handleUserProfile = async () => {
     try {
-      const token = await localStorage.getItem("token");
-      const response = await api.get("/users/me", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const response = await api.get("/users/me");
 
       setData(response.data);
     } catch (e) {
       console.log(e);
-
-      return e.message;
+      if (!data) history.push("/");
     }
   };
   // --------------------- logout ---------------------------------------
   const handleLogout = async () => {
     try {
-      const token = await localStorage.getItem("token");
-
-      await api.post(
-        "/users/logout",
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      localStorage.removeItem("token");
+      await api.post("/users/logout", {});
+      localStorage.removeItem("login");
       history.push("/");
     } catch (e) {
       console.log(e);
@@ -65,18 +53,8 @@ const User = () => {
   // --------------------- logout All---------------------------------------
   const handleLogoutAll = async () => {
     try {
-      const token = await localStorage.getItem("token");
-
-      await api.post(
-        "/users/logoutAll",
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      localStorage.removeItem("token");
+      await api.post("/users/logoutAll", {});
+      localStorage.removeItem("login");
       history.push("/");
     } catch (e) {
       console.log(e);

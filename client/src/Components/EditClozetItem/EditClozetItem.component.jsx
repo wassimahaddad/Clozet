@@ -19,16 +19,7 @@ const UpdateClozetItem = ({ data, cancelEdit, refreshData, userName }) => {
   //   ----------------- load persons for person field ---------------
   useEffect(() => {
     const getPersons = async () => {
-      const token = await localStorage.getItem("token");
-      const response = await api.get(
-        "/persons",
-
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await api.get("/persons");
 
       setPersons(response.data);
     };
@@ -67,10 +58,8 @@ const UpdateClozetItem = ({ data, cancelEdit, refreshData, userName }) => {
       formData.append("in_storage", storage);
       formData.append("keeper", keep);
 
-      const token = await localStorage.getItem("token");
       const response = await api.patch(`/clozets/${data._id}`, formData, {
         headers: {
-          Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",
         },
       });
@@ -80,8 +69,6 @@ const UpdateClozetItem = ({ data, cancelEdit, refreshData, userName }) => {
       cancelEdit("hide");
       refreshData(response.data);
       setSpinner("hide");
-      // setInStorage("");
-      // setKeeper("");
     } catch (e) {
       console.log(e.message);
       setError(e.message);

@@ -13,6 +13,7 @@ if (process.env.NODE_ENV === "production") {
 
 const api = axios.create({
   baseURL: url,
+  withCredentials: true,
 });
 
 export default api;
